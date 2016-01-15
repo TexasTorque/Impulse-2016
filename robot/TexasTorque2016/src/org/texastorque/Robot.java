@@ -14,74 +14,73 @@ import org.texastorque.torquelib.util.Parameters;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Robot extends TorqueIterative {
-	
+
 	private int numCycles;
 	private ArrayList<Subsystem> subsystems;
-	
+
 	private AutoManager autoManager;
 	private Input input;
-	private Feedback feedback;
-	
+
 	public void robotInit() {
 		Parameters.load();
 		numCycles = 0;
-		
+
 		subsystems = new ArrayList<>();
 		subsystems.add(Drivebase.getInstance());
-		
+
 		autoManager = AutoManager.getInstance();
-		feedback = Feedback.getInstance();
 	}
-	
-	//teleop
+
+	// teleop
 	public void teleopInit() {
 		numCycles = 0;
 		subsystems.forEach((subsystem) -> subsystem.init());
-		
+
 		input = HumanInput.getInstance();
 		subsystems.forEach((subsystem) -> subsystem.setInput(input));
 	}
-	
+
 	public void teleopContinuous() {
 		input.update();
-		feedback.update();
+		Feedback.update();
 		subsystems.forEach((subsystem) -> subsystem.run());
 	}
-	
+
 	public void teleopPeriodic() {
 		updateDashboard();
 	}
-	
-	//auto
+
+	// auto
 	public void autonomousInit() {
 		numCycles = 0;
 		autoManager.init();
-		
+		subsystems.forEach((subsystem) -> subsystem.init());
+
 		input = autoManager.createAutoMode();
-		subsystems.forEach((subsystem) -> subsystem.setInput(input));
+		subsystems.forEach((subsystem) -> subsystem.init());
 		autoManager.runAutoMode();
 	}
-	
+
 	public void autonomousContinuous() {
 		input.update();
-		feedback.update();
+		Feedback.update();
 		subsystems.forEach((subsystem) -> subsystem.run());
 	}
-	
+
 	public void autonomousPeriodic() {
 		updateDashboard();
 	}
-	
-	//disabled
+
+	// disabled
 	public void disabledInit() {
 		numCycles = 0;
 	}
-	
+
 	public void disabledContinuous() {
 		updateDashboard();
 	}
-	
-	//private
+
+	// private
 	private void updateDashboard() {
 		subsystems.forEach((subsystem) -> subsystem.pushToDashboard());
 		SmartDashboard.putNumber("NumCycles", numCycles++);

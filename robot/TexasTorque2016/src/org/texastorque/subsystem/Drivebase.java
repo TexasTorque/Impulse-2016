@@ -1,5 +1,7 @@
 package org.texastorque.subsystem;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 public class Drivebase extends Subsystem {
 	
 	private static Drivebase instance;
@@ -20,6 +22,8 @@ public class Drivebase extends Subsystem {
 	}
 	
 	public void pushToDashboard() {
+		SmartDashboard.putNumber("DrivebaseLeftSpeed", leftSpeed);
+		SmartDashboard.putNumber("DrivebaseRightSpeed", rightSpeed);
 	}
 	
 	//singleton

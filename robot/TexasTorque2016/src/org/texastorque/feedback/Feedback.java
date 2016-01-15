@@ -8,11 +8,15 @@ public class Feedback {
 	
 	//values
 	
-	public void update() {
+	private void update0() {
 	}
 	
 	//singleton
 	public static Feedback getInstance() {
 		return instance == null ? instance = new Feedback() : instance;
+	}
+	
+	public static void update() {
+		getInstance().update0();
 	}
 }
