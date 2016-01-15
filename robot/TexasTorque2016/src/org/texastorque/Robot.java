@@ -2,6 +2,7 @@ package org.texastorque;
 
 import java.util.ArrayList;
 
+import org.texastorque.auto.AutoManager;
 import org.texastorque.feedback.Feedback;
 import org.texastorque.input.HumanInput;
 import org.texastorque.subsystem.Drivebase;
@@ -15,6 +16,8 @@ public class Robot extends TorqueIterative {
 	
 	private int numCycles;
 	private ArrayList<Subsystem> subsystems;
+	
+	private AutoManager autoManager;
 	private HumanInput input;
 	private Feedback feedback;
 	
@@ -25,6 +28,7 @@ public class Robot extends TorqueIterative {
 		subsystems = new ArrayList<>();
 		subsystems.add(Drivebase.getInstance());
 		
+		autoManager = AutoManager.getInstance();
 		input = HumanInput.getInstance();
 		feedback = Feedback.getInstance();
 	}
@@ -44,6 +48,7 @@ public class Robot extends TorqueIterative {
 	
 	//auto
 	public void autonomousInit() {
+		autoManager.init();
 	}
 	
 	public void autonomousContinuous() {
