@@ -31,8 +31,31 @@ public class Robot extends TorqueIterative {
 		autoManager = AutoManager.getInstance();
 	}
 
+	// auto
+	public void autonomousInit() {
+		Parameters.load();
+		numCycles = 0;
+		autoManager.init();
+		subsystems.forEach((subsystem) -> subsystem.init());
+
+		input = autoManager.createAutoMode();
+		subsystems.forEach((subsystem) -> subsystem.setInput(input));
+		autoManager.runAutoMode();
+	}
+
+	public void autonomousContinuous() {
+		input.update();
+		Feedback.update();
+		subsystems.forEach((subsystem) -> subsystem.run());
+	}
+
+	public void autonomousPeriodic() {
+		updateDashboard();
+	}
+
 	// teleop
 	public void teleopInit() {
+		Parameters.load();
 		numCycles = 0;
 		subsystems.forEach((subsystem) -> subsystem.init());
 
@@ -47,27 +70,6 @@ public class Robot extends TorqueIterative {
 	}
 
 	public void teleopPeriodic() {
-		updateDashboard();
-	}
-
-	// auto
-	public void autonomousInit() {
-		numCycles = 0;
-		autoManager.init();
-		subsystems.forEach((subsystem) -> subsystem.init());
-
-		input = autoManager.createAutoMode();
-		subsystems.forEach((subsystem) -> subsystem.init());
-		autoManager.runAutoMode();
-	}
-
-	public void autonomousContinuous() {
-		input.update();
-		Feedback.update();
-		subsystems.forEach((subsystem) -> subsystem.run());
-	}
-
-	public void autonomousPeriodic() {
 		updateDashboard();
 	}
 
