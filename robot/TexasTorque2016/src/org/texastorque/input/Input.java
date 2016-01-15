@@ -8,6 +8,8 @@ public abstract class Input {
 	
 	//override variables
 	protected boolean override = false;
+	
+	public abstract void update();
 
 	public double getLeftDriveSpeed() {
 		return leftDriveSpeed;

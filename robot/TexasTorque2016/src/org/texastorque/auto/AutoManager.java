@@ -21,21 +21,23 @@ public class AutoManager {
 		SmartDashboard.putString("RunningAutoMode", "N/A");
 	}
 
-	public AutoMode runAutoMode() {
+	public AutoMode createAutoMode() {
 		int dashboardMode = (int) SmartDashboard.getNumber("AutoMode");
 
 		switch (dashboardMode) {
 		default:
 		case DO_NOTHING_AUTO:
 			SmartDashboard.putString("RunningAutoMode", "DoNothingAuto");
-			currentMode = new DoNothingAuto();
-			currentMode.run();
-			return currentMode;
+			return currentMode = new DoNothingAuto();
 		case DRIVE_FORWARD_AUTO:
 			SmartDashboard.putString("RunningAutoMode", "DriveForwardAuto");
 			break;
 		}
 		return null;
+	}
+	
+	public void runAutoMode() {
+		currentMode.run();
 	}
 
 	// singleton
