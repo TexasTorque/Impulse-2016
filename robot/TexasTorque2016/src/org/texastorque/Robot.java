@@ -20,6 +20,7 @@ public class Robot extends TorqueIterative {
 
 	private AutoManager autoManager;
 	private Input input;
+	private Feedback feedback;
 
 	public void robotInit() {
 		Parameters.load();
@@ -29,6 +30,7 @@ public class Robot extends TorqueIterative {
 		subsystems.add(Drivebase.getInstance());
 
 		autoManager = AutoManager.getInstance();
+		feedback = Feedback.getInstance();
 	}
 
 	// auto
@@ -45,7 +47,7 @@ public class Robot extends TorqueIterative {
 
 	public void autonomousContinuous() {
 		input.update();
-		Feedback.update();
+		feedback.update();
 		subsystems.forEach((subsystem) -> subsystem.run());
 	}
 
@@ -65,7 +67,7 @@ public class Robot extends TorqueIterative {
 
 	public void teleopContinuous() {
 		input.update();
-		Feedback.update();
+		feedback.update();
 		subsystems.forEach((subsystem) -> subsystem.run());
 	}
 
@@ -84,6 +86,7 @@ public class Robot extends TorqueIterative {
 
 	// private
 	private void updateDashboard() {
+		feedback.pushToDashboard();
 		subsystems.forEach((subsystem) -> subsystem.pushToDashboard());
 		SmartDashboard.putNumber("NumCycles", numCycles++);
 		SmartDashboard.putNumber("ThreadCount", Thread.activeCount());

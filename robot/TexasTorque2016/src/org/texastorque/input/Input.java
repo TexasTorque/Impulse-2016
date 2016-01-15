@@ -10,7 +10,7 @@ public abstract class Input {
 	protected boolean override = false;
 	
 	public abstract void update();
-
+	
 	public double getLeftDriveSpeed() {
 		return leftDriveSpeed;
 	}
