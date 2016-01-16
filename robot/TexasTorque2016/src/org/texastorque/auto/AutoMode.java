@@ -22,6 +22,10 @@ public abstract class AutoMode extends Input {
 	
 	protected abstract void run0();
 	
+	public void update() {
+		//auto modes do not update
+	}
+	
 	protected final void wait(double seconds) {
 		double start = Timer.getFPGATimestamp();
 		while (Timer.getFPGATimestamp() - start < seconds) {
