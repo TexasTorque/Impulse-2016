@@ -9,12 +9,30 @@ public class VisionManager {
 	
 	private NetworkTable visionTable;
 	
-	public void update() {
+	private double centerX;
+	private double centerY;
+	
+	public VisionManager() {
 		visionTable = NetworkTable.getTable("visionReport");
+	}
+	
+	public void update() {
+		centerX = visionTable.getNumber("centerX", 0.0);
+		centerY = visionTable.getNumber("centerY", 0.0);
+	}
+	
+	public double getCenterX() {
+		return centerX;
+	}
+	
+	public double getCenterY() {
+		return centerY;
 	}
 	
 	public void pushToDashboard() {
 		SmartDashboard.putBoolean("VisionAvaliable", visionTable.isConnected());
+		SmartDashboard.putNumber("VisionCenterX", centerX);
+		SmartDashboard.putNumber("VisionCenterY", centerY);
 	}
 	
 	// singleton
