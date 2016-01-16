@@ -4,13 +4,13 @@ import edu.wpi.first.wpilibj.DigitalInput;
 
 public class TorqueLevelSensor {
 
-    private DigitalInput button;
+	private DigitalInput button;
 
-    public TorqueLevelSensor(int port) {
-        button = new DigitalInput(port);
-    }
+	public TorqueLevelSensor(int port) {
+		button = new DigitalInput(port);
+	}
 
-    public boolean get() {
-        return !button.get();
-    }
+	public boolean get() {
+		return !button.get();
+	}
 }

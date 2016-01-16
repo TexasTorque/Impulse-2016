@@ -35,7 +35,7 @@ public class AutoManager {
 			return currentMode = new DriveForwardAuto();
 		}
 	}
-	
+
 	public void runAutoMode() {
 		currentMode.run();
 	}

@@ -6,7 +6,7 @@ public abstract class Input {
 	// drivebase
 	protected double leftDriveSpeed = 0.0;
 	protected double rightDriveSpeed = 0.0;
-	
+
 	protected double driveSetpoint = 0.0;
 
 	// override variables
