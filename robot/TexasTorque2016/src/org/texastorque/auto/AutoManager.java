@@ -37,7 +37,7 @@ public class AutoManager {
 	}
 
 	public void runAutoMode() {
-		currentMode.run();
+		currentMode.start();
 	}
 
 	// singleton

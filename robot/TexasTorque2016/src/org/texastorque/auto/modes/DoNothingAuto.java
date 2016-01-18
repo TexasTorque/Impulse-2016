@@ -4,6 +4,6 @@ import org.texastorque.auto.AutoMode;
 
 public class DoNothingAuto extends AutoMode {
 
-	public void run0() {
+	public void run() {
 	}
 }

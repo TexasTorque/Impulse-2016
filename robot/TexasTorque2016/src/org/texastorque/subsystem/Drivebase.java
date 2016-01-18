@@ -15,9 +15,10 @@ public class Drivebase extends Subsystem {
 	public void run() {
 		leftSpeed = input.getLeftDriveSpeed();
 		rightSpeed = input.getRightDriveSpeed();
+		output();
 	}
 
-	public void output() {
+	protected void output() {
 		output.setDriveSpeeds(leftSpeed, rightSpeed);
 	}
 

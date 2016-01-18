@@ -8,8 +8,8 @@ public abstract class AutoMode extends Input {
 
 	private Thread thread;
 
-	public final void run() {
-		thread = new Thread(() -> run0());
+	public final void start() {
+		thread = new Thread(() -> run());
 		thread.start();
 	}
 
@@ -20,7 +20,7 @@ public abstract class AutoMode extends Input {
 		}
 	}
 
-	protected abstract void run0();
+	protected abstract void run();
 
 	public void update() {
 		// auto modes do not update

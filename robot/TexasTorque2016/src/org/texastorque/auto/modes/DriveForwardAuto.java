@@ -5,7 +5,7 @@ import org.texastorque.constants.Constants;
 
 public class DriveForwardAuto extends AutoMode {
 
-	protected void run0() {
+	protected void run() {
 		driveSetpoint = Constants.DRIVE_FORWARD_AUTO_DISTANCE.getDouble();
 	}
 
