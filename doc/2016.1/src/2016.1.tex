@@ -1,0 +1,29 @@
+\documentclass[a4paper,12pt]{report}
+\usepackage[left=2.0cm, right=2.0cm, top=2.0cm, bottom=2.0cm]{geometry}
+
+\usepackage{setspace}
+\usepackage{sectsty}
+\usepackage{mathtools}
+\doublespacing
+
+\author{Matthew Webb}
+\title{TorquePaper 2016.1: Shooter Tilt and Calculation}
+
+\newcommand{\tab}{\hspace{20pt}}
+
+\begin{document}
+	\maketitle
+	\tableofcontents
+	
+	\chapter{Calculating Tilt}
+	\section{Initial Equation}
+	
+	\tab This equation was pulled from the Wikipedia article "Trajectory of a projectile", section called "Angle $\theta$ required to hit coordinate (x, y)". The derivation of this equation can be found on the Wiki page.
+	\begin{center}
+		\(\theta=\arctan{(\frac{v^2 \pm \sqrt{v^4 - g(gx^2 + 2yv^2)}}{gx})}\)
+	\end{center}
+	\tab By simply plugging in the velocity of the shooter, gravity, the distance between the robot and the tower (x), and the height from the top of the robot to the goal (y), the approximate angle $\theta$ can be calculated.
+	\section{Problem}
+	\tab The next problem is that when the shooter is tilted, the height of the robot - and thus the height between the top of the robot and the goal - changes. However, the required angle $\theta$ must be calculated before this modified height can be calculated. And in order to calculated the modified height, the angle is required. This sets up recursive equations, which cannot be solved. Therefore, a new equation must be derived.
+	
+\end{document}
