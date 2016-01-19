@@ -1,5 +1,6 @@
 package org.texastorque.output;
 
+import org.texastorque.constants.Ports;
 import org.texastorque.torquelib.component.TorqueMotor;
 
 import edu.wpi.first.wpilibj.VictorSP;
@@ -18,13 +19,13 @@ public class RobotOutput {
 	private TorqueMotor rightDriveBot;
 
 	public RobotOutput() {
-		leftDriveTop = new TorqueMotor(new VictorSP(0), false);
-		leftDriveMid = new TorqueMotor(new VictorSP(0), false);
-		leftDriveBot = new TorqueMotor(new VictorSP(0), false);
+		leftDriveTop = new TorqueMotor(new VictorSP(Ports.LEFT_DRIVE_TOP), false);
+		leftDriveMid = new TorqueMotor(new VictorSP(Ports.LEFT_DRIVE_MID), false);
+		leftDriveBot = new TorqueMotor(new VictorSP(Ports.LEFT_DRIVE_BOT), false);
 
-		rightDriveTop = new TorqueMotor(new VictorSP(0), true);
-		rightDriveMid = new TorqueMotor(new VictorSP(0), true);
-		rightDriveBot = new TorqueMotor(new VictorSP(0), true);
+		rightDriveTop = new TorqueMotor(new VictorSP(Ports.RIGHT_DRIVE_TOP), true);
+		rightDriveMid = new TorqueMotor(new VictorSP(Ports.RIGHT_DRIVE_MID), true);
+		rightDriveBot = new TorqueMotor(new VictorSP(Ports.RIGHT_DRIVE_BOT), true);
 	}
 
 	public void setDriveSpeeds(double left, double right) {
