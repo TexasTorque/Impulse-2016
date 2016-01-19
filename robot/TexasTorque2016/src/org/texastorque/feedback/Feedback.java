@@ -5,7 +5,7 @@ public class Feedback {
 	private static Feedback instance;
 
 	// sensors
-
+	
 	// values
 
 	public Feedback() {
@@ -16,7 +16,7 @@ public class Feedback {
 
 	public void pushToDashboard() {
 	}
-
+	
 	// singleton
 	public static Feedback getInstance() {
 		return instance == null ? instance = new Feedback() : instance;
