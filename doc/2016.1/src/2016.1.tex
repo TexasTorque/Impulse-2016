@@ -4,10 +4,12 @@
 \usepackage{setspace}
 \usepackage{sectsty}
 \usepackage{mathtools}
+\usepackage{tkz-euclide}
+\usetkzobj{all}
 \doublespacing
 
 \author{Matthew Webb}
-\title{TorquePaper 2016.1: Shooter Tilt and Calculation}
+\title{TorquePaper 2016.1: Accurate Shooter Tilt and Calculation}
 
 \newcommand{\tab}{\hspace{20pt}}
 
@@ -25,5 +27,21 @@
 	\tab By simply plugging in the velocity of the shooter, gravity, the distance between the robot and the tower (x), and the height from the top of the robot to the goal (y), the approximate angle $\theta$ can be calculated.
 	\section{Problem}
 	\tab The next problem is that when the shooter is tilted, the height of the robot - and thus the height between the top of the robot and the goal - changes. However, the required angle $\theta$ must be calculated before this modified height can be calculated. And in order to calculated the modified height, the angle is required. This sets up recursive equations, which cannot be solved. Therefore, a new equation must be derived.
-	
+	\section{Solution}
+	\tab The solution to this recursive problem starts with defining the new modified height from given values. We start with the initial triangle where the top of the robot is at the bottom and the tower is across from it.
+	\begin{center}
+		\begin{tikzpicture}[thick]
+			\coordinate(A) at (0, 0);
+			\coordinate(B) at (4, 0);
+			\coordinate(C) at (4, 2);
+			\draw (A)--(B)--(C)--cycle;
+			
+			\tkzLabelSegment[below=2pt](A,B){\textit{distanceAhead}}
+			\tkzLabelSegment[right=4pt](B,C){\textit{tower from top of robot}}
+			\tkzLabelSegment[above left=2pt](C,A){\textit{shot}}
+			
+			\tkzMarkAngle[fill=orange,size=1cm,opacity=.4](B,A,C)
+			\tkzLabelAngle[pos = 0.8](B,A,C){$\theta$}
+		\end{tikzpicture}
+	\end{center}
 \end{document}
