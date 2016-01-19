@@ -11,11 +11,7 @@ public class HumanInput extends Input {
 	private GenericController driver;
 	private GenericController operator;
 
-	// helper variables
-	private TorqueToggle overrideToggle;
-
 	private HumanInput() {
-		overrideToggle = new TorqueToggle();
 	}
 
 	public void update() {
