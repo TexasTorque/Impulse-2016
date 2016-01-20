@@ -1,7 +1,6 @@
 package org.texastorque.input;
 
 import org.texastorque.torquelib.util.GenericController;
-import org.texastorque.torquelib.util.TorqueToggle;
 
 public class HumanInput extends Input {
 
