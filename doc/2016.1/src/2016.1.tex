@@ -32,16 +32,20 @@
 	\begin{center}
 		\begin{tikzpicture}[thick]
 			\coordinate(A) at (0, 0);
-			\coordinate(B) at (4, 0);
-			\coordinate(C) at (4, 2);
+			\coordinate(B) at (3, 0);
+			\coordinate(C) at (3, 2);
 			\draw (A)--(B)--(C)--cycle;
 			
-			\tkzLabelSegment[below=2pt](A,B){\textit{distanceAhead}}
-			\tkzLabelSegment[right=4pt](B,C){\textit{tower from top of robot}}
-			\tkzLabelSegment[above left=2pt](C,A){\textit{shot}}
+			\tkzLabelSegment[below=2pt](A,B){\textit{L (length of robot)}}
+			\tkzLabelSegment[right=4pt](B,C){\textit{$H_{mod}$}}
+			\tkzLabelSegment[above left=2pt](C,A){\textit{shooter}}
 			
 			\tkzMarkAngle[fill=orange,size=1cm,opacity=.4](B,A,C)
 			\tkzLabelAngle[pos = 0.8](B,A,C){$\theta$}
 		\end{tikzpicture}
+	\end{center}
+	\tab Using this equation, we can substitute in the first equation.
+	\begin{center}
+		\(H_{mod} = H - L * \frac{v^2 \pm \sqrt{v^4 - g(gx^2 + 2yv^2)}}{gx}\)
 	\end{center}
 \end{document}
