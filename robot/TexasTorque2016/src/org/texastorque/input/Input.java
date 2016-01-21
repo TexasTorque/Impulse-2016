@@ -8,6 +8,8 @@ public abstract class Input {
 	protected double rightDriveSpeed = 0.0;
 
 	protected double driveSetpoint = 0.0;
+	
+	protected double drivebaseSetpoint = 0.0;
 
 	// override variables
 	protected boolean override = false;
@@ -20,6 +22,10 @@ public abstract class Input {
 
 	public double getRightDriveSpeed() {
 		return rightDriveSpeed;
+	}
+	
+	public double getDrivebaseSetpoint() {
+		return drivebaseSetpoint;
 	}
 
 	public boolean isOverride() {
