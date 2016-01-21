@@ -1,13 +1,28 @@
 package org.texastorque;
 
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class PDPLogger{
 
-	PowerDistributionPanel pdp;
+	private PowerDistributionPanel pdp;
 	
 	public PDPLogger(){
 		pdp = new PowerDistributionPanel();
+	}
+	
+	public void pushToDashboard(){
+		String output = "";
+		for(int x = 0; x <= 15; x++){
+			SmartDashboard.putNumber("Channel"+x+"Current", getChannelCurrent(x));
+			if(x%2 == 0)
+				output += "\n";
+		}
+		SmartDashboard.putNumber("CurrentPDPTemperature", getTemperature());
+		SmartDashboard.putNumber("CurrentPDPTotalEnergy", getTotalEnergy());
+		SmartDashboard.putNumber("CurrentPDPTotalCurrent", getTotalCurrent());
+		SmartDashboard.putNumber("CurrentPDPTotalPower", getTotalPower());
+		SmartDashboard.putNumber("CurrentPDPVoltage", getVoltage());
 	}
 	
 	public String readOut(){
