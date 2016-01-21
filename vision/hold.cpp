@@ -21,6 +21,9 @@ int main() {
 
 		findContours(frame, contours, hierarchy, RETR_EXTERNAL, CHAIN_APPROX_SIMPLE);
 
+		printf("contours: %i\n", contours.size());
+		printf("hierarchy: %i\n", hierarchy.size());
+
 		imshow("window", frame);
 		if (waitKey(30) >= 0) break;
 	}
