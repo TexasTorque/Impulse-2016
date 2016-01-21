@@ -6,6 +6,14 @@ public class Feedback {
 
 	// sensors
 	
+	private double leftDrivePosition;
+	private double leftDriveVelocity;
+	private double leftDriveAcceleration;
+	
+	private double rightDrivePosition;
+	private double rightDriveVelocity;
+	private double rightDriveAcceleration;
+	
 	// values
 
 	public Feedback() {
@@ -15,6 +23,35 @@ public class Feedback {
 	}
 
 	public void pushToDashboard() {
+	}
+	
+	// drivebase auton
+	
+	public void resetDriveEncoders() {
+		
+	}
+	
+	// getters
+	
+	public double getLeftDrivePosition(){
+		return leftDrivePosition;
+	}
+	public double getLeftDriveVelocity(){
+		return leftDriveVelocity;
+	}
+	public double getLeftDriveAcceleration(){
+		return leftDriveAcceleration;
+	}
+	
+	public double getRightDrivePosition(){
+		return rightDrivePosition;
+	}
+	public double getRightDriveVelocity(){
+		return rightDriveVelocity;
+	}
+	
+	public double getRightDriveAcceleration(){
+		return rightDriveAcceleration;
 	}
 	
 	// singleton
