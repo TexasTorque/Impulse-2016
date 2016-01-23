@@ -15,6 +15,9 @@ public class Feedback {
 	private double rightDrivePosition;
 	private double rightDriveVelocity;
 	private double rightDriveAcceleration;
+	
+	private double leftIntakeSpeed;
+	private double rightIntakeSpeed;
 
 	// values
 
@@ -57,6 +60,14 @@ public class Feedback {
 
 	public double getRightDriveAcceleration() {
 		return rightDriveAcceleration;
+	}
+	
+	public double getLeftIntakeSpeed(){
+		return leftIntakeSpeed;
+	}
+	
+	public double getRightIntakeSpeed(){
+		return rightIntakeSpeed;
 	}
 
 	// singleton
