@@ -5,15 +5,15 @@ public class Feedback {
 	private static Feedback instance;
 
 	// sensors
-	
+
 	private double leftDrivePosition;
 	private double leftDriveVelocity;
 	private double leftDriveAcceleration;
-	
+
 	private double rightDrivePosition;
 	private double rightDriveVelocity;
 	private double rightDriveAcceleration;
-	
+
 	// values
 
 	public Feedback() {
@@ -24,36 +24,39 @@ public class Feedback {
 
 	public void pushToDashboard() {
 	}
-	
+
 	// drivebase auton
-	
+
 	public void resetDriveEncoders() {
-		
+
 	}
-	
+
 	// getters
-	
-	public double getLeftDrivePosition(){
+
+	public double getLeftDrivePosition() {
 		return leftDrivePosition;
 	}
-	public double getLeftDriveVelocity(){
+
+	public double getLeftDriveVelocity() {
 		return leftDriveVelocity;
 	}
-	public double getLeftDriveAcceleration(){
+
+	public double getLeftDriveAcceleration() {
 		return leftDriveAcceleration;
 	}
-	
-	public double getRightDrivePosition(){
+
+	public double getRightDrivePosition() {
 		return rightDrivePosition;
 	}
-	public double getRightDriveVelocity(){
+
+	public double getRightDriveVelocity() {
 		return rightDriveVelocity;
 	}
-	
-	public double getRightDriveAcceleration(){
+
+	public double getRightDriveAcceleration() {
 		return rightDriveAcceleration;
 	}
-	
+
 	// singleton
 	public static Feedback getInstance() {
 		return instance == null ? instance = new Feedback() : instance;

@@ -12,8 +12,8 @@ public abstract class Subsystem {
 	protected Feedback feedback;
 	protected RobotOutput output;
 	protected DriverStation driverStation;
-	
-	public Subsystem(){
+
+	public Subsystem() {
 		feedback = Feedback.getInstance();
 		output = RobotOutput.getInstance();
 		driverStation = DriverStation.getInstance();
