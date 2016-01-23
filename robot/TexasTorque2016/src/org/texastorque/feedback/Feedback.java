@@ -15,9 +15,6 @@ public class Feedback {
 	private double rightDrivePosition;
 	private double rightDriveVelocity;
 	private double rightDriveAcceleration;
-	
-	private double leftIntakeSpeed;
-	private double rightIntakeSpeed;
 
 	// values
 
@@ -25,9 +22,6 @@ public class Feedback {
 	}
 
 	public void update() {
-	}
-
-	public void pushToDashboard() {
 	}
 
 	// drivebase auton
@@ -62,14 +56,6 @@ public class Feedback {
 		return rightDriveAcceleration;
 	}
 	
-	public double getLeftIntakeSpeed(){
-		return leftIntakeSpeed;
-	}
-	
-	public double getRightIntakeSpeed(){
-		return rightIntakeSpeed;
-	}
-
 	// singleton
 	public static Feedback getInstance() {
 		return instance == null ? instance = new Feedback() : instance;

@@ -3,20 +3,13 @@ package org.texastorque;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class PDPLogger{
+public class PDPLogger {
 
-	private PowerDistributionPanel pdp;
-	
-	public PDPLogger(){
-		pdp = new PowerDistributionPanel();
-	}
-	
-	public void pushToDashboard(){
-		String output = "";
-		for(int x = 0; x <= 15; x++){
-			SmartDashboard.putNumber("Channel"+x+"Current", getChannelCurrent(x));
-			if(x%2 == 0)
-				output += "\n";
+	private static PowerDistributionPanel pdp = new PowerDistributionPanel();
+
+	public static void pushToDashboard() {
+		for (int x = 0; x <= 15; x++) {
+			SmartDashboard.putNumber("Channel" + x + "Current", getChannelCurrent(x));
 		}
 		SmartDashboard.putNumber("CurrentPDPTemperature", getTemperature());
 		SmartDashboard.putNumber("CurrentPDPTotalEnergy", getTotalEnergy());
@@ -24,48 +17,33 @@ public class PDPLogger{
 		SmartDashboard.putNumber("CurrentPDPTotalPower", getTotalPower());
 		SmartDashboard.putNumber("CurrentPDPVoltage", getVoltage());
 	}
-	
-	public String readOut(){
-		String output = "";
-		for(int x = 0; x <= 15; x++){
-			output += "Channel" + x + "Current" + getChannelCurrent(x)+"\t\t";
-			if(x%2 == 0)
-				output += "\n";
-		}
-		output += "\n\nCurrentPDPTemperature: " + getTemperature();
-		output += "\nCurrentPDPTotalEnergy: " + getTotalEnergy();
-		output += "\nCurrentPDPTotalCurrent: " + getTotalCurrent();
-		output += "\nCurrentPDPTotalPower: " + getTotalPower();
-		output += "\nCurrentPDPVoltage: " + getVoltage();
-		return output;
-	}
-	
-	public double getChannelCurrent(int channel){
+
+	private static double getChannelCurrent(int channel) {
 		return pdp.getCurrent(channel);
 	}
-	
-	public double getTemperature(){
+
+	private static double getTemperature() {
 		return pdp.getTemperature();
 	}
-	
-	public double getTotalEnergy(){
+
+	private static double getTotalEnergy() {
 		return pdp.getTotalEnergy();
 	}
-	
-	public double getTotalCurrent(){
+
+	private static double getTotalCurrent() {
 		return pdp.getTotalCurrent();
 	}
-	
-	public double getTotalPower(){
+
+	private static double getTotalPower() {
 		return pdp.getTotalPower();
 	}
-	
-	public double getVoltage(){
+
+	private static double getVoltage() {
 		return pdp.getVoltage();
 	}
-	
-	public void resetPDPEnergy(){
+
+	private static void resetPDPEnergy() {
 		pdp.resetTotalEnergy();
 	}
-	
+
 }
