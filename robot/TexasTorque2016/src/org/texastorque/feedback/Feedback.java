@@ -3,6 +3,8 @@ package org.texastorque.feedback;
 public class Feedback {
 
 	private static Feedback instance;
+	
+	private static final double DRIVEBASE_CONVERSION = 8 * Math.PI;//inches
 
 	// sensors
 
