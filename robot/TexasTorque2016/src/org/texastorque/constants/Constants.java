@@ -14,7 +14,7 @@ public class Constants {
 	public static final Constant CAMERA_MIN_YAW_FOV_ANGLE = new Constant("V_CamMinXFOVAngle", 0.0);
 
 	// drivebase
-	public static final Constant D_MAX_SPEED = new Constant("D_MAX_SPEED", 0.0);
+	public static final Constant D_MAX_SPEED = new Constant("D_MAX_SPEED", 1.0);
 	public static final Constant D_MAX_VELOCITY = new Constant("D_MAX_VELOCITY", 0.0);
 	public static final Constant D_MAX_ACCELERATION = new Constant("D_MAX_ACCELERATION", 0.0);
 
