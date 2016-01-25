@@ -86,7 +86,6 @@ public class Robot extends TorqueIterative {
 
 	// private
 	private void updateDashboard() {
-		PDPLogger.pushToDashboard();
 		subsystems.forEach((subsystem) -> subsystem.pushToDashboard());
 		SmartDashboard.putNumber("NumCycles", numCycles++);
 		SmartDashboard.putNumber("ThreadCount", Thread.activeCount());
