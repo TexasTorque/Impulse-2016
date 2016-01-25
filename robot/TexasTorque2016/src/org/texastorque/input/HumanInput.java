@@ -11,6 +11,8 @@ public class HumanInput extends Input {
 	private GenericController operator;
 
 	private HumanInput() {
+		driver = new GenericController(0, .1);
+		operator = new GenericController(1, .1);
 	}
 
 	public void update() {
