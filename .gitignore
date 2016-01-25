@@ -1,4 +1,7 @@
 bin/
+build/
+dist/
+sysProps.xml
 *.*.aux
 *.*.log
 *.*.synctex.gz
