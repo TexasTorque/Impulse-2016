@@ -3,8 +3,8 @@ package org.texastorque.feedback;
 public class Feedback {
 
 	private static Feedback instance;
-	
-	private static final double DRIVEBASE_CONVERSION = 8 * Math.PI;//inches
+
+	private static final double DRIVEBASE_CONVERSION = 8 * Math.PI;// inches
 
 	// sensors
 
@@ -18,20 +18,14 @@ public class Feedback {
 
 	// values
 
-	public Feedback() {
-	}
-
 	public void update() {
 	}
-
-	// drivebase auton
 
 	public void resetDriveEncoders() {
 
 	}
 
 	// getters
-
 	public double getLeftDrivePosition() {
 		return leftDrivePosition;
 	}
@@ -55,7 +49,7 @@ public class Feedback {
 	public double getRightDriveAcceleration() {
 		return rightDriveAcceleration;
 	}
-	
+
 	// singleton
 	public static Feedback getInstance() {
 		return instance == null ? instance = new Feedback() : instance;

@@ -115,16 +115,16 @@ public class Drivebase extends Subsystem {
 		SmartDashboard.putNumber("DrivebaseTargetPosition", targetPosition);
 		SmartDashboard.putNumber("DrivebaseTargetVelocity", targetVelocity);
 		SmartDashboard.putNumber("DrivebaseTargetAcceleration", targetAcceleration);
-		
+
 		SmartDashboard.putNumber("DrivebaseLeftPosition", leftPosition);
 		SmartDashboard.putNumber("DrivebaseRightPosition", rightPosition);
-		
+
 		SmartDashboard.putNumber("DrivebsaeLeftVelocity", leftVelocity);
 		SmartDashboard.putNumber("DrivebaseRightVelocity", rightVelocity);
-		
+
 		SmartDashboard.putNumber("DrivebaseLeftAcceleration", leftAcceleration);
 		SmartDashboard.putNumber("DrivebaseRightAcceleration", rightAcceleration);
-		
+
 		SmartDashboard.putNumber("DrivebaseLeftSpeed", leftSpeed);
 		SmartDashboard.putNumber("DrivebaseRightSpeed", rightSpeed);
 	}

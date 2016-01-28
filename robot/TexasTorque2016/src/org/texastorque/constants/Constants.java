@@ -29,9 +29,8 @@ public class Constants {
 	public static final Constant D_LEFT_PV_ffV = new Constant("D_LEFT_PV_ffV", 0.0);
 
 	public static final Constant TUNED_VOLTAGE = new Constant("TUNED_VOLTAGE", 0.0);
-	
+
 	// intakes
 	public static final Constant I_MAX_SPEED = new Constant("I_MAX_SPEED", 0.0);
-			
 
 }
