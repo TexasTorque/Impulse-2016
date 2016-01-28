@@ -22,6 +22,7 @@ public class Robot extends TorqueIterative {
 	private Input input;
 	private Feedback feedback;
 
+	@Override
 	public void robotInit() {
 		Parameters.load();
 		numCycles = 0;
@@ -34,6 +35,7 @@ public class Robot extends TorqueIterative {
 	}
 
 	// auto
+	@Override
 	public void autonomousInit() {
 		Parameters.load();
 		numCycles = 0;
@@ -45,17 +47,20 @@ public class Robot extends TorqueIterative {
 		autoManager.runAutoMode();
 	}
 
+	@Override
 	public void autonomousContinuous() {
 		input.update();
 		feedback.update();
 		subsystems.forEach((subsystem) -> subsystem.run());
 	}
 
+	@Override
 	public void autonomousPeriodic() {
 		updateDashboard();
 	}
 
 	// teleop
+	@Override
 	public void teleopInit() {
 		Parameters.load();
 		numCycles = 0;
@@ -65,21 +70,25 @@ public class Robot extends TorqueIterative {
 		subsystems.forEach((subsystem) -> subsystem.setInput(input));
 	}
 
+	@Override
 	public void teleopContinuous() {
 		input.update();
 		feedback.update();
 		subsystems.forEach((subsystem) -> subsystem.run());
 	}
 
+	@Override
 	public void teleopPeriodic() {
 		updateDashboard();
 	}
 
 	// disabled
+	@Override
 	public void disabledInit() {
 		numCycles = 0;
 	}
 
+	@Override
 	public void disabledContinuous() {
 		updateDashboard();
 	}
