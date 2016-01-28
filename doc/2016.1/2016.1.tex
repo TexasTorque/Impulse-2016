@@ -44,8 +44,5 @@
 			\tkzLabelAngle[pos = 0.8](B,A,C){$\theta$}
 		\end{tikzpicture}
 	\end{center}
-	\tab Using this equation, we can substitute in the first equation.
-	\begin{center}
-		\(H_{mod} = H - L * \frac{v^2 \pm \sqrt{v^4 - g(gx^2 + 2yv^2)}}{gx}\)
-	\end{center}
+	\tab In order to fix the intial calculation for $\theta$, there must be some constant added to the end of the the equation to shift the angle up slightly (this accounts for drag as well as shooter inaccuracy). However, when the shooter tilts up to aim at the goal, the height of the robot increases, and the angle required to shoot in the goal decreases. Therefore, it can be assumed that the tilt of the robot will take care of the angle inaccuracy and no modifications have to be made.
 \end{document}
