@@ -29,5 +29,6 @@
 	
 	\tab The camera used on Sonic was an Axis Camera M1013 which has an angle of view of 67$^{\circ}$. This means that if the camera faces the front of the robot, the camera will be able to see 33.5$^{\circ}$ left and right.
 	\section{Simple Solution}
-	\tab OpenCV/GRIP is able to determine the center of the U shape that the reflective tape forms. This means that 
+	\tab OpenCV/GRIP is able to determine the center of the U shape that the reflective tape forms. If the vertical center of the image is treated as 0$^{\circ}$, then the proportion from the center can be used to determine the turn angle. The following equation formalizes this.
+	\[\theta_{yaw} = \frac{goalCenterX - \frac{imgWidth}{2}}{\frac{imgWidth}{2}} * 33.5^{\circ}\]
 \end{document}
