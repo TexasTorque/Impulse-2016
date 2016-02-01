@@ -13,7 +13,6 @@ public class Constants {
 	public static final Constant V_HEIGHT = new Constant("V_CAMERA_H", 0.0);
 
 	// drivebase
-	public static final Constant D_MAX_SPEED = new Constant("D_MAX_SPEED", 1.0);
 	public static final Constant D_MAX_VELOCITY = new Constant("D_MAX_VELOCITY", 0.0);
 	public static final Constant D_MAX_ACCELERATION = new Constant("D_MAX_ACCELERATION", 0.0);
 
