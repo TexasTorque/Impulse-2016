@@ -10,8 +10,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Drivebase extends Subsystem {
 
-	private double MAX_SPEED;
-
 	private static Drivebase instance;
 
 	private double leftSpeed;
@@ -26,10 +24,14 @@ public class Drivebase extends Subsystem {
 
 	private double leftAcceleration;
 	private double rightAcceleration;
+	
+	private double angle;
+	private double angularVelocity;
 
-	// profiling variables
+	// generic profile variables
 	private double prevTime;
 
+	// linear profile
 	private TorqueTMP profile;
 	private TorquePV leftPV;
 	private TorquePV rightPV;
@@ -41,10 +43,18 @@ public class Drivebase extends Subsystem {
 	private double setpoint;
 	private double previousSetpoint;
 
+	// angular profile
+	private TorqueTMP angularProfile;
+	private TorquePV angularPV;
+	
+	private double targetAngle;
+	private double targetAngularVelocity;
+	
+	private double angleSetpoint;
+	private double anglePreviousSetpoint;
+
 	@Override
 	public void init() {
-		MAX_SPEED = Constants.D_MAX_SPEED.getDouble();
-
 		profile = new TorqueTMP(Constants.D_MAX_VELOCITY.getDouble(), Constants.D_MAX_ACCELERATION.getDouble());
 		leftPV = new TorquePV();
 		rightPV = new TorquePV();
@@ -73,6 +83,9 @@ public class Drivebase extends Subsystem {
 
 		leftAcceleration = feedback.getLeftDriveAcceleration();
 		rightAcceleration = feedback.getRightDriveAcceleration();
+		
+		angle = feedback.getAngle();
+		angularVelocity = feedback.getAngularVelocity();
 
 		if (driverStation.isAutonomous()) {
 			if (input.isOverride()) {
@@ -107,8 +120,8 @@ public class Drivebase extends Subsystem {
 
 	@Override
 	protected void output() {
-		leftSpeed = TorqueMathUtil.constrain(leftSpeed, MAX_SPEED);
-		rightSpeed = TorqueMathUtil.constrain(rightSpeed, MAX_SPEED);
+		leftSpeed = TorqueMathUtil.constrain(leftSpeed, 1.0);
+		rightSpeed = TorqueMathUtil.constrain(rightSpeed, 1.0);
 
 		output.setDriveSpeeds(leftSpeed, rightSpeed);
 	}

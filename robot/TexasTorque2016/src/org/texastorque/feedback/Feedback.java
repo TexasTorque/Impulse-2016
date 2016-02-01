@@ -24,6 +24,7 @@ public class Feedback {
 	private double rightDriveAcceleration;
 	
 	private double angle;
+	private double angularVelocity;
 
 	public Feedback() {
 		vision = VisionFeedback.getInstance();
@@ -33,6 +34,7 @@ public class Feedback {
 	public void update() {
 		vision.update();
 		angle = gyro.getAngle();
+		angularVelocity = gyro.getRate();
 	}
 
 	public void resetDriveEncoders() {
@@ -69,6 +71,10 @@ public class Feedback {
 	
 	public double getAngle() {
 		return angle;
+	}
+	
+	public double getAngularVelocity() {
+		return angularVelocity;
 	}
 	
 	public double getRequiredYaw() {
