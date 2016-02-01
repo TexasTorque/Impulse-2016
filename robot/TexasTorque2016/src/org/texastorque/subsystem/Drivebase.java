@@ -128,10 +128,15 @@ public class Drivebase extends Subsystem {
 
 	@Override
 	public void pushToDashboard() {
+		//targets
 		SmartDashboard.putNumber("DrivebaseTargetPosition", targetPosition);
 		SmartDashboard.putNumber("DrivebaseTargetVelocity", targetVelocity);
 		SmartDashboard.putNumber("DrivebaseTargetAcceleration", targetAcceleration);
+		
+		SmartDashboard.putNumber("DrivebaseTargetAngle", targetAngle);
+		SmartDashboard.putNumber("DrivebaseTargetAngularVelocity", targetAngularVelocity);
 
+		//values
 		SmartDashboard.putNumber("DrivebaseLeftPosition", leftPosition);
 		SmartDashboard.putNumber("DrivebaseRightPosition", rightPosition);
 
@@ -140,7 +145,11 @@ public class Drivebase extends Subsystem {
 
 		SmartDashboard.putNumber("DrivebaseLeftAcceleration", leftAcceleration);
 		SmartDashboard.putNumber("DrivebaseRightAcceleration", rightAcceleration);
+		
+		SmartDashboard.putNumber("DrivebaseAngle", angle);
+		SmartDashboard.putNumber("DrivebaseAngularVelocity", angularVelocity);
 
+		//output
 		SmartDashboard.putNumber("DrivebaseLeftSpeed", leftSpeed);
 		SmartDashboard.putNumber("DrivebaseRightSpeed", rightSpeed);
 	}
