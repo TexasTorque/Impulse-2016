@@ -24,6 +24,8 @@ public class HumanInput extends Input {
 		} else if (driver.getRightCenterButton()) {
 			override = false;
 		}
+		
+		visionLock = driver.getAButton();
 	}
 
 	// singleton

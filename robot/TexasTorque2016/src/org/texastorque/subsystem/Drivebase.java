@@ -28,7 +28,6 @@ public class Drivebase extends Subsystem {
 	private double rightAcceleration;
 
 	// profiling variables
-
 	private double prevTime;
 
 	private TorqueTMP profile;

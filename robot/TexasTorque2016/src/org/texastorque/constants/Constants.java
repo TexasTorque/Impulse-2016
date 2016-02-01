@@ -8,10 +8,9 @@ public class Constants {
 	public static final Constant DRIVE_FORWARD_AUTO_DISTANCE = new Constant("A_DriveForwardDistance", 0.0);
 
 	// vision
-	public static final Constant CAMERA_MAX_PITCH_FOV_ANGLE = new Constant("V_CamMaxYFOVAngle", 0.0);
-	public static final Constant CAMERA_MIN_PITCH_FOV_ANGLE = new Constant("V_CamMinYFOVAngle", 0.0);
-	public static final Constant CAMERA_MAX_YAW_FOV_ANGLE = new Constant("V_CamMaxXFOVAngle", 0.0);
-	public static final Constant CAMERA_MIN_YAW_FOV_ANGLE = new Constant("V_CamMinXFOVAngle", 0.0);
+	public static final Constant V_CAMERA_FOV = new Constant("V_CAMERA_FOV", 0.0);
+	public static final Constant V_WIDTH = new Constant("V_CAMERA_W", 0.0);
+	public static final Constant V_HEIGHT = new Constant("V_CAMERA_H", 0.0);
 
 	// drivebase
 	public static final Constant D_MAX_SPEED = new Constant("D_MAX_SPEED", 1.0);
