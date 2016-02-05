@@ -89,7 +89,7 @@ public class Robot extends TorqueIterative {
 	}
 
 	@Override
-	public void disabledContinuous() {
+	public void disabledPeriodic() {
 		updateDashboard();
 	}
 
