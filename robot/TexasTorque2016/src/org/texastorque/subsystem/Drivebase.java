@@ -99,10 +99,10 @@ public class Drivebase extends Subsystem {
 		angle = feedback.getAngle();
 		angularVelocity = feedback.getAngularVelocity();
 
-		if (input.isOverride() || !driverStation.isAutonomous()) {// normal driving
+		if (input.isOverride() || !driverStation.isAutonomous()) {// normal
 			leftSpeed = input.getLeftDriveSpeed();
 			rightSpeed = input.getRightDriveSpeed();
-		} else if (input.getDriveSetpoint() != 0.0) {// linear driving
+		} else if (input.getDriveSetpoint() != 0.0) {// linear
 			setpoint = input.getDriveSetpoint();
 			if (setpoint != previousSetpoint) {
 				previousSetpoint = setpoint;
@@ -120,7 +120,7 @@ public class Drivebase extends Subsystem {
 
 			leftSpeed = leftPV.calculate(profile, leftPosition, leftVelocity);
 			rightSpeed = rightPV.calculate(profile, rightPosition, rightVelocity);
-		} else if (input.getTurnSetpoint() != 0.0) {
+		} else if (input.getTurnSetpoint() != 0.0) {// turn
 			if (input.isVisionLock()) {
 				turnSetpoint = feedback.getRequiredTurn();
 			} else {
