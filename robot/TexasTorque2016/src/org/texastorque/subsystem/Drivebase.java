@@ -52,7 +52,6 @@ public class Drivebase extends Subsystem {
 
 	private double turnSetpoint;
 	private double turnPreviousSetpoint;
-	private double yawSetpoint;
 
 	@Override
 	public void init() {
@@ -183,7 +182,7 @@ public class Drivebase extends Subsystem {
 		SmartDashboard.putNumber("DrivebaseAngularVelocity", angularVelocity);
 
 		// setpoints
-		SmartDashboard.putNumber("YawSetpoint", yawSetpoint);
+		SmartDashboard.putBoolean("VisionLock", input.isVisionLock());
 		SmartDashboard.putNumber("DriveSetpoint", setpoint);
 		SmartDashboard.putNumber("TurnSetpoint", turnPreviousSetpoint);
 
