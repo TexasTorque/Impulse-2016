@@ -20,7 +20,7 @@ public class Feedback {
 	private double rightDrivePosition;
 	private double rightDriveVelocity;
 	private double rightDriveAcceleration;
-	
+
 	private double angle;
 	private double angularVelocity;
 
@@ -28,7 +28,7 @@ public class Feedback {
 		vision = VisionFeedback.getInstance();
 		gyro = new ADXRS450_Gyro();
 	}
-	
+
 	public void update() {
 		vision.update();
 		angle = gyro.getAngle() % 360.0;
@@ -37,7 +37,7 @@ public class Feedback {
 
 	public void resetDriveEncoders() {
 	}
-	
+
 	public void resetGyro() {
 		gyro.reset();
 	}
@@ -66,19 +66,19 @@ public class Feedback {
 	public double getRightDriveAcceleration() {
 		return rightDriveAcceleration;
 	}
-	
+
 	public double getAngle() {
 		return angle;
 	}
-	
+
 	public double getAngularVelocity() {
 		return angularVelocity;
 	}
-	
+
 	public double getRequiredTurn() {
 		return vision.getTurn();
 	}
-	
+
 	public double getRequiredTilt() {
 		return vision.getTilt();
 	}
