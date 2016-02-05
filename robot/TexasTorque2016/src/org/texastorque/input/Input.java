@@ -13,7 +13,7 @@ public abstract class Input {
 	// override variables
 	protected boolean override = false;
 	protected boolean visionLock = false;
-	
+
 	public abstract void update();
 
 	public double getLeftDriveSpeed() {
@@ -27,7 +27,7 @@ public abstract class Input {
 	public double getDriveSetpoint() {
 		return driveSetpoint;
 	}
-	
+
 	public double getTurnSetpoint() {
 		return turnSetpoint;
 	}
@@ -35,7 +35,7 @@ public abstract class Input {
 	public boolean isOverride() {
 		return override;
 	}
-	
+
 	public boolean isVisionLock() {
 		return visionLock;
 	}

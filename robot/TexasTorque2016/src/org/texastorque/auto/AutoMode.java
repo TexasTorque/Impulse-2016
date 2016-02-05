@@ -22,6 +22,7 @@ public abstract class AutoMode extends Input {
 
 	protected abstract void run();
 
+	@Override
 	public void update() {
 		// auto modes do not update
 	}
