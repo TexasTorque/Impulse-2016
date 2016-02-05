@@ -11,4 +11,14 @@ public class TorqueMathUtil {
 			return value;
 		}
 	}
+
+	public static double arrayClosest(double[] values, double value) {
+		double closest = 0.0;
+		for (int i = 0; i < values.length; i++) {
+			if (Math.abs(values[i] - value) < Math.abs(closest - value)) {
+				closest = value;
+			}
+		}
+		return closest;
+	}
 }

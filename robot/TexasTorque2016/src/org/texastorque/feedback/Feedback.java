@@ -1,8 +1,6 @@
 package org.texastorque.feedback;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
-import edu.wpi.first.wpilibj.SPI.Port;
-import edu.wpi.first.wpilibj.interfaces.Accelerometer.Range;
 
 public class Feedback {
 
@@ -33,7 +31,7 @@ public class Feedback {
 	
 	public void update() {
 		vision.update();
-		angle = gyro.getAngle();
+		angle = gyro.getAngle() % 360.0;
 		angularVelocity = gyro.getRate();
 	}
 
@@ -77,12 +75,12 @@ public class Feedback {
 		return angularVelocity;
 	}
 	
-	public double getRequiredYaw() {
-		return vision.getYaw();
+	public double getRequiredTurn() {
+		return vision.getTurn();
 	}
 	
-	public double getRequiredPitch() {
-		return vision.getPitch();
+	public double getRequiredTilt() {
+		return vision.getTilt();
 	}
 
 	// singleton
