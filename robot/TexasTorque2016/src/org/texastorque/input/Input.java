@@ -33,7 +33,7 @@ public abstract class Input {
 	}
 
 	public boolean isOverride() {
-		return false;
+		return override;
 	}
 	
 	public boolean isVisionLock() {
