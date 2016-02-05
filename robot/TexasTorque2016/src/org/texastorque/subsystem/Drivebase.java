@@ -66,23 +66,28 @@ public class Drivebase extends Subsystem {
 		previousSetpoint = 0.0;
 
 		leftPV.setGains(Constants.D_LEFT_PV_P.getDouble(), Constants.D_LEFT_PV_V.getDouble(),
-				Constants.D_LEFT_PV_ffP.getDouble(), Constants.D_LEFT_PV_ffV.getDouble());
+				Constants.D_LEFT_PV_ffV.getDouble(), Constants.D_LEFT_PV_ffA.getDouble());
 		leftPV.setTunedVoltage(Constants.TUNED_VOLTAGE.getDouble());
 
 		rightPV.setGains(Constants.D_RIGHT_PV_P.getDouble(), Constants.D_RIGHT_PV_V.getDouble(),
-				Constants.D_RIGHT_PV_ffP.getDouble(), Constants.D_RIGHT_PV_ffV.getDouble());
+				Constants.D_RIGHT_PV_ffV.getDouble(), Constants.D_RIGHT_PV_ffA.getDouble());
 		rightPV.setTunedVoltage(Constants.TUNED_VOLTAGE.getDouble());
 
 		// angular
-		angularProfile = new TorqueTMP(0.0, 0.0);
+		angularProfile = new TorqueTMP(Constants.D_MAX_ANGULAR_VELOCITY.getDouble(),
+				Constants.D_MAX_ANGULAR_ACCELERATION.getDouble());
 		angularPV = new TorquePV();
 
-		prevTime = Timer.getFPGATimestamp();
+		feedback.resetGyro();
 		turnSetpoint = 0.0;
 		turnPreviousSetpoint = 0.0;
 
-		angularPV.setGains(0.0, 0.0, 0.0, 0.0);
+		angularPV.setGains(Constants.D_TURN_PV_P.getDouble(), Constants.D_TURN_PV_V.getDouble(),
+				Constants.D_TURN_PV_ffV.getDouble(), Constants.D_TURN_PV_ffA.getDouble());
 		angularPV.setTunedVoltage(Constants.TUNED_VOLTAGE.getDouble());
+
+		// time
+		prevTime = Timer.getFPGATimestamp();
 	}
 
 	@Override

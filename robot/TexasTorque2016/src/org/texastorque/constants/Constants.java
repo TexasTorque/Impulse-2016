@@ -15,16 +15,23 @@ public class Constants {
 	// drivebase
 	public static final Constant D_MAX_VELOCITY = new Constant("D_MAX_VELOCITY", 0.0);
 	public static final Constant D_MAX_ACCELERATION = new Constant("D_MAX_ACCELERATION", 0.0);
+	public static final Constant D_MAX_ANGULAR_VELOCITY = new Constant("D_MAX_ANGULAR_VELOCITY", 0.0);
+	public static final Constant D_MAX_ANGULAR_ACCELERATION = new Constant("D_MAX_ANGULAR_ACCELERATION", 0.0);
 
 	public static final Constant D_RIGHT_PV_P = new Constant("D_RIGHT_PV_P", 0.0);
 	public static final Constant D_RIGHT_PV_V = new Constant("D_RIGHT_PV_V", 0.0);
-	public static final Constant D_RIGHT_PV_ffP = new Constant("D_RIGHT_PV_ffP", 0.0);
-	public static final Constant D_RIGHT_PV_ffV = new Constant("D_RIGHT_PV_ffV", 0.0);
+	public static final Constant D_RIGHT_PV_ffV = new Constant("D_RIGHT_PV_ffP", 0.0);
+	public static final Constant D_RIGHT_PV_ffA = new Constant("D_RIGHT_PV_ffV", 0.0);
 
 	public static final Constant D_LEFT_PV_P = new Constant("D_LEFT_PV_P", 0.0);
 	public static final Constant D_LEFT_PV_V = new Constant("D_LEFT_PV_V", 0.0);
-	public static final Constant D_LEFT_PV_ffP = new Constant("D_LEFT_PV_ffP", 0.0);
-	public static final Constant D_LEFT_PV_ffV = new Constant("D_LEFT_PV_ffV", 0.0);
+	public static final Constant D_LEFT_PV_ffV = new Constant("D_LEFT_PV_ffP", 0.0);
+	public static final Constant D_LEFT_PV_ffA = new Constant("D_LEFT_PV_ffV", 0.0);
+
+	public static final Constant D_TURN_PV_P = new Constant("D_TURN_PV_P", 0.0);
+	public static final Constant D_TURN_PV_V = new Constant("D_TURN_PV_V", 0.0);
+	public static final Constant D_TURN_PV_ffV = new Constant("D_TURN_PV_ffP", 0.0);
+	public static final Constant D_TURN_PV_ffA = new Constant("D_TURN_PV_ffV", 0.0);
 
 	public static final Constant TUNED_VOLTAGE = new Constant("TUNED_VOLTAGE", 12.7);
 }
