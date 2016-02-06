@@ -55,6 +55,8 @@ public class Drivebase extends Subsystem {
 
 	@Override
 	public void init() {
+		input.resetSetpoints();
+
 		// linear
 		profile = new TorqueTMP(Constants.D_MAX_VELOCITY.getDouble(), Constants.D_MAX_ACCELERATION.getDouble());
 		leftPV = new TorquePV();

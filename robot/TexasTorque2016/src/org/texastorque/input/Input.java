@@ -16,6 +16,11 @@ public abstract class Input {
 
 	public abstract void update();
 
+	public void resetSetpoints() {
+		driveSetpoint = 0.0;
+		turnSetpoint = 0.0;
+	}
+
 	public double getLeftDriveSpeed() {
 		return leftDriveSpeed;
 	}
