@@ -105,5 +105,6 @@ public class Robot extends TorqueIterative {
 		subsystems.forEach((subsystem) -> subsystem.pushToDashboard());
 		SmartDashboard.putNumber("NumCycles", numCycles++);
 		SmartDashboard.putNumber("ThreadCount", Thread.activeCount());
+		SmartDashboard.putNumber("VISION_STATE", feedback.getVisionState());
 	}
 }

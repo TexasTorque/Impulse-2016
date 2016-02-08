@@ -83,6 +83,10 @@ public class Feedback {
 		return vision.getTilt();
 	}
 
+	public int getVisionState() {
+		return vision.getVisionState();
+	}
+
 	// singleton
 	public static Feedback getInstance() {
 		return instance == null ? instance = new Feedback() : instance;
