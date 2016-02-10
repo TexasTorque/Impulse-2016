@@ -4,6 +4,7 @@ public abstract class Input {
 
 	// dynamic variables
 	// drivebase
+	protected boolean driveBoost;
 	protected double leftDriveSpeed = 0.0;
 	protected double rightDriveSpeed = 0.0;
 
@@ -35,6 +36,10 @@ public abstract class Input {
 
 	public double getTurnSetpoint() {
 		return turnSetpoint;
+	}
+	
+	public boolean isDriveBoost() {
+		return driveBoost;
 	}
 
 	public boolean isOverride() {

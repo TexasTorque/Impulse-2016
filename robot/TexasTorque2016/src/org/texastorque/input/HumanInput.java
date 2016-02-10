@@ -9,7 +9,7 @@ public class HumanInput extends Input {
 	// controllers
 	private GenericController driver;
 	private GenericController operator;
-
+	
 	private HumanInput() {
 		driver = new GenericController(0, .1);
 		operator = new GenericController(1, .1);
@@ -24,6 +24,8 @@ public class HumanInput extends Input {
 		} else if (driver.getRightCenterButton()) {
 			override = false;
 		}
+		
+		driveBoost = driver.getXButton();
 		
 		visionLock = driver.getAButton();
 	}

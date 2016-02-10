@@ -11,39 +11,45 @@ public class RobotOutput {
 
 	private static final boolean OUTPUT_MUTED = false;
 
-	private TorqueMotor leftDriveTop;
-	private TorqueMotor leftDriveMid;
-	private TorqueMotor leftDriveBot;
-	private TorqueMotor rightDriveTop;
-	private TorqueMotor rightDriveMid;
-	private TorqueMotor rightDriveBot;
+	private TorqueMotor leftTopDrive;
+	private TorqueMotor leftBottomDrive;
+	private TorqueMotor leftBoostDrive;
+	private TorqueMotor rightTopDrive;
+	private TorqueMotor rightBottomDrive;
+	private TorqueMotor rightBoostDrive;
 
 	public RobotOutput() {
-		leftDriveTop = new TorqueMotor(new VictorSP(Ports.LEFT_DRIVE_TOP), false);
-		leftDriveMid = new TorqueMotor(new VictorSP(Ports.LEFT_DRIVE_MID), false);
-		leftDriveBot = new TorqueMotor(new VictorSP(Ports.LEFT_DRIVE_BOT), false);
+		leftTopDrive = new TorqueMotor(new VictorSP(Ports.LEFT_TOP_DRIVE), false);
+		leftBottomDrive = new TorqueMotor(new VictorSP(Ports.LEFT_DRIVE_MID), false);
+		leftBoostDrive = new TorqueMotor(new VictorSP(Ports.LEFT_DRIVE_BOT), false);
 
-		rightDriveTop = new TorqueMotor(new VictorSP(Ports.RIGHT_DRIVE_TOP), true);
-		rightDriveMid = new TorqueMotor(new VictorSP(Ports.RIGHT_DRIVE_MID), true);
-		rightDriveBot = new TorqueMotor(new VictorSP(Ports.RIGHT_DRIVE_BOT), true);
+		rightTopDrive = new TorqueMotor(new VictorSP(Ports.RIGHT_DRIVE_TOP), true);
+		rightBottomDrive = new TorqueMotor(new VictorSP(Ports.RIGHT_DRIVE_MID), true);
+		rightBoostDrive = new TorqueMotor(new VictorSP(Ports.RIGHT_DRIVE_BOT), true);
 	}
 
 	public void setDriveSpeeds(double left, double right) {
 		if (OUTPUT_MUTED) {
-			leftDriveTop.set(0.0);
-			leftDriveMid.set(0.0);
-			leftDriveBot.set(0.0);
-			rightDriveTop.set(0.0);
-			rightDriveMid.set(0.0);
-			rightDriveBot.set(0.0);
+			leftTopDrive.set(0.0);
+			leftBottomDrive.set(0.0);
+			rightTopDrive.set(0.0);
+			rightBottomDrive.set(0.0);
 			return;
 		}
-		leftDriveTop.set(left);
-		leftDriveMid.set(left);
-		leftDriveBot.set(left);
-		rightDriveTop.set(right);
-		rightDriveMid.set(right);
-		rightDriveBot.set(right);
+		leftTopDrive.set(left);
+		leftBottomDrive.set(left);
+		rightBottomDrive.set(right);
+		rightBottomDrive.set(right);
+	}
+	
+	public void setBoostDriveSpeed(double left, double right) {
+		if (OUTPUT_MUTED) {
+			leftBoostDrive.set(0.0);
+			rightBoostDrive.set(0.0);
+			return;
+		}
+		leftBoostDrive.set(left);
+		rightBoostDrive.set(right);
 	}
 
 	// singleton

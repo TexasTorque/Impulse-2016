@@ -158,6 +158,10 @@ public class Drivebase extends Subsystem {
 		rightSpeed = TorqueMathUtil.constrain(rightSpeed, 1.0);
 
 		output.setDriveSpeeds(leftSpeed, rightSpeed);
+		
+		if (input.isDriveBoost()) {
+			output.setBoostDriveSpeed(leftSpeed, rightSpeed);
+		}
 	}
 
 	@Override
