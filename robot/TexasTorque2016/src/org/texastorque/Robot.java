@@ -7,6 +7,8 @@ import org.texastorque.feedback.Feedback;
 import org.texastorque.input.HumanInput;
 import org.texastorque.input.Input;
 import org.texastorque.subsystem.Drivebase;
+import org.texastorque.subsystem.Intake;
+import org.texastorque.subsystem.Shooter;
 import org.texastorque.subsystem.Subsystem;
 import org.texastorque.torquelib.base.TorqueIterative;
 import org.texastorque.torquelib.util.Parameters;
@@ -29,6 +31,8 @@ public class Robot extends TorqueIterative {
 
 		subsystems = new ArrayList<>();
 		subsystems.add(Drivebase.getInstance());
+		subsystems.add(Intake.getInstance());
+		subsystems.add(Shooter.getInstance());
 
 		autoManager = AutoManager.getInstance();
 		feedback = Feedback.getInstance();
