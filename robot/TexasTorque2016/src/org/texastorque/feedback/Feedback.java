@@ -6,7 +6,7 @@ public class Feedback {
 
 	private static Feedback instance;
 
-	private static final double DRIVEBASE_CONVERSION = 8 * Math.PI;// inches
+	private static final double DRIVEBASE_CONVERSION = 8 * Math.PI;// miles
 
 	// sensors
 	private VisionFeedback vision;
