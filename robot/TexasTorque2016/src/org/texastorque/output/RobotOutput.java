@@ -28,12 +28,12 @@ public class RobotOutput {
 
 	public RobotOutput() {
 		leftTopDrive = new TorqueMotor(new VictorSP(Ports.LEFT_TOP_DRIVE), false);
-		leftBottomDrive = new TorqueMotor(new VictorSP(Ports.LEFT_DRIVE_MID), false);
-		leftBoostDrive = new TorqueMotor(new VictorSP(Ports.LEFT_DRIVE_BOT), false);
+		leftBottomDrive = new TorqueMotor(new VictorSP(Ports.LEFT_BOTTOM_DRIVE), false);
+		leftBoostDrive = new TorqueMotor(new VictorSP(Ports.LEFT_BOOST_DRIVE), false);
 
-		rightTopDrive = new TorqueMotor(new VictorSP(Ports.RIGHT_DRIVE_TOP), true);
-		rightBottomDrive = new TorqueMotor(new VictorSP(Ports.RIGHT_DRIVE_MID), true);
-		rightBoostDrive = new TorqueMotor(new VictorSP(Ports.RIGHT_DRIVE_BOT), true);
+		rightTopDrive = new TorqueMotor(new VictorSP(Ports.RIGHT_TOP_DRIVE), true);
+		rightBottomDrive = new TorqueMotor(new VictorSP(Ports.RIGHT_BOTTOM_DRIVE), true);
+		rightBoostDrive = new TorqueMotor(new VictorSP(Ports.RIGHT_BOOST_DRIVE), true);
 		
 		leftTiltMotor = new TorqueMotor(new VictorSP(Ports.LEFT_TILT), false);
 		rightTiltMotor = new TorqueMotor(new VictorSP(Ports.RIGHT_TILT), false);
