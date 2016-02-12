@@ -19,6 +19,11 @@ public abstract class Input {
 	protected double topIntakeSpeed = 0.0;
 	protected double bottomIntakeSpeed = 0.0;
 	
+	// shooter variable
+	protected double leftTiltMotorSpeed = 0.0;
+	protected double rightTiltMotorSpeed = 0.0;
+	protected double flywheelMotorSpeed = 0.0;
+	
 	public abstract void update();
 
 	public double getLeftDriveSpeed() {
@@ -55,5 +60,17 @@ public abstract class Input {
 	
 	public double getBottomIntakeSpeed(){
 		return bottomIntakeSpeed;
+	}
+	
+	public double getLeftTiltMotorSpeed(){
+		return leftTiltMotorSpeed;
+	}
+	
+	public double getRightTiltMotorSpeed(){
+		return rightTiltMotorSpeed;
+	}
+	
+	public double getFlywheelMotorSpeed(){
+		return flywheelMotorSpeed;
 	}
 }
