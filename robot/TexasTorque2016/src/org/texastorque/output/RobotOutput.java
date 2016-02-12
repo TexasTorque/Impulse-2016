@@ -22,6 +22,7 @@ public class RobotOutput {
 	// intake
 	private TorqueMotor topIntakeMotor;
 	private TorqueMotor bottomIntakeMotor;
+	
 	// shooter
 	private TorqueMotor leftTiltMotor;
 	private TorqueMotor rightTiltMotor;
