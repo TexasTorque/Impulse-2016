@@ -14,7 +14,11 @@ public abstract class Input {
 	// override variables
 	protected boolean override = false;
 	protected boolean visionLock = false;
-
+	
+	// intake variables
+	protected double topIntakeSpeed = 0.0;
+	protected double bottomIntakeSpeed = 0.0;
+	
 	public abstract void update();
 
 	public double getLeftDriveSpeed() {
@@ -43,5 +47,13 @@ public abstract class Input {
 
 	public boolean isVisionLock() {
 		return visionLock;
+	}
+	
+	public double getTopIntakeSpeed(){
+		return topIntakeSpeed;
+	}
+	
+	public double getBottomIntakeSpeed(){
+		return bottomIntakeSpeed;
 	}
 }

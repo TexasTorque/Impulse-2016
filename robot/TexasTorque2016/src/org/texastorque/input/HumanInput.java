@@ -19,6 +19,9 @@ public class HumanInput extends Input {
 		leftDriveSpeed = -driver.getLeftYAxis() + driver.getRightXAxis();
 		rightDriveSpeed = -driver.getLeftYAxis() - driver.getRightXAxis();
 
+		topIntakeSpeed = operator.getLeftYAxis();
+		bottomIntakeSpeed = operator.getLeftYAxis();
+		
 		if (driver.getLeftCenterButton()) {
 			override = true;
 		} else if (driver.getRightCenterButton()) {

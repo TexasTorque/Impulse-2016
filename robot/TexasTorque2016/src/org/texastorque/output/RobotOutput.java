@@ -20,7 +20,8 @@ public class RobotOutput {
 	private TorqueMotor rightBoostDrive;
 
 	// intake
-	
+	private TorqueMotor topIntakeMotor;
+	private TorqueMotor bottomIntakeMotor;
 	// shooter
 	private TorqueMotor leftTiltMotor;
 	private TorqueMotor rightTiltMotor;
@@ -38,6 +39,10 @@ public class RobotOutput {
 		leftTiltMotor = new TorqueMotor(new VictorSP(Ports.LEFT_TILT), false);
 		rightTiltMotor = new TorqueMotor(new VictorSP(Ports.RIGHT_TILT), false);
 		flywheelMotor = new TorqueMotor(new VictorSP(Ports.FLYWHEEL), false);
+		
+		topIntakeMotor = new TorqueMotor(new VictorSP(-1), false);
+		bottomIntakeMotor = new TorqueMotor(new VictorSP(-1), false);
+		
 	}
 
 	public void setDriveSpeeds(double left, double right) {
@@ -52,6 +57,11 @@ public class RobotOutput {
 		leftBottomDrive.set(left);
 		rightBottomDrive.set(right);
 		rightBottomDrive.set(right);
+	}
+	
+	public void setIntakeSpeed(double top, double bottom) {
+		topIntakeMotor.set(top);
+		bottomIntakeMotor.set(bottom);
 	}
 
 	public void setBoostDriveSpeed(double left, double right) {
