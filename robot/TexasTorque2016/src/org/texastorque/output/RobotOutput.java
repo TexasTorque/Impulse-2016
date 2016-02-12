@@ -40,8 +40,8 @@ public class RobotOutput {
 		rightTiltMotor = new TorqueMotor(new VictorSP(Ports.RIGHT_TILT), false);
 		flywheelMotor = new TorqueMotor(new VictorSP(Ports.FLYWHEEL), false);
 		
-		topIntakeMotor = new TorqueMotor(new VictorSP(-1), false);
-		bottomIntakeMotor = new TorqueMotor(new VictorSP(-1), false);
+		topIntakeMotor = new TorqueMotor(new VictorSP(Ports.TOP_INTAKE), false);
+		bottomIntakeMotor = new TorqueMotor(new VictorSP(Ports.BOTTOM_INTAKE), false);
 		
 	}
 

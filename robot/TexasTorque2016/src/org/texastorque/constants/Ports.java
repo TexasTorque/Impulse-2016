@@ -15,4 +15,8 @@ public class Ports {
 	public static final int LEFT_TILT = 0;
 	public static final int RIGHT_TILT = 0;
 	public static final int FLYWHEEL = 0;
+	
+	// intake
+	public static final int TOP_INTAKE = 0;
+	public static final int BOTTOM_INTAKE = 0;
 }
