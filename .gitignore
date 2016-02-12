@@ -6,3 +6,4 @@ sysProps.xml
 *.*.log
 *.*.synctex.gz
 *.*.toc
+.classpath
