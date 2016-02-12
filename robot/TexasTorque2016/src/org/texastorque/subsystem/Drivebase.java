@@ -159,6 +159,8 @@ public class Drivebase extends Subsystem {
 		
 		if (input.isDriveBoost()) {
 			output.setBoostDriveSpeed(leftSpeed, rightSpeed);
+		} else {
+			output.setBoostDriveSpeed(0.0, 0.0);
 		}
 	}
 
