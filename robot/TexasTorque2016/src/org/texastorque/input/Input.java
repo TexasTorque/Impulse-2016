@@ -16,7 +16,8 @@ public abstract class Input {
 	protected boolean visionLock = false;
 
 	// intake variables
-	protected double intakeSpeed = 0.0;
+	protected boolean intaking = false;
+	protected boolean outtaking = false;
 
 	// shooter variable
 	protected boolean flywheelActive;
@@ -54,16 +55,20 @@ public abstract class Input {
 		return visionLock;
 	}
 
-	public double getIntakeSpeed() {
-		return intakeSpeed;
-	}
-
 	public double getLeftTiltMotorSpeed() {
 		return leftTiltMotorSpeed;
 	}
 
 	public double getRightTiltMotorSpeed() {
 		return rightTiltMotorSpeed;
+	}
+
+	public boolean isIntaking() {
+		return intaking;
+	}
+	
+	public boolean isOuttaking() {
+		return outtaking;
 	}
 
 	public boolean isFlywheelActive() {
