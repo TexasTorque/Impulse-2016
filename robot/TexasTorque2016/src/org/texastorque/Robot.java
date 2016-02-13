@@ -94,8 +94,6 @@ public class Robot extends TorqueIterative {
 
 	@Override
 	public void disabledContinuous() {
-		input = HumanInput.getInstance();
-		input.update();
 		feedback.update();
 	}
 

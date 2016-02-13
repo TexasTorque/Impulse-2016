@@ -18,15 +18,15 @@ public class Feedback {
 	// sensors
 	private VisionFeedback vision;
 	private ADXRS450_Gyro gyro;
-	
+
 	private TorqueEncoder leftDriveEncoder;
 	private TorqueEncoder rightDriveEncoder;
-	
+
 	private TorqueEncoder flywheelEncoder;
-	
+
 	private TorquePotentiometer tiltPot;
-	
-	// values
+
+	// drivebase values
 	private double leftDrivePosition;
 	private double leftDriveVelocity;
 	private double leftDriveAcceleration;
@@ -37,20 +37,24 @@ public class Feedback {
 
 	private double angle;
 	private double angularVelocity;
-	
+
+	// shooter values
 	private double flywheelVelocity;
-	
+
 	private double tiltAngle;
-	
+
 	public Feedback() {
 		vision = VisionFeedback.getInstance();
 		gyro = new ADXRS450_Gyro();
-		
-		leftDriveEncoder = new TorqueEncoder(Ports.DRIVE_LEFT_ENCODER_A, Ports.DRIVE_LEFT_ENCODER_B, false, EncodingType.k4X);
-		rightDriveEncoder = new TorqueEncoder(Ports.DRIVE_RIGHT_ENCODER_A, Ports.DRIVE_RIGHT_ENCODER_B, false, EncodingType.k4X);
-		
-		flywheelEncoder = new TorqueEncoder(Ports.FLYWHEEL_ENCODER_A, Ports.FLYWHEEL_ENCODER_B, false, EncodingType.k4X);
-		
+
+		leftDriveEncoder = new TorqueEncoder(Ports.DRIVE_LEFT_ENCODER_A, Ports.DRIVE_LEFT_ENCODER_B, false,
+				EncodingType.k4X);
+		rightDriveEncoder = new TorqueEncoder(Ports.DRIVE_RIGHT_ENCODER_A, Ports.DRIVE_RIGHT_ENCODER_B, false,
+				EncodingType.k4X);
+
+		flywheelEncoder = new TorqueEncoder(Ports.FLYWHEEL_ENCODER_A, Ports.FLYWHEEL_ENCODER_B, false,
+				EncodingType.k4X);
+
 		tiltPot = new TorquePotentiometer(Ports.TILT_POT_PORT);
 		tiltPot.setInputRange(Constants.S_TILT_MIN_VOLTAGE.getDouble(), Constants.S_TILT_MAX_VOLTAGE.getDouble());
 		tiltPot.setPositionRange(0, Constants.S_TILT_MAX_ANGLE.getDouble());
@@ -60,22 +64,22 @@ public class Feedback {
 		leftDriveEncoder.calc();
 		rightDriveEncoder.calc();
 		flywheelEncoder.calc();
-		
+
 		leftDrivePosition = leftDriveEncoder.get() * DRIVEBASE_CONVERSION;
 		leftDriveVelocity = leftDriveEncoder.getRate() * DRIVEBASE_CONVERSION;
 		leftDriveAcceleration = leftDriveEncoder.getAcceleration() * DRIVEBASE_CONVERSION;
-		
+
 		rightDrivePosition = rightDriveEncoder.get() * DRIVEBASE_CONVERSION;
 		rightDriveVelocity = rightDriveEncoder.getRate() * DRIVEBASE_CONVERSION;
 		rightDriveAcceleration = rightDriveEncoder.getAcceleration() * DRIVEBASE_CONVERSION;
-		
+
 		angle = gyro.getAngle() % 360.0;
 		angularVelocity = gyro.getRate();
-		
+
 		flywheelVelocity = flywheelEncoder.getRate();
-		
+
 		tiltAngle = tiltPot.getPosition() * TILT_CONVERSION;
-		
+
 		vision.calc();
 	}
 
@@ -83,7 +87,7 @@ public class Feedback {
 		leftDriveEncoder.reset();
 		rightDriveEncoder.reset();
 	}
-	
+
 	public void resetFlywheelEncoder() {
 		flywheelEncoder.reset();
 	}
@@ -124,15 +128,15 @@ public class Feedback {
 	public double getAngularVelocity() {
 		return angularVelocity;
 	}
-	
+
 	public double getFlywheelVelocity() {
 		return flywheelVelocity;
 	}
-	
+
 	public double getTiltAngle() {
 		return tiltAngle;
 	}
-	
+
 	public double getRequiredTurn() {
 		return vision.getTurn();
 	}
