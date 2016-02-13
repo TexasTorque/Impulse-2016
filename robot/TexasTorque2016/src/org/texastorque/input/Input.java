@@ -14,16 +14,16 @@ public abstract class Input {
 	// override variables
 	protected boolean override = false;
 	protected boolean visionLock = false;
-	
+
 	// intake variables
-	protected double topIntakeSpeed = 0.0;
-	protected double bottomIntakeSpeed = 0.0;
-	
+	protected double intakeSpeed = 0.0;
+
 	// shooter variable
+	protected boolean flywheelActive;
+
 	protected double leftTiltMotorSpeed = 0.0;
 	protected double rightTiltMotorSpeed = 0.0;
-	protected double flywheelMotorSpeed = 0.0;
-	
+
 	public abstract void update();
 
 	public double getLeftDriveSpeed() {
@@ -41,7 +41,7 @@ public abstract class Input {
 	public double getTurnSetpoint() {
 		return turnSetpoint;
 	}
-	
+
 	public boolean isDriveBoost() {
 		return driveBoost;
 	}
@@ -53,24 +53,20 @@ public abstract class Input {
 	public boolean isVisionLock() {
 		return visionLock;
 	}
-	
-	public double getTopIntakeSpeed(){
-		return topIntakeSpeed;
+
+	public double getIntakeSpeed() {
+		return intakeSpeed;
 	}
-	
-	public double getBottomIntakeSpeed(){
-		return bottomIntakeSpeed;
-	}
-	
-	public double getLeftTiltMotorSpeed(){
+
+	public double getLeftTiltMotorSpeed() {
 		return leftTiltMotorSpeed;
 	}
-	
-	public double getRightTiltMotorSpeed(){
+
+	public double getRightTiltMotorSpeed() {
 		return rightTiltMotorSpeed;
 	}
-	
-	public double getFlywheelMotorSpeed(){
-		return flywheelMotorSpeed;
+
+	public boolean isFlywheelActive() {
+		return flywheelActive;
 	}
 }

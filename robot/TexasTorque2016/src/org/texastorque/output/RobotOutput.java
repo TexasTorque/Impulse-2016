@@ -20,29 +20,27 @@ public class RobotOutput {
 	private TorqueMotor rightBoostDrive;
 
 	// intake
-	private TorqueMotor topIntakeMotor;
+//	private TorqueMotor topIntakeMotor;
 	private TorqueMotor bottomIntakeMotor;
 	
 	// shooter
-	private TorqueMotor leftTiltMotor;
-	private TorqueMotor rightTiltMotor;
+	private TorqueMotor tiltMotor;
 	private TorqueMotor flywheelMotor;
 
 	public RobotOutput() {
-		leftTopDrive = new TorqueMotor(new VictorSP(Ports.LEFT_TOP_DRIVE), false);
-		leftBottomDrive = new TorqueMotor(new VictorSP(Ports.LEFT_BOTTOM_DRIVE), false);
-		leftBoostDrive = new TorqueMotor(new VictorSP(Ports.LEFT_BOOST_DRIVE), false);
+		leftTopDrive = new TorqueMotor(new VictorSP(Ports.DRIVE_LEFT_TOP), false);
+		leftBottomDrive = new TorqueMotor(new VictorSP(Ports.DRIVE_LEFT_BOTTOM), false);
+		leftBoostDrive = new TorqueMotor(new VictorSP(Ports.DRIVE_LEFT_BOOST), false);
 
-		rightTopDrive = new TorqueMotor(new VictorSP(Ports.RIGHT_TOP_DRIVE), true);
-		rightBottomDrive = new TorqueMotor(new VictorSP(Ports.RIGHT_BOTTOM_DRIVE), true);
-		rightBoostDrive = new TorqueMotor(new VictorSP(Ports.RIGHT_BOOST_DRIVE), true);
+		rightTopDrive = new TorqueMotor(new VictorSP(Ports.DRIVE_RIGHT_TOP), true);
+		rightBottomDrive = new TorqueMotor(new VictorSP(Ports.DRIVE_RIGHT_BOTTOM), true);
+		rightBoostDrive = new TorqueMotor(new VictorSP(Ports.DRIVE_RIGHT_BOOST), true);
 		
-		leftTiltMotor = new TorqueMotor(new VictorSP(Ports.LEFT_TILT), false);
-		rightTiltMotor = new TorqueMotor(new VictorSP(Ports.RIGHT_TILT), false);
+		tiltMotor = new TorqueMotor(new VictorSP(Ports.TILT), false);
 		flywheelMotor = new TorqueMotor(new VictorSP(Ports.FLYWHEEL), false);
 		
-		topIntakeMotor = new TorqueMotor(new VictorSP(Ports.TOP_INTAKE), false);
-		bottomIntakeMotor = new TorqueMotor(new VictorSP(Ports.BOTTOM_INTAKE), false);
+//		topIntakeMotor = new TorqueMotor(new VictorSP(Ports.INTAKE_TOP), false);
+		bottomIntakeMotor = new TorqueMotor(new VictorSP(Ports.INTAKE_BOTTOM), false);
 		
 	}
 
@@ -60,9 +58,14 @@ public class RobotOutput {
 		rightBottomDrive.set(right);
 	}
 	
-	public void setIntakeSpeed(double top, double bottom) {
-		topIntakeMotor.set(top);
-		bottomIntakeMotor.set(bottom);
+	public void setIntakeSpeed(double speed) {
+		if (OUTPUT_MUTED) {
+//			topIntakeMotor.set(0.0);
+			bottomIntakeMotor.set(0.0);
+			return;
+		}
+//		topIntakeMotor.set(speed);
+		bottomIntakeMotor.set(speed);
 	}
 
 	public void setBoostDriveSpeed(double left, double right) {
@@ -77,12 +80,10 @@ public class RobotOutput {
 	
 	public void setTiltSpeeds(double left, double right) {
 		if (OUTPUT_MUTED) {
-			leftTiltMotor.set(0.0);
-			rightTiltMotor.set(0.0);
+			tiltMotor.set(0.0);
 			return;
 		}
-		leftTiltMotor.set(left);
-		rightTiltMotor.set(right);
+		tiltMotor.set(left);
 	}
 	
 	public void setFlywheelSpeed(double speed) {

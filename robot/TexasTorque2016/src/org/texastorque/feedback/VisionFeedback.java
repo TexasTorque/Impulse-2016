@@ -26,7 +26,7 @@ public class VisionFeedback {
 		visionState = 0;
 	}
 
-	public void update() {
+	public void calc() {
 		double[] _goalCenterX = visionTable.getNumberArray("centerX", new double[] { -1.0 });
 		double[] _goalCenterY = visionTable.getNumberArray("centerY", new double[] { -1.0 });
 		if (_goalCenterX[0] == -1.0 || _goalCenterY[0] == -1.0) {

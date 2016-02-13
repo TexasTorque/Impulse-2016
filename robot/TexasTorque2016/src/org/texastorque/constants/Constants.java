@@ -34,4 +34,15 @@ public class Constants {
 	public static final Constant D_TURN_PV_ffA = new Constant("D_TURN_PV_ffV", 0.0);
 
 	public static final Constant TUNED_VOLTAGE = new Constant("TUNED_VOLTAGE", 12.7);
+	
+	// shooter
+	public static final Constant S_TILT_P = new Constant("S_TILT_P", 0.0);
+	public static final Constant S_TILT_I = new Constant("S_TILT_I", 0.0);
+	public static final Constant S_TILT_D = new Constant("S_TILT_D", 0.0);
+	
+	public static final Constant S_TILT_MIN_VOLTAGE = new Constant("S_TILT_MIN_VOLTAGE", 0.0);
+	public static final Constant S_TILT_MAX_VOLTAGE = new Constant("S_TILT_MAX_VOLTAGE", 0.0);
+	public static final Constant S_TILT_MAX_ANGLE = new Constant("S_TILT_MAX_ANGLE", 0.0);
+
+	public static final Constant S_FLYWHEEL_SETPOINT = new Constant("S_FLYWHEEL_SETPOINT", 0.0);
 }

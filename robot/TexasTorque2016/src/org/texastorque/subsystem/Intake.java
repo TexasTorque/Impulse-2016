@@ -6,28 +6,25 @@ public class Intake extends Subsystem {
 
 	private static Intake instance;
 
-	private double topSpeed;
-	private double bottomSpeed;
-
+	private double intakeSpeed;
+	
 	@Override
 	public void init() {
 	}
 
 	@Override
 	public void run() {
-		topSpeed = input.getTopIntakeSpeed();
-		bottomSpeed = input.getBottomIntakeSpeed();
+		intakeSpeed = input.getIntakeSpeed();
 	}
 
 	@Override
 	protected void output() {
-		output.setIntakeSpeed(topSpeed, bottomSpeed);
+		output.setIntakeSpeed(intakeSpeed);
 	}
 
 	@Override
 	public void pushToDashboard() {
-		SmartDashboard.putNumber("TopIntakeSpeed", topSpeed);
-		SmartDashboard.putNumber("BottomIntakeSpeed", bottomSpeed);
+		SmartDashboard.putNumber("IntakeSpeed", intakeSpeed);
 	}
 
 	// singleton
