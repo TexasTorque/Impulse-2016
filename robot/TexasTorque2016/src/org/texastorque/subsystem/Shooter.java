@@ -53,6 +53,8 @@ public class Shooter extends Subsystem {
 		
 		leftTiltSpeed = input.getLeftTiltMotorSpeed();
 		rightTiltSpeed = input.getLeftTiltMotorSpeed();
+		
+		output();
 	}
 
 	@Override

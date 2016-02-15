@@ -18,7 +18,11 @@ public class Intake extends Subsystem {
 			intakeSpeed = -1.0;
 		} else if (input.isOuttaking()) {
 			intakeSpeed = 1.0;
+		} else {
+			intakeSpeed = 0.0;
 		}
+		
+		output();
 	}
 
 	@Override
