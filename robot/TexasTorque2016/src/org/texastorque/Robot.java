@@ -6,6 +6,7 @@ import org.texastorque.auto.AutoManager;
 import org.texastorque.feedback.Feedback;
 import org.texastorque.input.HumanInput;
 import org.texastorque.input.Input;
+import org.texastorque.subsystem.Conveyor;
 import org.texastorque.subsystem.Drivebase;
 import org.texastorque.subsystem.Intake;
 import org.texastorque.subsystem.Shooter;
@@ -33,6 +34,7 @@ public class Robot extends TorqueIterative {
 		subsystems.add(Drivebase.getInstance());
 		subsystems.add(Intake.getInstance());
 		subsystems.add(Shooter.getInstance());
+		subsystems.add(Conveyor.getInstance());
 
 		autoManager = AutoManager.getInstance();
 		feedback = Feedback.getInstance();
@@ -90,16 +92,6 @@ public class Robot extends TorqueIterative {
 	@Override
 	public void disabledInit() {
 		numCycles = 0;
-	}
-
-	@Override
-	public void disabledContinuous() {
-		feedback.update();
-	}
-
-	@Override
-	public void disabledPeriodic() {
-		updateDashboard();
 	}
 
 	// private

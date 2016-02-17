@@ -4,7 +4,6 @@ public abstract class Input {
 
 	// dynamic variables
 	// drivebase
-	protected boolean driveBoost;
 	protected double leftDriveSpeed = 0.0;
 	protected double rightDriveSpeed = 0.0;
 
@@ -18,12 +17,15 @@ public abstract class Input {
 	// intake variables
 	protected boolean intaking = false;
 	protected boolean outtaking = false;
+	
+	// conveyor variables
+	protected boolean conveyorIntaking = false;
+	protected boolean conveyorOuttaking = false;
 
 	// shooter variable
 	protected boolean flywheelActive;
 
-	protected double leftTiltMotorSpeed = 0.0;
-	protected double rightTiltMotorSpeed = 0.0;
+	protected double tiltMotorSpeed = 0.0;
 
 	public abstract void update();
 
@@ -43,10 +45,6 @@ public abstract class Input {
 		return turnSetpoint;
 	}
 
-	public boolean isDriveBoost() {
-		return driveBoost;
-	}
-
 	public boolean isOverride() {
 		return override;
 	}
@@ -55,20 +53,24 @@ public abstract class Input {
 		return visionLock;
 	}
 
-	public double getLeftTiltMotorSpeed() {
-		return leftTiltMotorSpeed;
+	public double getTiltMotorSpeed() {
+		return tiltMotorSpeed;
 	}
-
-	public double getRightTiltMotorSpeed() {
-		return rightTiltMotorSpeed;
-	}
-
+	
 	public boolean isIntaking() {
 		return intaking;
 	}
 	
 	public boolean isOuttaking() {
 		return outtaking;
+	}
+	
+	public boolean isConveyorIntaking() {
+		return conveyorIntaking;
+	}
+	
+	public boolean isConveyorOuttaking() {
+		return conveyorOuttaking;
 	}
 
 	public boolean isFlywheelActive() {

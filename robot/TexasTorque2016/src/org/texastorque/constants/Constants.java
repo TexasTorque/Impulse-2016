@@ -9,8 +9,11 @@ public class Constants {
 
 	// vision
 	public static final Constant V_CAMERA_FOV = new Constant("V_CAMERA_FOV", 67.0);
-	public static final Constant V_WIDTH = new Constant("V_CAMERA_W", 800.0);
-	public static final Constant V_HEIGHT = new Constant("V_CAMERA_H", 600.0);
+	public static final Constant V_CAMERA_WIDTH = new Constant("V_CAMERA_WIDTH", 800.0);
+	public static final Constant V_CAMERA_HEIGHT = new Constant("V_CAMERA_HEIGHT", 600.0);
+	
+	public static final Constant V_G = new Constant("V_G", 0.0);
+	public static final Constant V_H = new Constant("V_H", 0.0);
 
 	// drivebase
 	public static final Constant D_MAX_VELOCITY = new Constant("D_MAX_VELOCITY", 0.0);
@@ -42,7 +45,8 @@ public class Constants {
 	
 	public static final Constant S_TILT_MIN_VOLTAGE = new Constant("S_TILT_MIN_VOLTAGE", 0.0);
 	public static final Constant S_TILT_MAX_VOLTAGE = new Constant("S_TILT_MAX_VOLTAGE", 0.0);
+	public static final Constant S_TILT_MIN_ANGLE = new Constant("S_TILT_MIN_ANGLE", 0.0);
 	public static final Constant S_TILT_MAX_ANGLE = new Constant("S_TILT_MAX_ANGLE", 0.0);
-
-	public static final Constant S_FLYWHEEL_SETPOINT = new Constant("S_FLYWHEEL_SETPOINT", 0.0);
+	
+	public static final Constant S_FLYWHEEL_SETPOINT_VELOCITY = new Constant("S_FLYWHEEL_SETPOINT", 0.0);
 }

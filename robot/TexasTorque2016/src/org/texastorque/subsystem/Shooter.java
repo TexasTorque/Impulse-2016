@@ -11,8 +11,7 @@ public class Shooter extends Subsystem {
 
 	private static Shooter instance;
 
-	private double leftTiltSpeed;
-	private double rightTiltSpeed;
+	private double tiltSpeed;
 	private double flywheelSpeed;
 
 	// sensor
@@ -31,7 +30,7 @@ public class Shooter extends Subsystem {
 	@Override
 	public void init() {
 		flywheelControl = new BangBang();
-		flywheelControl.setSetpoint(Constants.S_FLYWHEEL_SETPOINT.getDouble());
+		flywheelControl.setSetpoint(Constants.S_FLYWHEEL_SETPOINT_VELOCITY.getDouble());
 
 		tiltPID = new TorquePID(Constants.S_TILT_P.getDouble(), Constants.S_TILT_I.getDouble(),
 				Constants.S_TILT_D.getDouble());
@@ -50,24 +49,22 @@ public class Shooter extends Subsystem {
 		} else {
 			flywheelSpeed = 0.0;
 		}
-		
-		leftTiltSpeed = input.getLeftTiltMotorSpeed();
-		rightTiltSpeed = input.getLeftTiltMotorSpeed();
-		
+
+		tiltSpeed = input.getTiltMotorSpeed();
+
 		output();
 	}
 
 	@Override
 	protected void output() {
-		output.setTiltSpeeds(leftTiltSpeed, rightTiltSpeed);
+		output.setTiltSpeeds(tiltSpeed);
 		output.setFlywheelSpeed(flywheelSpeed);
 	}
 
 	@Override
 	public void pushToDashboard() {
 		SmartDashboard.putNumber("FlywheelMotorSpeed", flywheelSpeed);
-		SmartDashboard.putNumber("LeftTiltMotorSpeed", leftTiltSpeed);
-		SmartDashboard.putNumber("RightTiltMotorSpeed", rightTiltSpeed);
+		SmartDashboard.putNumber("RightTiltMotorSpeed", tiltSpeed);
 
 		SmartDashboard.putNumber("TiltAngle", tiltAngle);
 		SmartDashboard.putNumber("FlywheelVelocity", flywheelVelocity);

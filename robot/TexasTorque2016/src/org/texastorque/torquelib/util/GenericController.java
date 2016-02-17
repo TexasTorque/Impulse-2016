@@ -111,14 +111,6 @@ public final class GenericController extends Joystick {
 		return scaleInput(getRawAxis(controllerMap[3]));
 	}
 	
-	public synchronized boolean getDPADUp() {
-		return getRawAxis(controllerMap[4]) > 0.05;
-	}
-	
-	public synchronized boolean getDPADDown() {
-		return getRawAxis(controllerMap[4]) < -0.05;
-	}
-
 	public synchronized boolean getLeftStickClick() {
 		return getRawButton(controllerMap[6]);
 	}

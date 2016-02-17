@@ -20,17 +20,22 @@ public class HumanInput extends Input {
 		leftDriveSpeed = -driver.getLeftYAxis() + driver.getRightXAxis();
 		rightDriveSpeed = -driver.getLeftYAxis() - driver.getRightXAxis();
 
-		driveBoost = driver.getXButton();
-
 		// operator
 		if (driver.getLeftCenterButton()) {
 			override = true;
 		} else if (driver.getRightCenterButton()) {
 			override = false;
 		}
-		intaking = operator.getDPADDown();
-		outtaking = operator.getDPADUp();
+		intaking = operator.getRightBumper();
+		outtaking = operator.getRightTrigger();
+		
+		conveyorIntaking = operator.getLeftBumper();
+		conveyorOuttaking = operator.getLeftTrigger();
+		
 		visionLock = operator.getXButton();
+		flywheelActive = operator.getAButton();
+		
+		tiltMotorSpeed = operator.getLeftYAxis();
 	}
 
 	// singleton

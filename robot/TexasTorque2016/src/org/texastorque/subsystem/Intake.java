@@ -15,9 +15,9 @@ public class Intake extends Subsystem {
 	@Override
 	public void run() {
 		if (input.isIntaking()) {
-			intakeSpeed = -1.0;
-		} else if (input.isOuttaking()) {
 			intakeSpeed = 1.0;
+		} else if (input.isOuttaking()) {
+			intakeSpeed = -1.0;
 		} else {
 			intakeSpeed = 0.0;
 		}

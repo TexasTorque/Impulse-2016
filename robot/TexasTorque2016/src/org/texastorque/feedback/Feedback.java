@@ -7,13 +7,18 @@ import org.texastorque.torquelib.component.TorquePotentiometer;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Feedback {
 
 	private static Feedback instance;
 
-	private static final double DRIVEBASE_CONVERSION = 8 * Math.PI;// converts to inches
-	private static final double TILT_CONVERSION = 1.05 / 9.875;// converts to degrees (shooter tilt)
+	private static final double DRIVEBASE_CONVERSION = 8 * Math.PI;// converts
+																	// to inches
+	private static final double TILT_CONVERSION = 1.05 / 9.875;// converts to
+																// degrees
+																// (shooter
+																// tilt)
 
 	// sensors
 	private VisionFeedback vision;
@@ -77,6 +82,8 @@ public class Feedback {
 		angularVelocity = gyro.getRate();
 
 		flywheelVelocity = flywheelEncoder.getRate();
+
+		SmartDashboard.putNumber("POTVALUE", tiltPot.getRaw());
 
 		tiltAngle = tiltPot.getPosition() * TILT_CONVERSION;
 

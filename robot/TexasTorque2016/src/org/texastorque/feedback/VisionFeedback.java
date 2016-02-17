@@ -9,13 +9,16 @@ import edu.wpi.first.wpilibj.tables.ITable;
 public class VisionFeedback {
 
 	private static VisionFeedback instance;
-	private static double WIDTH = Constants.V_WIDTH.getDouble() / 2.0;
-	private static double HEIGHT = Constants.V_HEIGHT.getDouble() / 2.0;
+	private static double WIDTH = Constants.V_CAMERA_WIDTH.getDouble() / 2.0;
+	private static double HEIGHT = Constants.V_CAMERA_HEIGHT.getDouble() / 2.0;
 	private static double FOV = Constants.V_CAMERA_FOV.getDouble() / 2.0;
+
+	private static double G = Constants.V_G.getDouble();
+	private static double H = Constants.V_H.getDouble();
+	private static double V = Constants.S_FLYWHEEL_SETPOINT_VELOCITY.getDouble();
 
 	private ITable visionTable;
 	private double goalCenterX;
-	private double goalCenterY;
 	private double turn;
 	private double tilt;
 
@@ -27,24 +30,46 @@ public class VisionFeedback {
 	}
 
 	public void calc() {
+		// calc turn
 		double[] _goalCenterX = visionTable.getNumberArray("centerX", new double[] { -1.0 });
-		double[] _goalCenterY = visionTable.getNumberArray("centerY", new double[] { -1.0 });
-		if (_goalCenterX[0] == -1.0 || _goalCenterY[0] == -1.0) {
+		if (_goalCenterX[0] == -1.0) {
 			goalCenterX = visionTable.getNumber("centerX", -1.0);
-			goalCenterY = visionTable.getNumber("centerY", -1.0);
 		} else {
 			goalCenterX = TorqueMathUtil.arrayClosest(_goalCenterX, WIDTH);
-			goalCenterY = TorqueMathUtil.arrayClosest(_goalCenterY, HEIGHT);
 		}
-		
-		if (goalCenterX == -1.0 || goalCenterY == -1.0) {
+
+		if (goalCenterX == -1.0) {
 			visionState = 3;
 		} else {
 			visionState = 1;
 		}
 
 		turn = ((goalCenterX / WIDTH) - 1) * FOV;
-		tilt = ((goalCenterY / HEIGHT) - 1) * FOV;
+
+		// calc tilt
+		double _tilt0 = 0.0;
+		double _tilt1 = 0.0;
+		try {
+			_tilt0 = Math.toDegrees(
+					Math.atan((V * V + Math.sqrt(Math.pow(V, 4) - G * (G * 0.0 * 0.0 + 2 * H * V * V))) / (G * 0.0)));
+
+		} catch (Exception e) {
+			_tilt0 = 0.0;
+		}
+		try {
+			_tilt1 = Math.toDegrees(
+					Math.atan((V * V - Math.sqrt(Math.pow(V, 4) - G * (G * 0.0 * 0.0 + 2 * H * V * V))) / (G * 0.0)));
+		} catch (Exception e) {
+			_tilt1 = 0.0;
+		}
+		if (_tilt0 == 0.0 && _tilt1 == 0.0) {
+			visionState = 3;
+			tilt = 0.0;
+		} else if (_tilt0 == 0.0) {
+			tilt = _tilt1;
+		} else if (_tilt1 == 0.0) {
+			tilt = _tilt0;
+		}
 	}
 
 	public double getTurn() {
@@ -54,16 +79,16 @@ public class VisionFeedback {
 	public double getTilt() {
 		return tilt;
 	}
-	
+
 	public int getVisionState() {
 		return visionState;
 	}
-	
+
 	// singleton
 	public static VisionFeedback getInstance() {
 		return instance == null ? instance = new VisionFeedback() : instance;
 	}
-	
+
 	public static void setState(int state) {
 		getInstance().visionState = state;
 	}
