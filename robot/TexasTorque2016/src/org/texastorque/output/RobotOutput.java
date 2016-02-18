@@ -43,7 +43,7 @@ public class RobotOutput {
 		conveyorMotor = new TorqueMotor(new VictorSP(Ports.CONVEYOR), false);
 
 		tiltMotor = new TorqueMotor(new VictorSP(Ports.TILT), true);
-		flywheelMotor = new TorqueMotor(new VictorSP(Ports.FLYWHEEL), false);
+		flywheelMotor = new TorqueMotor(new VictorSP(Ports.FLYWHEEL), true);
 	}
 
 	public void setDriveSpeeds(double left, double right) {

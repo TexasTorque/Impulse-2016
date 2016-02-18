@@ -3,6 +3,7 @@ package org.texastorque.feedback;
 import org.texastorque.constants.Constants;
 import org.texastorque.constants.Ports;
 import org.texastorque.torquelib.component.TorqueEncoder;
+import org.texastorque.torquelib.component.TorqueGyro;
 import org.texastorque.torquelib.component.TorquePotentiometer;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
@@ -82,7 +83,7 @@ public class Feedback {
 		angularVelocity = gyro.getRate();
 
 		flywheelVelocity = flywheelEncoder.getRate();
-
+		
 		SmartDashboard.putNumber("POTVALUE", tiltPot.getRaw());
 
 		tiltAngle = tiltPot.getPosition() * TILT_CONVERSION;

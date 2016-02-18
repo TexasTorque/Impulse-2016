@@ -80,7 +80,7 @@ public class Drivebase extends Subsystem {
 		feedback.resetGyro();
 		turnSetpoint = 0.0;
 		turnPreviousSetpoint = 0.0;
-
+		
 		angularPV.setGains(Constants.D_TURN_PV_P.getDouble(), Constants.D_TURN_PV_V.getDouble(),
 				Constants.D_TURN_PV_ffV.getDouble(), Constants.D_TURN_PV_ffA.getDouble());
 		angularPV.setTunedVoltage(Constants.TUNED_VOLTAGE.getDouble());
@@ -106,7 +106,7 @@ public class Drivebase extends Subsystem {
 		if (input.isOverride() || !driverStation.isAutonomous()) {// normal
 			leftSpeed = input.getLeftDriveSpeed();
 			rightSpeed = input.getRightDriveSpeed();
-		} else if (input.getDriveSetpoint() != 0.0) {// linear
+		} else if (input.getDriveSetpoint() != 0.0 && driverStation.isAutonomous()) {// linear
 			setpoint = input.getDriveSetpoint();
 			if (setpoint != previousSetpoint) {
 				previousSetpoint = setpoint;

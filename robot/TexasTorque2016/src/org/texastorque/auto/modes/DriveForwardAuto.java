@@ -8,5 +8,4 @@ public class DriveForwardAuto extends AutoMode {
 	protected void run() {
 		driveSetpoint = Constants.DRIVE_FORWARD_AUTO_DISTANCE.getDouble();
 	}
-
 }
