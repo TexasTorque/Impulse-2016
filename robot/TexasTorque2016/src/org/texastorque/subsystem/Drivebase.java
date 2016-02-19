@@ -27,7 +27,7 @@ public class Drivebase extends Subsystem {
 
 	private double angle;
 	private double angularVelocity;
-
+	
 	// generic profile variables
 	private double prevTime;
 
@@ -102,11 +102,8 @@ public class Drivebase extends Subsystem {
 
 		angle = feedback.getAngle();
 		angularVelocity = feedback.getAngularVelocity();
-
-		if (input.isOverride() || !driverStation.isAutonomous()) {// normal
-			leftSpeed = input.getLeftDriveSpeed();
-			rightSpeed = input.getRightDriveSpeed();
-		} else if (input.getDriveSetpoint() != 0.0 && driverStation.isAutonomous()) {// linear
+		
+		if (input.getDriveSetpoint() != 0.0) {
 			setpoint = input.getDriveSetpoint();
 			if (setpoint != previousSetpoint) {
 				previousSetpoint = setpoint;
@@ -124,13 +121,13 @@ public class Drivebase extends Subsystem {
 
 			leftSpeed = leftPV.calculate(profile, leftPosition, leftVelocity);
 			rightSpeed = rightPV.calculate(profile, rightPosition, rightVelocity);
-		} else if (input.getTurnSetpoint() != 0.0) {// turn
+		} else if (input.getTurnSetpoint() != 0.0) {
 			if (input.isVisionLock()) {
 				turnSetpoint = feedback.getRequiredTurn();
 			} else {
 				turnSetpoint = input.getTurnSetpoint();
 			}
-			if (turnSetpoint != input.getTurnSetpoint()) {
+			if (turnSetpoint != turnPreviousSetpoint) {
 				turnPreviousSetpoint = turnSetpoint;
 				feedback.resetGyro();
 				angularProfile.generateTrapezoid(turnSetpoint, 0.0, 0.0);
@@ -144,9 +141,13 @@ public class Drivebase extends Subsystem {
 			targetAngularVelocity = profile.getCurrentVelocity();
 
 			leftSpeed = angularPV.calculate(angularProfile, angle, angularVelocity);
-			leftSpeed = -rightSpeed;
+			rightSpeed = -leftSpeed;
+		} else {
+			leftSpeed = input.getLeftDriveSpeed();
+			rightSpeed = input.getRightDriveSpeed();
 		}
-
+		
+			
 		output();
 	}
 
@@ -184,7 +185,7 @@ public class Drivebase extends Subsystem {
 		// setpoints
 		SmartDashboard.putBoolean("VisionLock", input.isVisionLock());
 		SmartDashboard.putNumber("DriveSetpoint", setpoint);
-		SmartDashboard.putNumber("TurnSetpoint", turnPreviousSetpoint);
+		SmartDashboard.putNumber("TurnSetpoint", turnSetpoint);
 
 		// output
 		SmartDashboard.putNumber("DrivebaseLeftSpeed", leftSpeed);

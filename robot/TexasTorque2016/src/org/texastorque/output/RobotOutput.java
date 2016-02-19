@@ -36,7 +36,7 @@ public class RobotOutput {
 
 		rightTopDrive = new TorqueMotor(new VictorSP(Ports.DRIVE_RIGHT_TOP), true);
 		rightBottomDrive = new TorqueMotor(new VictorSP(Ports.DRIVE_RIGHT_BOTTOM), true);
-		rightBoostDrive = new TorqueMotor(new VictorSP(Ports.DRIVE_RIGHT_BOOST), false);
+		rightBoostDrive = new TorqueMotor(new VictorSP(Ports.DRIVE_RIGHT_BOOST), true);
 
 		intakeMotor = new TorqueMotor(new VictorSP(Ports.INTAKE), false);
 

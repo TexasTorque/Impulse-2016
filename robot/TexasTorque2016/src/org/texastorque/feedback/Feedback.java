@@ -3,7 +3,6 @@ package org.texastorque.feedback;
 import org.texastorque.constants.Constants;
 import org.texastorque.constants.Ports;
 import org.texastorque.torquelib.component.TorqueEncoder;
-import org.texastorque.torquelib.component.TorqueGyro;
 import org.texastorque.torquelib.component.TorquePotentiometer;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
@@ -14,8 +13,8 @@ public class Feedback {
 
 	private static Feedback instance;
 
-	private static final double DRIVEBASE_CONVERSION = 8 * Math.PI;// converts
-																	// to inches
+	private static final double DRIVEBASE_CONVERSION = 1.0 / (3.75 * Math.PI);// converts
+	// to inches
 	private static final double TILT_CONVERSION = 1.05 / 9.875;// converts to
 																// degrees
 																// (shooter
@@ -53,7 +52,7 @@ public class Feedback {
 		vision = VisionFeedback.getInstance();
 		gyro = new ADXRS450_Gyro();
 
-		leftDriveEncoder = new TorqueEncoder(Ports.DRIVE_LEFT_ENCODER_A, Ports.DRIVE_LEFT_ENCODER_B, false,
+		leftDriveEncoder = new TorqueEncoder(Ports.DRIVE_LEFT_ENCODER_A, Ports.DRIVE_LEFT_ENCODER_B, true,
 				EncodingType.k4X);
 		rightDriveEncoder = new TorqueEncoder(Ports.DRIVE_RIGHT_ENCODER_A, Ports.DRIVE_RIGHT_ENCODER_B, false,
 				EncodingType.k4X);
@@ -83,7 +82,7 @@ public class Feedback {
 		angularVelocity = gyro.getRate();
 
 		flywheelVelocity = flywheelEncoder.getRate();
-		
+
 		SmartDashboard.putNumber("POTVALUE", tiltPot.getRaw());
 
 		tiltAngle = tiltPot.getPosition() * TILT_CONVERSION;

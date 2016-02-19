@@ -38,6 +38,8 @@ public class Robot extends TorqueIterative {
 
 		autoManager = AutoManager.getInstance();
 		feedback = Feedback.getInstance();
+		
+		autoManager.reset();
 	}
 
 	// auto
@@ -45,9 +47,8 @@ public class Robot extends TorqueIterative {
 	public void autonomousInit() {
 		Parameters.load();
 		numCycles = 0;
-		autoManager.init();
+		
 		subsystems.forEach((subsystem) -> subsystem.init());
-
 		input = autoManager.createAutoMode();
 		subsystems.forEach((subsystem) -> subsystem.setInput(input));
 		autoManager.runAutoMode();
@@ -64,7 +65,7 @@ public class Robot extends TorqueIterative {
 	public void autonomousPeriodic() {
 		updateDashboard();
 	}
-
+	
 	// teleop
 	@Override
 	public void teleopInit() {
@@ -92,6 +93,7 @@ public class Robot extends TorqueIterative {
 	@Override
 	public void disabledInit() {
 		numCycles = 0;
+		autoManager.reset();
 	}
 
 	// private

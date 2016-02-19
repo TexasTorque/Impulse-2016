@@ -25,7 +25,7 @@ public abstract class Input {
 	protected boolean flywheelActive;
 
 	protected double tiltMotorSpeed = 0.0;
-
+	
 	public abstract void update();
 
 	public double getLeftDriveSpeed() {
