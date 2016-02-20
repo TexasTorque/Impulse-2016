@@ -1,6 +1,7 @@
 package org.texastorque.input;
 
 import org.texastorque.torquelib.util.GenericController;
+import org.texastorque.torquelib.util.TorqueToggle;
 
 public class HumanInput extends Input {
 
@@ -9,6 +10,8 @@ public class HumanInput extends Input {
 	// controllers
 	private GenericController driver;
 	private GenericController operator;
+	
+	private TorqueToggle brakes;	
 
 	private HumanInput() {
 		driver = new GenericController(0, .1);
@@ -26,6 +29,10 @@ public class HumanInput extends Input {
 		} else if (driver.getRightCenterButton()) {
 			override = false;
 		}
+		
+		brakes.calc(driver.getAButton());
+		brakeing = brakes.get();
+		
 		intaking = operator.getRightBumper();
 		outtaking = operator.getRightTrigger();
 		

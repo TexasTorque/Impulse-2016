@@ -3,6 +3,7 @@ package org.texastorque.output;
 import org.texastorque.constants.Ports;
 import org.texastorque.torquelib.component.TorqueMotor;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.VictorSP;
 
 public class RobotOutput {
@@ -18,6 +19,9 @@ public class RobotOutput {
 	private TorqueMotor rightTopDrive;
 	private TorqueMotor rightBottomDrive;
 	private TorqueMotor rightBoostDrive;
+
+	// brakeing
+	private DoubleSolenoid brakes;
 
 	// intake
 	private TorqueMotor intakeMotor;
@@ -44,6 +48,8 @@ public class RobotOutput {
 
 		tiltMotor = new TorqueMotor(new VictorSP(Ports.TILT), true);
 		flywheelMotor = new TorqueMotor(new VictorSP(Ports.FLYWHEEL), true);
+
+		brakes = new DoubleSolenoid(Ports.BRAKES_SOLENOID_PORT_A, Ports.BRAKES_SOLENOID_PORT_A);
 	}
 
 	public void setDriveSpeeds(double left, double right) {
@@ -93,6 +99,14 @@ public class RobotOutput {
 			flywheelMotor.set(speed);
 		} else {
 			flywheelMotor.set(0.0);
+		}
+	}
+
+	public void setBrakes(boolean activate) {
+		if (OUTPUT_ENABLED) {
+			brakes.set((activate) ? DoubleSolenoid.Value.kForward : DoubleSolenoid.Value.kReverse);
+		} else {
+			brakes.set(DoubleSolenoid.Value.kReverse);
 		}
 	}
 

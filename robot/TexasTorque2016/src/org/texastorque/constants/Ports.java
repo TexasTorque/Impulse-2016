@@ -10,7 +10,11 @@ public class Ports {
 	public static final int DRIVE_RIGHT_TOP = 11;
 	public static final int DRIVE_RIGHT_BOTTOM = 2;
 	public static final int DRIVE_RIGHT_BOOST = 10;
-
+	
+	// brakeing
+	public static final int BRAKES_SOLENOID_PORT_A = 0;
+	public static final int BRAKES_SOLENOID_PORT_B = 0;
+	
 	// shooter
 	public static final int TILT = 8;
 	public static final int FLYWHEEL = 4;
