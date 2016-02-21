@@ -12,8 +12,8 @@ public class Ports {
 	public static final int DRIVE_RIGHT_BOOST = 10;
 	
 	// brakeing
-	public static final int BRAKES_SOLENOID_PORT_A = 0;
-	public static final int BRAKES_SOLENOID_PORT_B = 0;
+	public static final int BRAKES_SOLENOID_PORT_A = 5;//3
+	public static final int BRAKES_SOLENOID_PORT_B = 2;//4
 	
 	// shooter
 	public static final int TILT = 8;
@@ -22,7 +22,7 @@ public class Ports {
 	// intake
 	public static final int INTAKE = 3;
 	
-	// conveyor
+	// conveyor`
 	public static final int CONVEYOR = 9;
 	
 	// sensors

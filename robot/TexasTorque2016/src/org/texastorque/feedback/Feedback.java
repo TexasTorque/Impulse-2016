@@ -57,12 +57,14 @@ public class Feedback {
 		rightDriveEncoder = new TorqueEncoder(Ports.DRIVE_RIGHT_ENCODER_A, Ports.DRIVE_RIGHT_ENCODER_B, false,
 				EncodingType.k4X);
 
-		flywheelEncoder = new TorqueEncoder(Ports.FLYWHEEL_ENCODER_A, Ports.FLYWHEEL_ENCODER_B, false,
+		flywheelEncoder = new TorqueEncoder(Ports.FLYWHEEL_ENCODER_A, Ports.FLYWHEEL_ENCODER_B, true,
 				EncodingType.k4X);
 
 		tiltPot = new TorquePotentiometer(Ports.TILT_POT_PORT);
-		tiltPot.setInputRange(Constants.S_TILT_MIN_VOLTAGE.getDouble(), Constants.S_TILT_MAX_VOLTAGE.getDouble());
-		tiltPot.setPositionRange(0, Constants.S_TILT_MAX_ANGLE.getDouble());
+//		tiltPot.setInputRange(Constants.S_TILT_MIN_VOLTAGE.getDouble(), Constants.S_TILT_MAX_VOLTAGE.getDouble());
+//		tiltPot.setPositionRange(Constants.S_TILT_MIN_ANGLE.getDouble(), Constants.S_TILT_MAX_ANGLE.getDouble());
+		tiltPot.setInputRange(2035, 1746);
+		tiltPot.setPositionRange(0, 31);
 	}
 
 	public void update() {
@@ -85,8 +87,8 @@ public class Feedback {
 
 		SmartDashboard.putNumber("POTVALUE", tiltPot.getRaw());
 
-		tiltAngle = tiltPot.getPosition() * TILT_CONVERSION;
-
+		tiltAngle = tiltPot.getPosition();
+		
 		vision.calc();
 	}
 
