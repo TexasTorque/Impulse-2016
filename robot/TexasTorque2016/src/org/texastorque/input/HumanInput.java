@@ -1,5 +1,6 @@
 package org.texastorque.input;
 
+import org.texastorque.feedback.Feedback;
 import org.texastorque.torquelib.util.GenericController;
 import org.texastorque.torquelib.util.TorqueToggle;
 
@@ -10,12 +11,14 @@ public class HumanInput extends Input {
 	// controllers
 	private GenericController driver;
 	private GenericController operator;
-	
-	private TorqueToggle brakes;	
+
+	private TorqueToggle brakes;
 
 	private HumanInput() {
 		driver = new GenericController(0, .1);
 		operator = new GenericController(1, .1);
+
+		brakes = new TorqueToggle();
 	}
 
 	public void update() {
@@ -29,20 +32,29 @@ public class HumanInput extends Input {
 		} else if (driver.getRightCenterButton()) {
 			override = false;
 		}
-		
+
 		brakes.calc(driver.getAButton());
 		brakeing = brakes.get();
-		
+
 		intaking = operator.getRightBumper();
 		outtaking = operator.getRightTrigger();
-		
+
 		conveyorIntaking = operator.getLeftBumper();
 		conveyorOuttaking = operator.getLeftTrigger();
-		
-		visionLock = operator.getXButton();
-		flywheelActive = operator.getAButton();
-		
-		tiltMotorSpeed = operator.getLeftYAxis();
+
+//		visionLock = operator.getXButton();
+//		flywheelActive = operator.getAButton();
+		if (operator.getAButton()) {
+			flywheelActive = true;
+			if (Feedback.getInstance().getFlywheelVelocity() > 17000) {
+				conveyorIntaking = true;
+				intaking = true;
+			}
+		} else {
+			flywheelActive = false;
+		}
+
+		tiltMotorSpeed = -operator.getLeftYAxis();
 	}
 
 	// singleton

@@ -27,6 +27,8 @@ public class Shooter extends Subsystem {
 	// tilt profiling
 	private TorquePID tiltPID;
 
+	private double tiltSetpoint;
+
 	@Override
 	public void init() {
 		flywheelControl = new BangBang();
@@ -35,6 +37,8 @@ public class Shooter extends Subsystem {
 		tiltPID = new TorquePID(Constants.S_TILT_P.getDouble(), Constants.S_TILT_I.getDouble(),
 				Constants.S_TILT_D.getDouble());
 		tiltPID.setTunedVoltage(Constants.TUNED_VOLTAGE.getDouble());
+		tiltPID.setMaxOutput(1.0);
+		tiltPID.reset();
 
 		prevTime = Timer.getFPGATimestamp();
 	}
@@ -44,13 +48,20 @@ public class Shooter extends Subsystem {
 		tiltAngle = feedback.getTiltAngle();
 		flywheelVelocity = feedback.getFlywheelVelocity();
 
+		if (input.getTiltSetpoint() != 0.0 && !input.isOverride()) {
+			tiltSetpoint = input.getTiltSetpoint();
+			tiltPID.setSetpoint(tiltSetpoint);
+
+			tiltSpeed = -tiltPID.calculate(tiltAngle);
+		} else {
+			tiltSpeed = input.getTiltMotorSpeed();
+		}
+
 		if (input.isFlywheelActive()) {
 			flywheelSpeed = flywheelControl.calculate(flywheelVelocity);
 		} else {
 			flywheelSpeed = 0.0;
 		}
-
-		tiltSpeed = input.getTiltMotorSpeed();
 
 		output();
 	}
@@ -64,10 +75,12 @@ public class Shooter extends Subsystem {
 	@Override
 	public void pushToDashboard() {
 		SmartDashboard.putNumber("FlywheelMotorSpeed", flywheelSpeed);
-		SmartDashboard.putNumber("RightTiltMotorSpeed", tiltSpeed);
+		SmartDashboard.putNumber("TiltSpeed", tiltSpeed);
 
 		SmartDashboard.putNumber("TiltAngle", tiltAngle);
 		SmartDashboard.putNumber("FlywheelVelocity", flywheelVelocity);
+
+		SmartDashboard.putNumber("TiltSetpoint", tiltSetpoint);
 	}
 
 	// singleton

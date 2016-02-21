@@ -1,8 +1,6 @@
 package org.texastorque.auto;
 
-import org.texastorque.auto.modes.DoNothingAuto;
-import org.texastorque.auto.modes.DriveForwardAuto;
-import org.texastorque.auto.modes.TurnAuto;
+import org.texastorque.auto.modes.*;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -13,6 +11,7 @@ public class AutoManager {
 	private final int DO_NOTHING_AUTO = 0;
 	private final int DRIVE_FORWARD_AUTO = 1;
 	private final int TURN_AUTO = 2;
+	private final int TILT_AUTO = 3;
 
 	private AutoMode currentMode;
 
@@ -38,6 +37,9 @@ public class AutoManager {
 		case TURN_AUTO:
 			SmartDashboard.putString("RunningAutoMode", "TurnAuto");
 			return currentMode = new TurnAuto();
+		case TILT_AUTO:
+			SmartDashboard.putString("RunningAutoMode", "TiltAuto");
+			return currentMode = new TiltAuto();
 		}
 	}
 

@@ -8,6 +8,7 @@ public abstract class Input {
 
 	protected double driveSetpoint = 0.0;
 	protected double turnSetpoint = 0.0;
+	protected double tiltSetpoint = 0.0;
 	
 	// brakeing
 	protected boolean brakeing = false;
@@ -47,6 +48,10 @@ public abstract class Input {
 		return turnSetpoint;
 	}
 
+	public double getTiltSetpoint() {
+		return tiltSetpoint;
+	}
+	
 	public boolean isOverride() {
 		return override;
 	}
