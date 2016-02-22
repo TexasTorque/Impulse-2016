@@ -35,7 +35,7 @@ public class HumanInput extends Input {
 		}
 
 		brakes.calc(driver.getAButton());
-		brakeing = brakes.get();
+		braking = brakes.get();
 
 		intaking = operator.getRightBumper();
 		outtaking = operator.getRightTrigger();

@@ -101,9 +101,9 @@ public class RobotOutput {
 		}
 	}
 
-	public void setBrakes(boolean activate) {
+	public void setBrakes(boolean on) {
 		if (OUTPUT_ENABLED) {
-//			brakes.set((activate) ? DoubleSolenoid.Value.kForward : DoubleSolenoid.Value.kReverse);
+//			brakes.set(on ? DoubleSolenoid.Value.kForward : DoubleSolenoid.Value.kReverse);
 		} else {
 //			brakes.set(DoubleSolenoid.Value.kReverse);
 		}

@@ -6,7 +6,7 @@ public class Brakes extends Subsystem {
 
 	private static Brakes instance;
 
-	private boolean brakeing;
+	private boolean braking;
 
 	@Override
 	public void init() {
@@ -14,17 +14,17 @@ public class Brakes extends Subsystem {
 
 	@Override
 	public void run() {
-		brakeing = input.isBrakeing();
+		braking = input.isBraking();
 	}
 
 	@Override
 	protected void output() {
-		output.setBrakes(brakeing);
+		output.setBrakes(braking);
 	}
 
 	@Override
 	public void pushToDashboard() {
-		SmartDashboard.putBoolean("Brakeing", brakeing);
+		SmartDashboard.putBoolean("Braking", braking);
 	}
 
 	public static Brakes getInstance() {
