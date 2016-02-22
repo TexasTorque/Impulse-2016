@@ -6,6 +6,8 @@ import org.texastorque.torquelib.util.TorqueMathUtil;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.tables.ITable;
 
+import static java.lang.Math.*;
+
 public class VisionFeedback {
 
 	private static VisionFeedback instance;
@@ -16,9 +18,11 @@ public class VisionFeedback {
 	private static double G = Constants.V_G.getDouble();
 	private static double H = Constants.V_H.getDouble();
 	private static double V = Constants.S_FLYWHEEL_SETPOINT_VELOCITY.getDouble();
+	private static double Vsq = V * V;
 
 	private ITable visionTable;
 	private double goalCenterX;
+	private double goalCenterY;
 	private double turn;
 	private double tilt;
 
@@ -32,10 +36,13 @@ public class VisionFeedback {
 	public void calc() {
 		// calc turn
 		double[] _goalCenterX = visionTable.getNumberArray("centerX", new double[] { -1.0 });
-		if (_goalCenterX[0] == -1.0) {
+		double[] _goalCenterY = visionTable.getNumberArray("centerY", new double[] { -1.0 });
+		if (_goalCenterX[0] == -1.0 || _goalCenterY[0] == -1.0) {
 			goalCenterX = visionTable.getNumber("centerX", -1.0);
+			goalCenterY = visionTable.getNumber("centerY", -1.0);
 		} else {
 			goalCenterX = TorqueMathUtil.arrayClosest(_goalCenterX, WIDTH);
+			goalCenterY = TorqueMathUtil.arrayClosest(_goalCenterY, HEIGHT);
 		}
 
 		if (goalCenterX == -1.0) {
@@ -47,17 +54,18 @@ public class VisionFeedback {
 		turn = ((goalCenterX / WIDTH) - 1) * FOV;
 
 		// calc tilt
+		double distance = HEIGHT / tan(FOV * goalCenterY / HEIGHT);
 		double _tilt0 = 0.0;
 		double _tilt1 = 0.0;
 		try {
-			_tilt0 = Math.toDegrees(
-					Math.atan((V * V + Math.sqrt(Math.pow(V, 4) - G * (G * 0.0 * 0.0 + 2 * H * V * V))) / (G * 0.0)));
+			_tilt0 = toDegrees(atan((Vsq + Math.sqrt(Math.pow(Vsq, 2) - G * (G * distance * distance + 2 * H * Vsq)))
+					/ (G * distance)));
 		} catch (Exception e) {
 			_tilt0 = 0.0;
 		}
 		try {
-			_tilt1 = Math.toDegrees(
-					Math.atan((V * V - Math.sqrt(Math.pow(V, 4) - G * (G * 0.0 * 0.0 + 2 * H * V * V))) / (G * 0.0)));
+			_tilt1 = toDegrees(atan((Vsq - Math.sqrt(Math.pow(Vsq, 2) - G * (G * distance * distance + 2 * H * Vsq)))
+					/ (G * distance)));
 		} catch (Exception e) {
 			_tilt1 = 0.0;
 		}
