@@ -52,6 +52,7 @@ public class Robot extends TorqueIterative {
 		
 		subsystems.forEach((subsystem) -> subsystem.init());
 		input = autoManager.createAutoMode();
+		feedback.setInput(input);
 		subsystems.forEach((subsystem) -> subsystem.setInput(input));
 		autoManager.runAutoMode();
 	}

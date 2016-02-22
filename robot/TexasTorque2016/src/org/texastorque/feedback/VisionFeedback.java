@@ -69,6 +69,10 @@ public class VisionFeedback {
 		} else if (_tilt1 == 0.0) {
 			tilt = _tilt0;
 		}
+
+		if (visionState != 3 && Feedback.getInstance().visionShotReady()) {
+			visionState = 2;// success
+		}
 	}
 
 	public double getTurn() {
