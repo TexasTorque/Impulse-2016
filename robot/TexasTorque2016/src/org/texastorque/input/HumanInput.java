@@ -43,6 +43,7 @@ public class HumanInput extends Input {
 		conveyorIntaking = operator.getLeftBumper();
 		conveyorOuttaking = operator.getLeftTrigger();
 
+		visionLock = operator.getXButton();
 		if (operator.getAButton()) {
 			flywheelActive = true;
 			if (Feedback.getInstance().getFlywheelVelocity() > Constants.S_FLYWHEEL_SETPOINT_VELOCITY.getDouble() * .9) {
