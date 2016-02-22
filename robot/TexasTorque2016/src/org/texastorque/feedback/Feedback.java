@@ -12,12 +12,7 @@ public class Feedback {
 
 	private static Feedback instance;
 
-	private static final double DRIVEBASE_CONVERSION = 1.0 / (3.75 * Math.PI);// converts
-	// to inches
-	private static final double TILT_CONVERSION = 1.05 / 9.875;// converts to
-																// degrees
-																// (shooter
-																// tilt)
+	private static final double DRIVEBASE_CONVERSION = 1.0 / (3.75 * Math.PI);
 
 	// sensors
 	private VisionFeedback vision;
