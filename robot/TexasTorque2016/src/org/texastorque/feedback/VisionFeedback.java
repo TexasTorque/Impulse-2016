@@ -39,9 +39,9 @@ public class VisionFeedback {
 		}
 
 		if (goalCenterX == -1.0) {
-			visionState = 3;
+			visionState = 3;// failed - could not find goal
 		} else {
-			visionState = 1;
+			visionState = 1;// loading - waiting for setpoints to be met
 		}
 
 		turn = ((goalCenterX / WIDTH) - 1) * FOV;
@@ -52,7 +52,6 @@ public class VisionFeedback {
 		try {
 			_tilt0 = Math.toDegrees(
 					Math.atan((V * V + Math.sqrt(Math.pow(V, 4) - G * (G * 0.0 * 0.0 + 2 * H * V * V))) / (G * 0.0)));
-
 		} catch (Exception e) {
 			_tilt0 = 0.0;
 		}
@@ -63,7 +62,7 @@ public class VisionFeedback {
 			_tilt1 = 0.0;
 		}
 		if (_tilt0 == 0.0 && _tilt1 == 0.0) {
-			visionState = 3;
+			visionState = 3;// failed - could not fit a shooting angle
 			tilt = 0.0;
 		} else if (_tilt0 == 0.0) {
 			tilt = _tilt1;

@@ -1,6 +1,5 @@
 package org.texastorque.feedback;
 
-import org.texastorque.constants.Constants;
 import org.texastorque.constants.Ports;
 import org.texastorque.torquelib.component.TorqueEncoder;
 import org.texastorque.torquelib.component.TorquePotentiometer;

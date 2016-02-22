@@ -49,10 +49,14 @@ public class Shooter extends Subsystem {
 		flywheelVelocity = feedback.getFlywheelVelocity();
 
 		if (input.getTiltSetpoint() != 0.0 && !input.isOverride()) {
-			tiltSetpoint = input.getTiltSetpoint();
+			if (input.isVisionLock()) {
+				tiltSetpoint = feedback.getRequiredTilt();
+			} else {
+				tiltSetpoint = input.getTiltSetpoint();
+			}
 			tiltPID.setSetpoint(tiltSetpoint);
 
-			tiltSpeed = -tiltPID.calculate(tiltAngle);
+			tiltSpeed = tiltPID.calculate(tiltAngle);
 		} else {
 			tiltSpeed = input.getTiltMotorSpeed();
 		}
