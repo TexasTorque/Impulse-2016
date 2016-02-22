@@ -1,5 +1,6 @@
 package org.texastorque.input;
 
+import org.texastorque.constants.Constants;
 import org.texastorque.feedback.Feedback;
 import org.texastorque.torquelib.util.GenericController;
 import org.texastorque.torquelib.util.TorqueToggle;
@@ -42,11 +43,9 @@ public class HumanInput extends Input {
 		conveyorIntaking = operator.getLeftBumper();
 		conveyorOuttaking = operator.getLeftTrigger();
 
-//		visionLock = operator.getXButton();
-//		flywheelActive = operator.getAButton();
 		if (operator.getAButton()) {
 			flywheelActive = true;
-			if (Feedback.getInstance().getFlywheelVelocity() > 17000) {
+			if (Feedback.getInstance().getFlywheelVelocity() > Constants.S_FLYWHEEL_SETPOINT_VELOCITY.getDouble() * .9) {
 				conveyorIntaking = true;
 				intaking = true;
 			}
