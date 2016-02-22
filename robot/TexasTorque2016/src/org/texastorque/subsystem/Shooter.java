@@ -38,7 +38,6 @@ public class Shooter extends Subsystem {
 				Constants.S_TILT_D.getDouble());
 		tiltPID.setTunedVoltage(Constants.TUNED_VOLTAGE.getDouble());
 		tiltPID.setMaxOutput(1.0);
-		tiltPID.reset();
 
 		prevTime = Timer.getFPGATimestamp();
 	}
