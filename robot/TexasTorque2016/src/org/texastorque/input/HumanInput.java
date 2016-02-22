@@ -26,6 +26,9 @@ public class HumanInput extends Input {
 		// driver
 		leftDriveSpeed = -driver.getLeftYAxis() + driver.getRightXAxis();
 		rightDriveSpeed = -driver.getLeftYAxis() - driver.getRightXAxis();
+		
+		brakes.calc(driver.getAButton());
+		braking = brakes.get();
 
 		// operator
 		if (driver.getLeftCenterButton()) {
@@ -33,9 +36,6 @@ public class HumanInput extends Input {
 		} else if (driver.getRightCenterButton()) {
 			override = false;
 		}
-
-		brakes.calc(driver.getAButton());
-		braking = brakes.get();
 
 		intaking = operator.getRightBumper();
 		outtaking = operator.getRightTrigger();
