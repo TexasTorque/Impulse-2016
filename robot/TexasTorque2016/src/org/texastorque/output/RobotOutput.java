@@ -35,6 +35,9 @@ public class RobotOutput {
 	// shooter
 	private TorqueMotor tiltMotor;
 	private TorqueMotor flywheelMotor;
+	
+	// compression testing
+	private DoubleSolenoid compressionTesting;
 
 	public RobotOutput() {
 		compressor = new Compressor();
@@ -114,6 +117,10 @@ public class RobotOutput {
 		} else {
 			brakes.set(DoubleSolenoid.Value.kReverse);
 		}
+	}
+	
+	public void setCompressionTesting(boolean doCompressionTesting){
+		compressionTesting.set(doCompressionTesting ? DoubleSolenoid.Value.kForward : DoubleSolenoid.Value.kReverse);
 	}
 
 	// singleton

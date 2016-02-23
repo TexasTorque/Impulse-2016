@@ -29,7 +29,8 @@ public class Feedback {
 	private TorqueEncoder flywheelEncoder;
 
 	private TorquePotentiometer tiltPot;
-
+	private TorquePotentiometer compressionPot;
+	
 	// drivebase values
 	private double leftDrivePosition;
 	private double leftDriveVelocity;
@@ -47,6 +48,7 @@ public class Feedback {
 
 	private double tiltAngle;
 
+	
 	public Feedback() {
 		vision = VisionFeedback.getInstance();
 		gyro = new ADXRS450_Gyro();
@@ -65,6 +67,8 @@ public class Feedback {
 		// Constants.S_TILT_MAX_ANGLE.getDouble());
 		tiltPot.setInputRange(1994, 1781);
 		tiltPot.setPositionRange(-5, 18);
+		
+		compressionPot = new TorquePotentiometer(Ports.COMPRESSION_TESTING);
 	}
 
 	public void setInput(Input _input) {
@@ -151,6 +155,10 @@ public class Feedback {
 	public double getTiltAngle() {
 		return tiltAngle;
 	}
+	
+	public double getCompressionValue() {
+		return compressionPot.get();
+	}
 
 	public double getRequiredTurn() {
 		if (input != null && input.isVisionLock()) {
@@ -196,7 +204,7 @@ public class Feedback {
 			return false;
 		}
 	}
-
+	
 	// singleton
 	public static Feedback getInstance() {
 		return instance == null ? instance = new Feedback() : instance;
