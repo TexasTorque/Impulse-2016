@@ -9,7 +9,7 @@ public abstract class Input {
 	protected double driveSetpoint = 0.0;
 	protected double turnSetpoint = 0.0;
 	protected double tiltSetpoint = 0.0;
-	
+
 	// brakeing
 	protected boolean braking = false;
 
@@ -20,16 +20,18 @@ public abstract class Input {
 	// intake variables
 	protected boolean intaking = false;
 	protected boolean outtaking = false;
-	
+
 	// conveyor variables
 	protected boolean conveyorIntaking = false;
 	protected boolean conveyorOuttaking = false;
 
 	// shooter variable
-	protected boolean flywheelActive;
+	protected boolean flywheelActive = false;;
+	protected boolean layupShot = false;
+	protected boolean longShot = false;
 
 	protected double tiltMotorSpeed = 0.0;
-	
+
 	public abstract void update();
 
 	public double getLeftDriveSpeed() {
@@ -51,7 +53,15 @@ public abstract class Input {
 	public double getTiltSetpoint() {
 		return tiltSetpoint;
 	}
-	
+
+	public boolean isLayupShot() {
+		return layupShot;
+	}
+
+	public boolean isLongShot() {
+		return longShot;
+	}
+
 	public boolean isOverride() {
 		return override;
 	}
@@ -63,23 +73,23 @@ public abstract class Input {
 	public double getTiltMotorSpeed() {
 		return tiltMotorSpeed;
 	}
-	
+
 	public boolean isBraking() {
 		return braking;
 	}
-	
+
 	public boolean isIntaking() {
 		return intaking;
 	}
-	
+
 	public boolean isOuttaking() {
 		return outtaking;
 	}
-	
+
 	public boolean isConveyorIntaking() {
 		return conveyorIntaking;
 	}
-	
+
 	public boolean isConveyorOuttaking() {
 		return conveyorOuttaking;
 	}

@@ -103,7 +103,7 @@ public class Drivebase extends Subsystem {
 		angle = feedback.getAngle();
 		angularVelocity = feedback.getAngularVelocity();
 		
-		if (input.getDriveSetpoint() != 0.0) {
+		if (input.getDriveSetpoint() != 0.0 && !input.isOverride()) {
 			setpoint = input.getDriveSetpoint();
 			if (setpoint != previousSetpoint) {
 				previousSetpoint = setpoint;
@@ -121,7 +121,7 @@ public class Drivebase extends Subsystem {
 
 			leftSpeed = leftPV.calculate(profile, leftPosition, leftVelocity);
 			rightSpeed = rightPV.calculate(profile, rightPosition, rightVelocity);
-		} else if (input.getTurnSetpoint() != 0.0) {
+		} else if (input.getTurnSetpoint() != 0.0 && !input.isOverride()) {
 			if (input.isVisionLock()) {
 				turnSetpoint = feedback.getRequiredTurn();
 			} else {
@@ -155,6 +155,11 @@ public class Drivebase extends Subsystem {
 	protected void output() {
 		leftSpeed = TorqueMathUtil.constrain(leftSpeed, 1.0);
 		rightSpeed = TorqueMathUtil.constrain(rightSpeed, 1.0);
+		
+		if (input.isBraking()) {
+			leftSpeed = 0.0;
+			rightSpeed = 0.0;
+		}
 
 		output.setDriveSpeeds(leftSpeed, rightSpeed);
 	}

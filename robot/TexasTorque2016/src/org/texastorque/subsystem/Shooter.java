@@ -4,7 +4,6 @@ import org.texastorque.constants.Constants;
 import org.texastorque.torquelib.controlLoop.BangBang;
 import org.texastorque.torquelib.controlLoop.TorquePID;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Shooter extends Subsystem {
@@ -17,9 +16,6 @@ public class Shooter extends Subsystem {
 	// sensor
 	private double tiltAngle;
 	private double flywheelVelocity;
-
-	// generic profile variables
-	private double prevTime;
 
 	// flywheel profiling
 	private BangBang flywheelControl;
@@ -38,8 +34,6 @@ public class Shooter extends Subsystem {
 				Constants.S_TILT_D.getDouble());
 		tiltPID.setTunedVoltage(Constants.TUNED_VOLTAGE.getDouble());
 		tiltPID.setMaxOutput(1.0);
-
-		prevTime = Timer.getFPGATimestamp();
 	}
 
 	@Override
@@ -47,20 +41,25 @@ public class Shooter extends Subsystem {
 		tiltAngle = feedback.getTiltAngle();
 		flywheelVelocity = feedback.getFlywheelVelocity();
 
-		if (input.getTiltSetpoint() != 0.0 && !input.isOverride()) {
-			if (input.isVisionLock()) {
-				tiltSetpoint = feedback.getRequiredTilt();
-			} else {
-				tiltSetpoint = input.getTiltSetpoint();
+		if (!input.isOverride()) {
+			if (input.isLayupShot() ) {
+				tiltPID.setSetpoint(Constants.S_LAYUP_ANGLE_SETPOINT.getDouble());
+			} else if (input.isLongShot() && !input.isOverride()) {
+				tiltPID.setSetpoint(Constants.S_LONG_SHOT_ANGLE_SETPOINT.getDouble());
+			} else if (input.getTiltSetpoint() != 0.0) {
+				if (input.isVisionLock()) {
+					tiltSetpoint = feedback.getRequiredTilt();
+				} else {
+					tiltSetpoint = input.getTiltSetpoint();
+				}
+				tiltPID.setSetpoint(tiltSetpoint);
 			}
-			tiltPID.setSetpoint(tiltSetpoint);
-
 			tiltSpeed = tiltPID.calculate(tiltAngle);
 		} else {
 			tiltSpeed = input.getTiltMotorSpeed();
 		}
 
-		if (input.isFlywheelActive()) {
+		if (input.isFlywheelActive()) {// 8000 max rpm
 			flywheelSpeed = flywheelControl.calculate(flywheelVelocity);
 		} else {
 			flywheelSpeed = 0.0;

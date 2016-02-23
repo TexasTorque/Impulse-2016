@@ -63,8 +63,8 @@ public class Feedback {
 		// Constants.S_TILT_MAX_VOLTAGE.getDouble());
 		// tiltPot.setPositionRange(Constants.S_TILT_MIN_ANGLE.getDouble(),
 		// Constants.S_TILT_MAX_ANGLE.getDouble());
-		tiltPot.setInputRange(2035, 1746);
-		tiltPot.setPositionRange(0, 31);
+		tiltPot.setInputRange(1994, 1781);
+		tiltPot.setPositionRange(-5, 18);
 	}
 
 	public void setInput(Input _input) {
@@ -87,13 +87,13 @@ public class Feedback {
 		angle = gyro.getAngle() % 360.0;
 		angularVelocity = gyro.getRate();
 
-		flywheelVelocity = flywheelEncoder.getRate();
+		flywheelVelocity = flywheelEncoder.getRate() * .004;
 
 		SmartDashboard.putNumber("POTVALUE", tiltPot.getRaw());
 
 		tiltAngle = tiltPot.getPosition();
 
-		if (input.isVisionLock()) {
+		if (input != null && input.isVisionLock()) {
 			vision.calc();
 		}
 	}
@@ -153,7 +153,7 @@ public class Feedback {
 	}
 
 	public double getRequiredTurn() {
-		if (input.isVisionLock()) {
+		if (input != null && input.isVisionLock()) {
 			return vision.getTurn();
 		} else {
 			return 0.0;
@@ -161,7 +161,7 @@ public class Feedback {
 	}
 
 	public double getRequiredTilt() {
-		if (input.isVisionLock()) {
+		if (input != null && input.isVisionLock()) {
 			return vision.getTilt();
 		} else {
 			return 0.0;
@@ -169,7 +169,7 @@ public class Feedback {
 	}
 
 	public int getVisionState() {
-		if (input.isVisionLock()) {
+		if (input != null && input.isVisionLock()) {
 			return vision.getVisionState();
 		} else {
 			return 0;
@@ -177,7 +177,7 @@ public class Feedback {
 	}
 
 	public boolean visionShotReady() {
-		if (input.isVisionLock()) {
+		if (input != null && input.isVisionLock()) {
 			boolean ready = true;
 			if (!TorqueMathUtil.near(getRequiredTilt(), 0, 5.0)) {
 				// must be within 5 degrees of required tilt

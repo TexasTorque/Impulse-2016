@@ -7,12 +7,12 @@ public class Constants {
 	// auto
 	public static final Constant A_DRIVE_FORWARD_DISTANCE = new Constant("A_DRIVE_FORWARD_DISTANCE", 0.0);
 	public static final Constant A_TURN_ANGLE = new Constant("A_TURN_ANGLE", 0.0);
-	
+
 	// vision
 	public static final Constant V_CAMERA_FOV = new Constant("V_CAMERA_FOV", 67.0);
 	public static final Constant V_CAMERA_WIDTH = new Constant("V_CAMERA_WIDTH", 800.0);
 	public static final Constant V_CAMERA_HEIGHT = new Constant("V_CAMERA_HEIGHT", 600.0);
-	
+
 	public static final Constant V_G = new Constant("V_G", 0.0);
 	public static final Constant V_H = new Constant("V_H", 0.0);
 
@@ -38,16 +38,18 @@ public class Constants {
 	public static final Constant D_TURN_PV_ffA = new Constant("D_TURN_PV_ffA", 0.0);
 
 	public static final Constant TUNED_VOLTAGE = new Constant("TUNED_VOLTAGE", 12.7);
-	
+
 	// shooter
 	public static final Constant S_TILT_P = new Constant("S_TILT_P", 0.0);
 	public static final Constant S_TILT_I = new Constant("S_TILT_I", 0.0);
 	public static final Constant S_TILT_D = new Constant("S_TILT_D", 0.0);
-	
+
 	public static final Constant S_TILT_MIN_VOLTAGE = new Constant("S_TILT_MIN_VOLTAGE", 0.0);
 	public static final Constant S_TILT_MAX_VOLTAGE = new Constant("S_TILT_MAX_VOLTAGE", 0.0);
 	public static final Constant S_TILT_MIN_ANGLE = new Constant("S_TILT_MIN_ANGLE", 0.0);
 	public static final Constant S_TILT_MAX_ANGLE = new Constant("S_TILT_MAX_ANGLE", 0.0);
-	
-	public static final Constant S_FLYWHEEL_SETPOINT_VELOCITY = new Constant("S_FLYWHEEL_SETPOINT", 0.0);
+
+	public static final Constant S_FLYWHEEL_SETPOINT_VELOCITY = new Constant("S_FLYWHEEL_SETPOINT_VELOCITY", 0.0);
+	public static final Constant S_LAYUP_ANGLE_SETPOINT = new Constant("S_LAYUP_ANGLE_SETPOINT", 14);
+	public static final Constant S_LONG_SHOT_ANGLE_SETPOINT = new Constant("S_LONG_SHOT_ANGLE_SETPOINT", 39);
 }

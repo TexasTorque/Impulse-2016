@@ -36,12 +36,15 @@ public class HumanInput extends Input {
 		} else if (driver.getRightCenterButton()) {
 			override = false;
 		}
-
+		
 		intaking = operator.getRightBumper();
 		outtaking = operator.getRightTrigger();
 
 		conveyorIntaking = operator.getLeftBumper();
 		conveyorOuttaking = operator.getLeftTrigger();
+		
+		layupShot = operator.getYButton();
+		longShot = operator.getBButton();
 
 		visionLock = operator.getXButton();
 		if (operator.getAButton()) {

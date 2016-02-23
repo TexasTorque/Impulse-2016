@@ -3,6 +3,8 @@ package org.texastorque.output;
 import org.texastorque.constants.Ports;
 import org.texastorque.torquelib.component.TorqueMotor;
 
+import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.VictorSP;
 
 public class RobotOutput {
@@ -10,7 +12,9 @@ public class RobotOutput {
 	private static RobotOutput instance;
 
 	private static boolean OUTPUT_ENABLED = true;
-	
+
+	private Compressor compressor;
+
 	// drivebase
 	private TorqueMotor leftTopDrive;
 	private TorqueMotor leftBottomDrive;
@@ -20,7 +24,7 @@ public class RobotOutput {
 	private TorqueMotor rightBoostDrive;
 
 	// brakeing
-//	private DoubleSolenoid brakes;
+	private DoubleSolenoid brakes;
 
 	// intake
 	private TorqueMotor intakeMotor;
@@ -33,6 +37,9 @@ public class RobotOutput {
 	private TorqueMotor flywheelMotor;
 
 	public RobotOutput() {
+		compressor = new Compressor();
+		compressor.start();
+
 		leftTopDrive = new TorqueMotor(new VictorSP(Ports.DRIVE_LEFT_TOP), false);
 		leftBottomDrive = new TorqueMotor(new VictorSP(Ports.DRIVE_LEFT_BOTTOM), false);
 		leftBoostDrive = new TorqueMotor(new VictorSP(Ports.DRIVE_LEFT_BOOST), false);
@@ -47,8 +54,8 @@ public class RobotOutput {
 
 		tiltMotor = new TorqueMotor(new VictorSP(Ports.TILT), false);
 		flywheelMotor = new TorqueMotor(new VictorSP(Ports.FLYWHEEL), true);
-		
-//		brakes = new DoubleSolenoid(Ports.BRAKES_SOLENOID_PORT_A, Ports.BRAKES_SOLENOID_PORT_A);
+
+		brakes = new DoubleSolenoid(Ports.BRAKES_SOLENOID_PORT_A, Ports.BRAKES_SOLENOID_PORT_B);
 	}
 
 	public void setDriveSpeeds(double left, double right) {
@@ -103,9 +110,9 @@ public class RobotOutput {
 
 	public void setBrakes(boolean on) {
 		if (OUTPUT_ENABLED) {
-//			brakes.set(on ? DoubleSolenoid.Value.kForward : DoubleSolenoid.Value.kReverse);
+			brakes.set(on ? DoubleSolenoid.Value.kForward : DoubleSolenoid.Value.kReverse);
 		} else {
-//			brakes.set(DoubleSolenoid.Value.kReverse);
+			brakes.set(DoubleSolenoid.Value.kReverse);
 		}
 	}
 

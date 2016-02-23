@@ -12,8 +12,8 @@ public class Ports {
 	public static final int DRIVE_RIGHT_BOOST = 10;
 	
 	// brakeing
-	public static final int BRAKES_SOLENOID_PORT_A = 5;//3
-	public static final int BRAKES_SOLENOID_PORT_B = 2;//4
+	public static final int BRAKES_SOLENOID_PORT_A = 3;//3 and 4
+	public static final int BRAKES_SOLENOID_PORT_B = 4;//0 and 5
 	
 	// shooter
 	public static final int TILT = 8;

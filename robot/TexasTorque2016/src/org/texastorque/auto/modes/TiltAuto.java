@@ -6,7 +6,7 @@ public class TiltAuto extends AutoMode {
 
 	@Override
 	protected void run() {
-		tiltSetpoint = 30.0;
+		tiltSetpoint = 10.0;
 	}
 
 }
