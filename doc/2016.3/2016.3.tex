@@ -85,20 +85,31 @@
 	\section{Fourth Interval}
 	\tab We start with the assumption that the addition of the integral of the acceleration and deceleration portions plus the integral of the constant velocity portion results in the total distance that the profile travels. This is represented by:
 	\[D = 2\int_{t_1}^{t_3}v_{mod}(t)dt + \int_{t_3}^{t_4}v_{max}dt\]
-	\tab Which can be simplified as follows:
+	\tab This can be simplified through the following derivation, to an equation for the third and fourth intervals.
 	\[D = 2\int_{t_1}^{t_3}v_{mod}(t)dt + v_{max}(t_4 - t_3)\]
 	\[D = 2\int_{t_1}^{t_3}\frac{sin(kt - \frac{\pi}{2}) + 1}{c}dt + v_{max}(t_4 - t_3)\]
-	\[D = -\frac{1}{ck}\left[cos(kt - \frac{\pi}{2})\right]_{t_1}^{t_3} + v_{max}(t_4 - t_3)\]
-	\[D = -\frac{1}{ck}\left[cos(kt_3 - \frac{\pi}{2}) - cos(kt_1 - \frac{\pi}{2})\right] + \frac{t_3 - t_1}{c} + v_{max}(t_4 - t_3)\]
-	\tab From here we have to assume that $t_1$ is the beginning of the profile, and is equal to 0.
-	\[D = -\frac{1}{ck}cos(kt_3 - \frac{\pi}{2}) + \frac{t_3}{c} + v_{max}t_4\]
-	\tab Then we plug in $k = \frac{\pi}{t_3}$ and $c = \frac{2}{v_{max}}$.
-	\[D = -\frac{v_{max}t_3}{2\pi}cos(\frac{\pi}{t_3}t_3 - \frac{\pi}{2}) + \frac{v_{max}t_3}{2} + v_{max}t_4\]
-	\[D = -\frac{v_{max}t_3}{2\pi}cos(\pi - \frac{\pi}{2}) + \frac{v_{max}t_3}{2} + v_{max}t_4\]
-	\[D = -\frac{v_{max}t_3}{2\pi}cos(\pi - \frac{\pi}{2}) + \frac{v_{max}t_3}{2} + v_{max}t_4\]
-	\[D = \frac{v_{max}t_3}{2} + v_{max}t_4\]
+	\[D = 2\left[\int_{t_1}^{t_3}\frac{sin(kt - \frac{\pi}{2})}{c}dt + \int_{t_1}^{t_3}\frac{1}{c}dt\right] + v_{max}(t_4 - t_3)\]
+	\[D = 2\left[\int_{t_1}^{t_3}\frac{sin(kt - \frac{\pi}{2})}{c}dt + \frac{t_3 - t_1}{c}\right] + v_{max}(t_4 - t_3)\]
+	\[substitution \rightarrow u = kt - \frac{\pi}{2}, du = kdt, \frac{1}{k}du = dt\]
+	\[D = 2\left[-\frac{1}{ck}\left[cos(kt - \frac{\pi}{2})\right]_{t_1}^{t_3} + \frac{t_3 - t_1}{c}\right] + v_{max}(t_4 - t_3)\]
+	\[D = 2\left[-\frac{1}{ck}\left[cos(kt_3 - \frac{\pi}{2}) - cos(kt_1 - \frac{\pi}{2})\right] + \frac{t_3 - t_1}{c}\right] + v_{max}(t_4 - t_3)\]
+	\tab From here, $t_1$ is the beginning of the profile and can be set to 0 for the rest of this derivation.
+	\[D = 2\left[-\frac{1}{ck}cos(kt_3 - \frac{\pi}{2}) + \frac{t_3}{c}\right] + v_{max}(t_4 - t_3)\]
+	\tab Finally, we must plug in $k = \frac{\pi}{t_3}$ and $c = \frac{2}{v_{max}}$.
+	\[D = 2\left[-\frac{t_3v_{max}}{2\pi}cos(\frac{\pi}{2}) + \frac{t_3v_{max}}{2}\right] + v_{max}(t_4 - t_3)\]
+	\[D = 2(\frac{t_3v_{max}}{2}) + v_{max}(t_4 - t_3)\]
+	\[D = t_3v_{max} + v_{max}(t_4 - t_3)\]
+	\[D = v_{max}(t_3 + t_4 - t_3)\]
+	\[t_4 = \frac{D}{v_{max}}\]
 	
 	\section{Fifth Interval}
+	\tab 
+	
 	\section{Final Interval}
 	\tab The total time of the profile, $t_f$, can be easily defined using symmetry. The acceleration and deceleration portions are exactly equal, which means $t_f = 2t_3 + (t_4 - t_3) = t_4 + t_3$.
+	\[t_f = t_4 + t_3\]
+	\[t_f = \frac{D}{v_{max}} + \frac{v_{max}\pi}{2a_{max}}\]
+	\[t_f = \frac{2a_{max}D}{2a_{max}v_{max}} + \frac{(v_{max})^2\pi}{2v_{max}a_{max}}\]
+	\[t_f = \frac{2a_{max}D + (v_{max})^2\pi}{2a_{max}v_{max}}\]
+	
 \end{document}
