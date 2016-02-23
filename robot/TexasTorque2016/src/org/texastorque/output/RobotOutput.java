@@ -3,7 +3,6 @@ package org.texastorque.output;
 import org.texastorque.constants.Ports;
 import org.texastorque.torquelib.component.TorqueMotor;
 
-import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.VictorSP;
 
@@ -12,8 +11,6 @@ public class RobotOutput {
 	private static RobotOutput instance;
 
 	private static boolean OUTPUT_ENABLED = true;
-
-	private Compressor compressor;
 
 	// drivebase
 	private TorqueMotor leftTopDrive;
@@ -40,9 +37,6 @@ public class RobotOutput {
 	private DoubleSolenoid compressionTesting;
 
 	public RobotOutput() {
-		compressor = new Compressor();
-		compressor.start();
-
 		leftTopDrive = new TorqueMotor(new VictorSP(Ports.DRIVE_LEFT_TOP), false);
 		leftBottomDrive = new TorqueMotor(new VictorSP(Ports.DRIVE_LEFT_BOTTOM), false);
 		leftBoostDrive = new TorqueMotor(new VictorSP(Ports.DRIVE_LEFT_BOOST), false);
@@ -120,7 +114,11 @@ public class RobotOutput {
 	}
 	
 	public void setCompressionTesting(boolean doCompressionTesting){
-		compressionTesting.set(doCompressionTesting ? DoubleSolenoid.Value.kForward : DoubleSolenoid.Value.kReverse);
+		if (OUTPUT_ENABLED) {
+			compressionTesting.set(doCompressionTesting ? DoubleSolenoid.Value.kForward : DoubleSolenoid.Value.kReverse);
+		} else {
+			compressionTesting.set(DoubleSolenoid.Value.kReverse);
+		}
 	}
 
 	// singleton
