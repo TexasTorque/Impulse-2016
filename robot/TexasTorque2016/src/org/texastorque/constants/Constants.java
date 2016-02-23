@@ -5,8 +5,9 @@ import org.texastorque.torquelib.util.Parameters.Constant;
 public class Constants {
 
 	// auto
-	public static final Constant A_DRIVE_FORWARD_DISTANCE = new Constant("A_DRIVE_FORWARD_DISTANCE", 0.0);
-	public static final Constant A_TURN_ANGLE = new Constant("A_TURN_ANGLE", 0.0);
+	public static final Constant A_DRIVE_FORWARD_AUTO_DISTANCE = new Constant("A_DRIVE_FORWARD_DISTANCE", 0.0);
+	public static final Constant A_TURN_AUTO_ANGLE = new Constant("A_TURN_ANGLE", 0.0);
+	public static final Constant A_TILT_AUTO_ANGLE = new Constant("A_TILT_AUTO_ANGLE", 0.0);
 
 	// vision
 	public static final Constant V_CAMERA_FOV = new Constant("V_CAMERA_FOV", 67.0);

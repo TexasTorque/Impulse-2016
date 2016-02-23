@@ -7,7 +7,7 @@ public class TurnAuto extends AutoMode {
 
 	@Override
 	protected void run() {
-		turnSetpoint = Constants.A_TURN_ANGLE.getDouble();
+		turnSetpoint = Constants.A_TURN_AUTO_ANGLE.getDouble();
 	}
 	
 	@Override

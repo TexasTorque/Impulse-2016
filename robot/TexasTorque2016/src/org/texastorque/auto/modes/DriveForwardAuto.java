@@ -7,7 +7,7 @@ public class DriveForwardAuto extends AutoMode {
 
 	@Override
 	protected void run() {
-		driveSetpoint = Constants.A_DRIVE_FORWARD_DISTANCE.getDouble();
+		driveSetpoint = Constants.A_DRIVE_FORWARD_AUTO_DISTANCE.getDouble();
 	}
 	
 	@Override
