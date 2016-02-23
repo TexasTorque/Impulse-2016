@@ -51,6 +51,11 @@
 	v_{max} & t_3 \leq t\leq t_4 \\
 	-v_{mod}(t) & t > t_f
 	\end{cases}\]
+	\tab Using this piecewise function, the entire profile is shaped like the trapezoidal motion profile, but is much smoother and easier for a robot to follow.
+	
+	\chapter{Why It Works}
+	\section{Problem with TMP}
+	\tab 
 	
 	\chapter{Determining Time Intervals}
 	\section{SMP Time Invervals}
@@ -69,7 +74,7 @@
 	\end{center}
 	
 	\section{First Interval}
-	\tab The initial time ($t_1$) of the profile can be found by grabbing time from the robot's FGPA.
+	\tab The initial time ($t_1$) of the profile can be found by grabbing time from the robot's FGPA. However, for the sake of calculating the intervals, the initial time will be 0.
 	
 	\section{Second and Third Interval}
 	\tab The acceleration of the robot is highest at $t_2$, which can be proved by plugging in any numbers to the acceleration equation and determining the maximum of the function on the domain. $t_2 = \frac{t_3}{2}$ because the maximum acceleration occurs at the halfway point between 0 velocity and maximum velocity.
@@ -102,14 +107,21 @@
 	\[D = v_{max}(t_3 + t_4 - t_3)\]
 	\[t_4 = \frac{D}{v_{max}}\]
 	
-	\section{Fifth Interval}
-	\tab 
-	
 	\section{Final Interval}
 	\tab The total time of the profile, $t_f$, can be easily defined using symmetry. The acceleration and deceleration portions are exactly equal, which means $t_f = 2t_3 + (t_4 - t_3) = t_4 + t_3$.
 	\[t_f = t_4 + t_3\]
 	\[t_f = \frac{D}{v_{max}} + \frac{v_{max}\pi}{2a_{max}}\]
 	\[t_f = \frac{2a_{max}D}{2a_{max}v_{max}} + \frac{(v_{max})^2\pi}{2v_{max}a_{max}}\]
 	\[t_f = \frac{2a_{max}D + (v_{max})^2\pi}{2a_{max}v_{max}}\]
+	
+	\section{Fifth Interval}
+	\tab The fifth interval is easily defined by the equation $t_f - t_5 = t_2$, or $t_5 = t_f - t_2$. This requires that $t_f$ is defined.
+	\[t_5 = t_f - t_2\]
+	\[t_5 = \frac{2a_{max}D + (v_{max})^2\pi}{2a_{max}v_{max}} - \frac{v_{max}\pi}{4a_{max}}\]
+	\[t_5 = \frac{4a_{max}D + (v_{max})^2\pi}{4a_{max}v_{max}}\]
+	
+	\chapter{Time Interval Calculation Alternatives}
+	\section{Second Interval Alt}
+	\section{Fifth Interval Alt}
 	
 \end{document}
