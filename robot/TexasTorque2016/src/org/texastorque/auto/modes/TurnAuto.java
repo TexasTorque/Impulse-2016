@@ -9,4 +9,9 @@ public class TurnAuto extends AutoMode {
 	protected void run() {
 		turnSetpoint = Constants.A_TURN_ANGLE.getDouble();
 	}
+	
+	@Override
+	public String getName() {
+		return "TurnAuto";
+	}
 }

@@ -9,4 +9,8 @@ public class TiltAuto extends AutoMode {
 		tiltSetpoint = 10.0;
 	}
 
+	@Override
+	public String getName() {
+		return "TiltAuto";
+	}
 }

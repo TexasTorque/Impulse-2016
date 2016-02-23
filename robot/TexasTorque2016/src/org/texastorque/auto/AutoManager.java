@@ -29,17 +29,21 @@ public class AutoManager {
 		switch (dashboardMode) {
 		default:
 		case DO_NOTHING_AUTO:
-			SmartDashboard.putString("RunningAutoMode", "DoNothingAuto");
-			return currentMode = new DoNothingAuto();
+			currentMode = new DoNothingAuto();
+			SmartDashboard.putString("RunningAutoMode", currentMode.getName());
+			return currentMode;
 		case DRIVE_FORWARD_AUTO:
-			SmartDashboard.putString("RunningAutoMode", "DriveForwardAuto");
-			return currentMode = new DriveForwardAuto();
+			currentMode = new DriveForwardAuto();
+			SmartDashboard.putString("RunningAutoMode", currentMode.getName());
+			return currentMode;
 		case TURN_AUTO:
-			SmartDashboard.putString("RunningAutoMode", "TurnAuto");
-			return currentMode = new TurnAuto();
+			currentMode = new TurnAuto();
+			SmartDashboard.putString("RunningAutoMode", currentMode.getName());
+			return currentMode;
 		case TILT_AUTO:
-			SmartDashboard.putString("RunningAutoMode", "TiltAuto");
-			return currentMode = new TiltAuto();
+			currentMode = new TiltAuto();
+			SmartDashboard.putString("RunningAutoMode", currentMode.getName());
+			return currentMode;
 		}
 	}
 

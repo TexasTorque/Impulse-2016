@@ -21,6 +21,8 @@ public abstract class AutoMode extends Input {
 	}
 
 	protected abstract void run();
+	
+	public abstract String getName();
 
 	@Override
 	public void update() {
