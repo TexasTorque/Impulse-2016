@@ -15,7 +15,8 @@ public class Feedback {
 
 	private static Feedback instance;
 
-	private static final double DRIVEBASE_CONVERSION = 1.0 / (3.75 * Math.PI);
+	private static final double DRIVEBASE_CONVERSION = 0.084883;
+	private static final double FLYWHEEL_CONVERSION = .004;
 
 	private Input input;
 
@@ -91,7 +92,7 @@ public class Feedback {
 		angle = gyro.getAngle() % 360.0;
 		angularVelocity = gyro.getRate();
 
-		flywheelVelocity = flywheelEncoder.getRate() * .004;
+		flywheelVelocity = flywheelEncoder.getRate() * FLYWHEEL_CONVERSION;
 
 		SmartDashboard.putNumber("POTVALUE", tiltPot.getRaw());
 
