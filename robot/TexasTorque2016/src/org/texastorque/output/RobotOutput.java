@@ -3,6 +3,7 @@ package org.texastorque.output;
 import org.texastorque.constants.Ports;
 import org.texastorque.torquelib.component.TorqueMotor;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.VictorSP;
 
 public class RobotOutput {
@@ -31,6 +32,9 @@ public class RobotOutput {
 	// shooter
 	private TorqueMotor tiltMotor;
 	private TorqueMotor flywheelMotor;
+	
+	// compression testing
+	private DoubleSolenoid compressionTesting;
 
 	public RobotOutput() {
 		leftTopDrive = new TorqueMotor(new VictorSP(Ports.DRIVE_LEFT_TOP), false);
@@ -107,6 +111,10 @@ public class RobotOutput {
 		} else {
 //			brakes.set(DoubleSolenoid.Value.kReverse);
 		}
+	}
+	
+	public void setCompressionTesting(boolean doCompressionTesting){
+		compressionTesting.set(doCompressionTesting ? DoubleSolenoid.Value.kForward : DoubleSolenoid.Value.kReverse);
 	}
 
 	// singleton

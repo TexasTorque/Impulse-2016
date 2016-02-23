@@ -30,8 +30,15 @@ public abstract class Input {
 
 	protected double tiltMotorSpeed = 0.0;
 	
+	// compression testing
+	protected boolean compressionTesting;
+	
 	public abstract void update();
 
+	public boolean getCompressionTesting(){
+		return compressionTesting;
+	}
+	
 	public double getLeftDriveSpeed() {
 		return leftDriveSpeed;
 	}

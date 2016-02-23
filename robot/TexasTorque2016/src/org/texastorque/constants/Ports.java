@@ -35,4 +35,5 @@ public class Ports {
 	public static final int FLYWHEEL_ENCODER_B = 3;
 
 	public static final int TILT_POT_PORT = 3;
+	public static final int COMPRESSION_TESTING = 0;
 }
