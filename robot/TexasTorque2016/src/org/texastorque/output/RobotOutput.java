@@ -53,6 +53,7 @@ public class RobotOutput {
 		flywheelMotor = new TorqueMotor(new VictorSP(Ports.FLYWHEEL), true);
 
 		brakes = new DoubleSolenoid(Ports.BRAKES_SOLENOID_PORT_A, Ports.BRAKES_SOLENOID_PORT_B);
+		compressionTesting = new DoubleSolenoid(Ports.COMPRESSION_TESTING_A, Ports.COMPRESSION_TESTING_B);
 	}
 
 	public void setDriveSpeeds(double left, double right) {
@@ -115,9 +116,9 @@ public class RobotOutput {
 	
 	public void setCompressionTesting(boolean doCompressionTesting){
 		if (OUTPUT_ENABLED) {
-			compressionTesting.set(doCompressionTesting ? DoubleSolenoid.Value.kForward : DoubleSolenoid.Value.kReverse);
+			compressionTesting.set(doCompressionTesting ? DoubleSolenoid.Value.kReverse : DoubleSolenoid.Value.kForward);
 		} else {
-			compressionTesting.set(DoubleSolenoid.Value.kReverse);
+			compressionTesting.set(DoubleSolenoid.Value.kForward);
 		}
 	}
 

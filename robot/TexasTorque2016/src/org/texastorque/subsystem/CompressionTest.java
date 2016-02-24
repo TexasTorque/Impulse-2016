@@ -2,19 +2,17 @@ package org.texastorque.subsystem;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-/**
- * -One Boolean 'testing'
- * if testing,
- * 	enable compression testing solenoid
- * 	
- * @author 2015 ProLaptop
- *
- */
-public class CompressionTest extends Subsystem{
+public class CompressionTest extends Subsystem {
+
+	private static CompressionTest instance;
 
 	private boolean compressionTesting;
+
 	private double compressionValue;
-	
+
+	// sensor values
+	private boolean ballIn;
+
 	@Override
 	public void init() {
 	}
@@ -22,18 +20,29 @@ public class CompressionTest extends Subsystem{
 	@Override
 	public void run() {
 		compressionValue = feedback.getCompressionValue();
+		ballIn = feedback.isCompressionTestReady();
+
 		compressionTesting = input.getCompressionTesting();
+		
+		output();
 	}
 
 	@Override
 	protected void output() {
 		output.setCompressionTesting(compressionTesting);
-	}	
+	}
 
 	@Override
 	public void pushToDashboard() {
 		SmartDashboard.putBoolean("CompressionTesting", compressionTesting);
+		
 		SmartDashboard.putNumber("CompressionValue", compressionValue);
+		SmartDashboard.putBoolean("CompressionBallIn", ballIn);
+	}
+
+	// singleton
+	public static CompressionTest getInstance() {
+		return instance == null ? instance = new CompressionTest() : instance;
 	}
 
 }

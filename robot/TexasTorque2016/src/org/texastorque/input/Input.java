@@ -16,6 +16,7 @@ public abstract class Input {
 	// override variables
 	protected boolean override = false;
 	protected boolean visionLock = false;
+	protected boolean prevVisionLock = false;
 
 	// intake variables
 	protected boolean intaking = false;
@@ -33,7 +34,7 @@ public abstract class Input {
 	protected double tiltMotorSpeed = 0.0;
 	
 	// compression testing
-	protected boolean compressionTesting;
+	protected boolean compressionTesting = false;
 	
 	public abstract void update();
 

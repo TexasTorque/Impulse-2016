@@ -2,13 +2,13 @@ package org.texastorque.feedback;
 
 import org.texastorque.constants.Constants;
 import org.texastorque.constants.Ports;
-import org.texastorque.input.Input;
 import org.texastorque.torquelib.component.TorqueEncoder;
 import org.texastorque.torquelib.component.TorquePotentiometer;
 import org.texastorque.torquelib.util.TorqueMathUtil;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Feedback {
@@ -16,9 +16,7 @@ public class Feedback {
 	private static Feedback instance;
 
 	private static final double DRIVEBASE_CONVERSION = 0.084883;
-	private static final double FLYWHEEL_CONVERSION = .004;
-
-	private Input input;
+	private static final double FLYWHEEL_CONVERSION = .24;
 
 	// sensors
 	private VisionFeedback vision;
@@ -31,7 +29,9 @@ public class Feedback {
 
 	private TorquePotentiometer tiltPot;
 	private TorquePotentiometer compressionPot;
-	
+
+	private DigitalInput compressionSensor;
+
 	// drivebase values
 	private double leftDrivePosition;
 	private double leftDriveVelocity;
@@ -49,7 +49,6 @@ public class Feedback {
 
 	private double tiltAngle;
 
-	
 	public Feedback() {
 		vision = VisionFeedback.getInstance();
 		gyro = new ADXRS450_Gyro();
@@ -60,20 +59,15 @@ public class Feedback {
 				EncodingType.k4X);
 
 		flywheelEncoder = new TorqueEncoder(Ports.FLYWHEEL_ENCODER_A, Ports.FLYWHEEL_ENCODER_B, true, EncodingType.k4X);
-
 		tiltPot = new TorquePotentiometer(Ports.TILT_POT_PORT);
-		// tiltPot.setInputRange(Constants.S_TILT_MIN_VOLTAGE.getDouble(),
-		// Constants.S_TILT_MAX_VOLTAGE.getDouble());
-		// tiltPot.setPositionRange(Constants.S_TILT_MIN_ANGLE.getDouble(),
-		// Constants.S_TILT_MAX_ANGLE.getDouble());
-		tiltPot.setInputRange(1994, 1781);
-		tiltPot.setPositionRange(-5, 18);
-		
-		compressionPot = new TorquePotentiometer(Ports.COMPRESSION_TESTING);
+
+		compressionPot = new TorquePotentiometer(Ports.COMPRESSION_POT);
+		compressionSensor = new DigitalInput(Ports.COMPRESSON_SENSOR);
 	}
 
-	public void setInput(Input _input) {
-		input = _input;
+	public void init() {
+		tiltPot.setInputRange(Constants.S_TILT_MIN_VOLTAGE.getDouble(), Constants.S_TILT_MAX_VOLTAGE.getDouble());
+		tiltPot.setPositionRange(Constants.S_TILT_MIN_ANGLE.getDouble(), Constants.S_TILT_MAX_ANGLE.getDouble());
 	}
 
 	public void update() {
@@ -98,9 +92,7 @@ public class Feedback {
 
 		tiltAngle = tiltPot.getPosition();
 
-		if (input != null && input.isVisionLock()) {
-			vision.calc();
-		}
+		vision.calc();
 	}
 
 	public void resetDriveEncoders() {
@@ -156,56 +148,44 @@ public class Feedback {
 	public double getTiltAngle() {
 		return tiltAngle;
 	}
-	
+
 	public double getCompressionValue() {
-		return compressionPot.get();
+		return compressionPot.getRaw();
+	}
+
+	public boolean isCompressionTestReady() {
+		return compressionSensor.get();
 	}
 
 	public double getRequiredTurn() {
-		if (input != null && input.isVisionLock()) {
-			return vision.getTurn();
-		} else {
-			return 0.0;
-		}
+		return vision.getTurn();
 	}
 
 	public double getRequiredTilt() {
-		if (input != null && input.isVisionLock()) {
-			return vision.getTilt();
-		} else {
-			return 0.0;
-		}
+		return vision.getTilt();
 	}
 
 	public int getVisionState() {
-		if (input != null && input.isVisionLock()) {
-			return vision.getVisionState();
-		} else {
-			return 0;
-		}
+		return vision.getVisionState();
 	}
 
 	public boolean visionShotReady() {
-		if (input != null && input.isVisionLock()) {
-			boolean ready = true;
-			if (!TorqueMathUtil.near(getRequiredTilt(), 0, 5.0)) {
-				// must be within 5 degrees of required tilt
-				ready = false;
-			}
-			if (!TorqueMathUtil.near(getRequiredTurn(), 0, 5.0)) {
-				// must be with 5 degrees of required turn
-				ready = false;
-			}
-			if (!TorqueMathUtil.near(getFlywheelVelocity(), Constants.S_FLYWHEEL_SETPOINT_VELOCITY.getDouble(), 500)) {
-				// must be near flywheel velocity
-				ready = false;
-			}
-			return ready;
-		} else {
-			return false;
+		boolean ready = true;
+		if (!TorqueMathUtil.near(getRequiredTilt(), 0, 5.0)) {
+			// must be within 5 degrees of required tilt
+			ready = false;
 		}
+		if (!TorqueMathUtil.near(getRequiredTurn(), 0, 5.0)) {
+			// must be with 5 degrees of required turn
+			ready = false;
+		}
+		if (!TorqueMathUtil.near(getFlywheelVelocity(), Constants.S_FLYWHEEL_SETPOINT_VELOCITY.getDouble(), 500)) {
+			// must be near flywheel velocity
+			ready = false;
+		}
+		return ready;
 	}
-	
+
 	// singleton
 	public static Feedback getInstance() {
 		return instance == null ? instance = new Feedback() : instance;

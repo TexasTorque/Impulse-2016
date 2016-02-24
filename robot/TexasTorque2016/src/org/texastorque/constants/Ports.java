@@ -12,8 +12,10 @@ public class Ports {
 	public static final int DRIVE_RIGHT_BOOST = 10;
 	
 	// brakeing
-	public static final int BRAKES_SOLENOID_PORT_A = 3;//3 and 4
-	public static final int BRAKES_SOLENOID_PORT_B = 4;//0 and 5
+	public static final int BRAKES_SOLENOID_PORT_A = 3;
+	public static final int BRAKES_SOLENOID_PORT_B = 4;
+	public static final int COMPRESSION_TESTING_A = 0;
+	public static final int COMPRESSION_TESTING_B = 5;
 	
 	// shooter
 	public static final int TILT = 8;
@@ -35,5 +37,8 @@ public class Ports {
 	public static final int FLYWHEEL_ENCODER_B = 3;
 
 	public static final int TILT_POT_PORT = 3;
-	public static final int COMPRESSION_TESTING = 0;
+	
+	public static final int COMPRESSION_POT = 0;
+	public static final int COMPRESSON_SENSOR = 6;
+	
 }

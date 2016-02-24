@@ -2,6 +2,7 @@ package org.texastorque.input;
 
 import org.texastorque.constants.Constants;
 import org.texastorque.feedback.Feedback;
+import org.texastorque.feedback.VisionFeedback;
 import org.texastorque.torquelib.util.GenericController;
 import org.texastorque.torquelib.util.TorqueToggle;
 
@@ -14,12 +15,14 @@ public class HumanInput extends Input {
 	private GenericController operator;
 
 	private TorqueToggle brakes;
+	private TorqueToggle compressionTester;
 
 	private HumanInput() {
 		driver = new GenericController(0, .1);
 		operator = new GenericController(1, .1);
 
 		brakes = new TorqueToggle();
+		compressionTester = new TorqueToggle();
 	}
 
 	public void update() {
@@ -45,8 +48,15 @@ public class HumanInput extends Input {
 		
 		layupShot = operator.getYButton();
 		longShot = operator.getBButton();
+		
+		compressionTester.calc(operator.getRightStickClick());
+		compressionTesting = compressionTester.get();
 
+		prevVisionLock = visionLock;
 		visionLock = operator.getXButton();
+		if (prevVisionLock != visionLock && visionLock == true) {
+			VisionFeedback.init();
+		}
 		if (operator.getAButton()) {
 			flywheelActive = true;
 			if (Feedback.getInstance().getFlywheelVelocity() > Constants.S_FLYWHEEL_SETPOINT_VELOCITY.getDouble() * .9) {

@@ -4,9 +4,11 @@ import java.util.ArrayList;
 
 import org.texastorque.auto.AutoManager;
 import org.texastorque.feedback.Feedback;
+import org.texastorque.feedback.VisionFeedback;
 import org.texastorque.input.HumanInput;
 import org.texastorque.input.Input;
 import org.texastorque.subsystem.Brakes;
+import org.texastorque.subsystem.CompressionTest;
 import org.texastorque.subsystem.Conveyor;
 import org.texastorque.subsystem.Drivebase;
 import org.texastorque.subsystem.Intake;
@@ -37,9 +39,12 @@ public class Robot extends TorqueIterative {
 		subsystems.add(Shooter.getInstance());
 		subsystems.add(Conveyor.getInstance());
 		subsystems.add(Brakes.getInstance());
+		subsystems.add(CompressionTest.getInstance());
 
 		autoManager = AutoManager.getInstance();
 		feedback = Feedback.getInstance();
+		
+		VisionFeedback.init();
 
 		autoManager.reset();
 	}
@@ -50,9 +55,9 @@ public class Robot extends TorqueIterative {
 		Parameters.load();
 		numCycles = 0;
 
+		feedback.init();
 		subsystems.forEach((subsystem) -> subsystem.init());
 		input = autoManager.createAutoMode();
-		feedback.setInput(input);
 		subsystems.forEach((subsystem) -> subsystem.setInput(input));
 		autoManager.runAutoMode();
 	}
@@ -73,6 +78,7 @@ public class Robot extends TorqueIterative {
 	@Override
 	public void teleopInit() {
 		Parameters.load();
+		feedback.init();
 		numCycles = 0;
 		subsystems.forEach((subsystem) -> subsystem.init());
 

@@ -27,7 +27,7 @@ public class Drivebase extends Subsystem {
 
 	private double angle;
 	private double angularVelocity;
-	
+
 	// generic profile variables
 	private double prevTime;
 
@@ -80,7 +80,7 @@ public class Drivebase extends Subsystem {
 		feedback.resetGyro();
 		turnSetpoint = 0.0;
 		turnPreviousSetpoint = 0.0;
-		
+
 		angularPV.setGains(Constants.D_TURN_PV_P.getDouble(), Constants.D_TURN_PV_V.getDouble(),
 				Constants.D_TURN_PV_ffV.getDouble(), Constants.D_TURN_PV_ffA.getDouble());
 		angularPV.setTunedVoltage(Constants.TUNED_VOLTAGE.getDouble());
@@ -102,8 +102,25 @@ public class Drivebase extends Subsystem {
 
 		angle = feedback.getAngle();
 		angularVelocity = feedback.getAngularVelocity();
-		
-		if (input.getDriveSetpoint() != 0.0 && !input.isOverride()) {
+
+		if (input.isVisionLock()) {
+			turnSetpoint = feedback.getRequiredTurn();
+			if (turnSetpoint != turnPreviousSetpoint) {
+				turnPreviousSetpoint = turnSetpoint;
+				feedback.resetGyro();
+				angularProfile.generateTrapezoid(turnSetpoint, 0.0, 0.0);
+			}
+
+			double dt = Timer.getFPGATimestamp() - prevTime;
+			prevTime = Timer.getFPGATimestamp();
+			angularProfile.calculateNextSituation(dt);
+
+			targetAngle = profile.getCurrentPosition();
+			targetAngularVelocity = profile.getCurrentVelocity();
+
+			leftSpeed = angularPV.calculate(angularProfile, angle, angularVelocity);
+			rightSpeed = -leftSpeed;
+		} else if (input.getDriveSetpoint() != 0.0 && !input.isOverride()) {
 			setpoint = input.getDriveSetpoint();
 			if (setpoint != previousSetpoint) {
 				previousSetpoint = setpoint;
@@ -122,11 +139,7 @@ public class Drivebase extends Subsystem {
 			leftSpeed = leftPV.calculate(profile, leftPosition, leftVelocity);
 			rightSpeed = rightPV.calculate(profile, rightPosition, rightVelocity);
 		} else if (input.getTurnSetpoint() != 0.0 && !input.isOverride()) {
-			if (input.isVisionLock()) {
-				turnSetpoint = feedback.getRequiredTurn();
-			} else {
-				turnSetpoint = input.getTurnSetpoint();
-			}
+			turnSetpoint = input.getTurnSetpoint();
 			if (turnSetpoint != turnPreviousSetpoint) {
 				turnPreviousSetpoint = turnSetpoint;
 				feedback.resetGyro();
@@ -146,8 +159,7 @@ public class Drivebase extends Subsystem {
 			leftSpeed = input.getLeftDriveSpeed();
 			rightSpeed = input.getRightDriveSpeed();
 		}
-		
-			
+
 		output();
 	}
 
@@ -155,7 +167,7 @@ public class Drivebase extends Subsystem {
 	protected void output() {
 		leftSpeed = TorqueMathUtil.constrain(leftSpeed, 1.0);
 		rightSpeed = TorqueMathUtil.constrain(rightSpeed, 1.0);
-		
+
 		if (input.isBraking()) {
 			leftSpeed = 0.0;
 			rightSpeed = 0.0;
