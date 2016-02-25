@@ -2,7 +2,7 @@ package org.texastorque.torquelib.util;
 
 import java.util.ArrayList;
 
-public class TorqueMovementAverage {
+public class TorqueMovingAverage {
 	
 	private int numberOfMoves = 0;
 	private ArrayList<Double> previousMoves = new ArrayList(100);	

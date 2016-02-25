@@ -13,10 +13,10 @@ public class HumanInput extends Input {
 	// controllers
 	private GenericController driver;
 	private GenericController operator;
-
+	
 	private TorqueToggle brakes;
 	private TorqueToggle compressionTester;
-
+	
 	private HumanInput() {
 		driver = new GenericController(0, .1);
 		operator = new GenericController(1, .1);
@@ -29,6 +29,8 @@ public class HumanInput extends Input {
 		// driver
 		leftDriveSpeed = -driver.getLeftYAxis() + driver.getRightXAxis();
 		rightDriveSpeed = -driver.getLeftYAxis() - driver.getRightXAxis();
+		
+		
 		
 		brakes.calc(driver.getAButton());
 		braking = brakes.get();
