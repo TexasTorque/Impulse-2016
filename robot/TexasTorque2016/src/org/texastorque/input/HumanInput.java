@@ -4,6 +4,7 @@ import org.texastorque.constants.Constants;
 import org.texastorque.feedback.Feedback;
 import org.texastorque.feedback.VisionFeedback;
 import org.texastorque.torquelib.util.GenericController;
+import org.texastorque.torquelib.util.TorqueMovingAverage;
 import org.texastorque.torquelib.util.TorqueToggle;
 
 public class HumanInput extends Input {
@@ -14,12 +15,18 @@ public class HumanInput extends Input {
 	private GenericController driver;
 	private GenericController operator;
 	
+	private TorqueMovingAverage leftCheck;
+	private TorqueMovingAverage rightCheck;
+	
 	private TorqueToggle brakes;
 	private TorqueToggle compressionTester;
 	
 	private HumanInput() {
 		driver = new GenericController(0, .1);
 		operator = new GenericController(1, .1);
+		
+		leftCheck = new TorqueMovingAverage();
+		rightCheck = new TorqueMovingAverage();
 
 		brakes = new TorqueToggle();
 		compressionTester = new TorqueToggle();
@@ -30,7 +37,16 @@ public class HumanInput extends Input {
 		leftDriveSpeed = -driver.getLeftYAxis() + driver.getRightXAxis();
 		rightDriveSpeed = -driver.getLeftYAxis() - driver.getRightXAxis();
 		
-		
+		if (leftDriveSpeed > .5 && leftCheck.getAverage() < -.5 && rightDriveSpeed > .5 && rightCheck.getAverage() < -.5) {
+			leftDriveSpeed = -.5;
+			rightDriveSpeed = -.5;
+		} else if (leftDriveSpeed < -.5 && leftCheck.getAverage() > .5 && rightDriveSpeed < -.5 && rightCheck.getAverage() < .5) {
+			leftDriveSpeed = .5;
+			rightDriveSpeed = .5;
+		} else {
+			leftCheck.push(leftDriveSpeed);
+			rightCheck.push(rightDriveSpeed);
+		}
 		
 		brakes.calc(driver.getAButton());
 		braking = brakes.get();
