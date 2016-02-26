@@ -120,7 +120,7 @@ public class Drivebase extends Subsystem {
 
 			leftSpeed = angularPV.calculate(angularProfile, angle, angularVelocity);
 			rightSpeed = -leftSpeed;
-		} else if (input.getDriveSetpoint() != 0.0 && !input.isOverride()) {
+		} else if (input.getDriveSetpoint() != 0.0) {
 			setpoint = input.getDriveSetpoint();
 			if (setpoint != previousSetpoint) {
 				previousSetpoint = setpoint;
@@ -138,7 +138,7 @@ public class Drivebase extends Subsystem {
 
 			leftSpeed = leftPV.calculate(profile, leftPosition, leftVelocity);
 			rightSpeed = rightPV.calculate(profile, rightPosition, rightVelocity);
-		} else if (input.getTurnSetpoint() != 0.0 && !input.isOverride()) {
+		} else if (input.getTurnSetpoint() != 0.0) {
 			turnSetpoint = input.getTurnSetpoint();
 			if (turnSetpoint != turnPreviousSetpoint) {
 				turnPreviousSetpoint = turnSetpoint;
