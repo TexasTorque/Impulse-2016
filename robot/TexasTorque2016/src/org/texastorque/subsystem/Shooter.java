@@ -41,26 +41,27 @@ public class Shooter extends Subsystem {
 		tiltAngle = feedback.getTiltAngle();
 		flywheelVelocity = feedback.getFlywheelVelocity();
 
-		if (input.isLayupShot()) {
-			tiltPID.setSetpoint(Constants.S_LAYUP_ANGLE_SETPOINT.getDouble());
-			tiltSpeed = tiltPID.calculate(tiltAngle);
-		} else if (input.isLongShot()) {
-			tiltPID.setSetpoint(Constants.S_LONG_SHOT_ANGLE_SETPOINT.getDouble());
-			tiltSpeed = tiltPID.calculate(tiltAngle);
-		} else if (input.getTiltSetpoint() != 0.0) {
-			if (input.isVisionLock()) {
-				tiltSetpoint = feedback.getRequiredTilt();
-			} else {
-				tiltSetpoint = input.getTiltSetpoint();
-			}
-			tiltPID.setSetpoint(tiltSetpoint);
-			
-			tiltSpeed = tiltPID.calculate(tiltAngle);
+		if (input.isOverride()) {
+			tiltSpeed = input.getTiltOverrideSpeed();
 		} else {
-			tiltSpeed = input.getTiltMotorSpeed();
+			if (input.isLayupShot()) {
+				tiltPID.setSetpoint(Constants.S_LAYUP_ANGLE_SETPOINT.getDouble());
+				tiltSpeed = tiltPID.calculate(tiltAngle);
+			} else if (input.isLongShot()) {
+				tiltPID.setSetpoint(Constants.S_LONG_SHOT_ANGLE_SETPOINT.getDouble());
+				tiltSpeed = tiltPID.calculate(tiltAngle);
+			} else {
+				if (input.isVisionLock()) {
+					tiltSetpoint = feedback.getRequiredTilt();
+				} else {
+					tiltSetpoint = input.getTiltSetpoint();
+				}
+				tiltPID.setSetpoint(tiltSetpoint);
+
+				tiltSpeed = tiltPID.calculate(tiltAngle);
+			}
 		}
-			
-			
+
 		if (input.isFlywheelActive()) {// 8000 max rpm
 			flywheelSpeed = flywheelControl.calculate(flywheelVelocity);
 		} else {

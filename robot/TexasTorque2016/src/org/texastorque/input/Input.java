@@ -78,7 +78,7 @@ public abstract class Input {
 		return visionLock;
 	}
 
-	public double getTiltMotorSpeed() {
+	public double getTiltOverrideSpeed() {
 		return tiltMotorSpeed;
 	}
 

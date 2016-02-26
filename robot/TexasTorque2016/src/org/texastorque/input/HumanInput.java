@@ -14,17 +14,17 @@ public class HumanInput extends Input {
 	// controllers
 	private GenericController driver;
 	private GenericController operator;
-	
+
 	private TorqueMovingAverage leftCheck;
 	private TorqueMovingAverage rightCheck;
-	
+
 	private TorqueToggle brakes;
 	private TorqueToggle compressionTester;
-	
+
 	private HumanInput() {
 		driver = new GenericController(0, .1);
 		operator = new GenericController(1, .1);
-		
+
 		leftCheck = new TorqueMovingAverage();
 		rightCheck = new TorqueMovingAverage();
 
@@ -36,7 +36,7 @@ public class HumanInput extends Input {
 		// driver
 		leftDriveSpeed = -driver.getLeftYAxis() + driver.getRightXAxis();
 		rightDriveSpeed = -driver.getLeftYAxis() - driver.getRightXAxis();
-		
+
 		if (leftDriveSpeed > .5 && leftCheck.getAverage() < -.5 && rightDriveSpeed > .5 && rightCheck.getAverage() < -.5) {
 			leftDriveSpeed = -.5;
 			rightDriveSpeed = -.5;
@@ -46,7 +46,7 @@ public class HumanInput extends Input {
 		}
 		leftCheck.push(leftDriveSpeed);
 		rightCheck.push(rightDriveSpeed);
-		
+
 		brakes.calc(driver.getAButton());
 		braking = brakes.get();
 
@@ -56,16 +56,16 @@ public class HumanInput extends Input {
 		} else if (driver.getRightCenterButton()) {
 			override = false;
 		}
-		
+
 		intaking = operator.getRightBumper();
 		outtaking = operator.getRightTrigger();
 
 		conveyorIntaking = operator.getLeftBumper();
 		conveyorOuttaking = operator.getLeftTrigger();
-		
+
 		layupShot = operator.getYButton();
 		longShot = operator.getBButton();
-		
+
 		compressionTester.calc(operator.getRightStickClick());
 		compressionTesting = compressionTester.get();
 
@@ -84,6 +84,7 @@ public class HumanInput extends Input {
 			flywheelActive = false;
 		}
 
+		tiltSetpoint += -operator.getLeftYAxis() * .01;// max 1/10 degree change
 		tiltMotorSpeed = -operator.getLeftYAxis();
 	}
 

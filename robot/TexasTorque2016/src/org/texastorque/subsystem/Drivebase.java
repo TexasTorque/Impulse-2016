@@ -103,61 +103,66 @@ public class Drivebase extends Subsystem {
 		angle = feedback.getAngle();
 		angularVelocity = feedback.getAngularVelocity();
 
-		if (input.isVisionLock()) {
-			turnSetpoint = feedback.getRequiredTurn();
-			if (turnSetpoint != turnPreviousSetpoint) {
-				turnPreviousSetpoint = turnSetpoint;
-				feedback.resetGyro();
-				angularProfile.generateTrapezoid(turnSetpoint, 0.0, 0.0);
-			}
-
-			double dt = Timer.getFPGATimestamp() - prevTime;
-			prevTime = Timer.getFPGATimestamp();
-			angularProfile.calculateNextSituation(dt);
-
-			targetAngle = profile.getCurrentPosition();
-			targetAngularVelocity = profile.getCurrentVelocity();
-
-			leftSpeed = angularPV.calculate(angularProfile, angle, angularVelocity);
-			rightSpeed = -leftSpeed;
-		} else if (input.getDriveSetpoint() != 0.0) {
-			setpoint = input.getDriveSetpoint();
-			if (setpoint != previousSetpoint) {
-				previousSetpoint = setpoint;
-				feedback.resetDriveEncoders();
-				profile.generateTrapezoid(setpoint, 0.0, 0.0);
-			}
-
-			double dt = Timer.getFPGATimestamp() - prevTime;
-			prevTime = Timer.getFPGATimestamp();
-			profile.calculateNextSituation(dt);
-
-			targetPosition = profile.getCurrentPosition();
-			targetVelocity = profile.getCurrentVelocity();
-			targetAcceleration = profile.getCurrentAcceleration();
-
-			leftSpeed = leftPV.calculate(profile, leftPosition, leftVelocity);
-			rightSpeed = rightPV.calculate(profile, rightPosition, rightVelocity);
-		} else if (input.getTurnSetpoint() != 0.0) {
-			turnSetpoint = input.getTurnSetpoint();
-			if (turnSetpoint != turnPreviousSetpoint) {
-				turnPreviousSetpoint = turnSetpoint;
-				feedback.resetGyro();
-				angularProfile.generateTrapezoid(turnSetpoint, 0.0, 0.0);
-			}
-
-			double dt = Timer.getFPGATimestamp() - prevTime;
-			prevTime = Timer.getFPGATimestamp();
-			angularProfile.calculateNextSituation(dt);
-
-			targetAngle = profile.getCurrentPosition();
-			targetAngularVelocity = profile.getCurrentVelocity();
-
-			leftSpeed = angularPV.calculate(angularProfile, angle, angularVelocity);
-			rightSpeed = -leftSpeed;
-		} else {
+		if (input.isOverride()) {
 			leftSpeed = input.getLeftDriveSpeed();
 			rightSpeed = input.getRightDriveSpeed();
+		} else {
+			if (input.isVisionLock()) {
+				turnSetpoint = feedback.getRequiredTurn();
+				if (turnSetpoint != turnPreviousSetpoint) {
+					turnPreviousSetpoint = turnSetpoint;
+					feedback.resetGyro();
+					angularProfile.generateTrapezoid(turnSetpoint, 0.0, 0.0);
+				}
+
+				double dt = Timer.getFPGATimestamp() - prevTime;
+				prevTime = Timer.getFPGATimestamp();
+				angularProfile.calculateNextSituation(dt);
+
+				targetAngle = profile.getCurrentPosition();
+				targetAngularVelocity = profile.getCurrentVelocity();
+
+				leftSpeed = angularPV.calculate(angularProfile, angle, angularVelocity);
+				rightSpeed = -leftSpeed;
+			} else if (input.getDriveSetpoint() != 0.0) {
+				setpoint = input.getDriveSetpoint();
+				if (setpoint != previousSetpoint) {
+					previousSetpoint = setpoint;
+					feedback.resetDriveEncoders();
+					profile.generateTrapezoid(setpoint, 0.0, 0.0);
+				}
+
+				double dt = Timer.getFPGATimestamp() - prevTime;
+				prevTime = Timer.getFPGATimestamp();
+				profile.calculateNextSituation(dt);
+
+				targetPosition = profile.getCurrentPosition();
+				targetVelocity = profile.getCurrentVelocity();
+				targetAcceleration = profile.getCurrentAcceleration();
+
+				leftSpeed = leftPV.calculate(profile, leftPosition, leftVelocity);
+				rightSpeed = rightPV.calculate(profile, rightPosition, rightVelocity);
+			} else if (input.getTurnSetpoint() != 0.0) {
+				turnSetpoint = input.getTurnSetpoint();
+				if (turnSetpoint != turnPreviousSetpoint) {
+					turnPreviousSetpoint = turnSetpoint;
+					feedback.resetGyro();
+					angularProfile.generateTrapezoid(turnSetpoint, 0.0, 0.0);
+				}
+
+				double dt = Timer.getFPGATimestamp() - prevTime;
+				prevTime = Timer.getFPGATimestamp();
+				angularProfile.calculateNextSituation(dt);
+
+				targetAngle = profile.getCurrentPosition();
+				targetAngularVelocity = profile.getCurrentVelocity();
+
+				leftSpeed = angularPV.calculate(angularProfile, angle, angularVelocity);
+				rightSpeed = -leftSpeed;
+			} else {
+				leftSpeed = input.getLeftDriveSpeed();
+				rightSpeed = input.getRightDriveSpeed();
+			}
 		}
 
 		output();
