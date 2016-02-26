@@ -43,10 +43,9 @@ public class HumanInput extends Input {
 		} else if (leftDriveSpeed < -.5 && leftCheck.getAverage() > .5 && rightDriveSpeed < -.5 && rightCheck.getAverage() < .5) {
 			leftDriveSpeed = .5;
 			rightDriveSpeed = .5;
-		} else {
-			leftCheck.push(leftDriveSpeed);
-			rightCheck.push(rightDriveSpeed);
 		}
+		leftCheck.push(leftDriveSpeed);
+		rightCheck.push(rightDriveSpeed);
 		
 		brakes.calc(driver.getAButton());
 		braking = brakes.get();
