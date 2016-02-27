@@ -8,9 +8,8 @@ public class CompressionTest extends Subsystem {
 
 	private boolean compressionTesting;
 
-	private double compressionValue;
-
 	// sensor values
+	private double compressionValue;
 	private boolean ballIn;
 
 	@Override
