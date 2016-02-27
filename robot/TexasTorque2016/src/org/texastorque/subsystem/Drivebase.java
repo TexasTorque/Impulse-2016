@@ -1,6 +1,7 @@
 package org.texastorque.subsystem;
 
 import org.texastorque.constants.Constants;
+import org.texastorque.torquelib.controlLoop.TorquePID;
 import org.texastorque.torquelib.controlLoop.TorquePV;
 import org.texastorque.torquelib.controlLoop.TorqueTMP;
 import org.texastorque.torquelib.util.TorqueMathUtil;
@@ -53,6 +54,9 @@ public class Drivebase extends Subsystem {
 	private double turnSetpoint;
 	private double turnPreviousSetpoint;
 
+	// vision PID control
+	private TorquePID visionPID;
+
 	@Override
 	public void init() {
 		// linear
@@ -85,6 +89,12 @@ public class Drivebase extends Subsystem {
 				Constants.D_TURN_PV_ffV.getDouble(), Constants.D_TURN_PV_ffA.getDouble());
 		angularPV.setTunedVoltage(Constants.TUNED_VOLTAGE.getDouble());
 
+		// vision PID
+		visionPID = new TorquePID();
+		visionPID.setPIDGains(Constants.D_VISION_P.getDouble(), Constants.D_VISION_I.getDouble(), Constants.D_VISION_D.getDouble());
+		visionPID.setTunedVoltage(Constants.TUNED_VOLTAGE.getDouble());
+		visionPID.setMaxOutput(1.0);
+
 		// time
 		prevTime = Timer.getFPGATimestamp();
 	}
@@ -109,20 +119,8 @@ public class Drivebase extends Subsystem {
 		} else {
 			if (input.isVisionLock()) {
 				turnSetpoint = feedback.getRequiredTurn();
-				if (turnSetpoint != turnPreviousSetpoint) {
-					turnPreviousSetpoint = turnSetpoint;
-					feedback.resetGyro();
-					angularProfile.generateTrapezoid(turnSetpoint, 0.0, 0.0);
-				}
-
-				double dt = Timer.getFPGATimestamp() - prevTime;
-				prevTime = Timer.getFPGATimestamp();
-				angularProfile.calculateNextSituation(dt);
-
-				targetAngle = profile.getCurrentPosition();
-				targetAngularVelocity = profile.getCurrentVelocity();
-
-				leftSpeed = angularPV.calculate(angularProfile, angle, angularVelocity);
+				
+				leftSpeed = visionPID.calculate(leftPosition);
 				rightSpeed = -leftSpeed;
 			} else if (input.getDriveSetpoint() != 0.0) {
 				setpoint = input.getDriveSetpoint();

@@ -37,6 +37,10 @@ public class Constants {
 	public static final Constant D_TURN_PV_V = new Constant("D_TURN_PV_V", 0.0);
 	public static final Constant D_TURN_PV_ffV = new Constant("D_TURN_PV_ffV", 0.0);
 	public static final Constant D_TURN_PV_ffA = new Constant("D_TURN_PV_ffA", 0.0);
+	
+	public static final Constant D_VISION_P = new Constant("D_VISION_P", 0.0);
+	public static final Constant D_VISION_I = new Constant("D_VISION_I", 0.0);
+	public static final Constant D_VISION_D = new Constant("D_VISION_D", 0.0);
 
 	public static final Constant TUNED_VOLTAGE = new Constant("TUNED_VOLTAGE", 12.7);
 
