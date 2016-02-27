@@ -170,20 +170,19 @@ public class Feedback {
 	}
 
 	public boolean visionShotReady() {
-		boolean ready = true;
 		if (!TorqueMathUtil.near(getRequiredTilt(), 0, 5.0)) {
 			// must be within 5 degrees of required tilt
-			ready = false;
+			return false;
 		}
 		if (!TorqueMathUtil.near(getRequiredTurn(), 0, 5.0)) {
 			// must be with 5 degrees of required turn
-			ready = false;
+			return false;
 		}
 		if (!TorqueMathUtil.near(getFlywheelVelocity(), Constants.S_FLYWHEEL_SETPOINT_VELOCITY.getDouble(), 500)) {
 			// must be near flywheel velocity
-			ready = false;
+			return false;
 		}
-		return ready;
+		return false;
 	}
 
 	// singleton
