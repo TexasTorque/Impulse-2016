@@ -27,7 +27,7 @@ public class Robot extends TorqueIterative {
 	private AutoManager autoManager;
 	private Input input;
 	private Feedback feedback;
-
+	
 	@Override
 	public void robotInit() {
 		Parameters.load();

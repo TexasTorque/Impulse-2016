@@ -7,9 +7,11 @@ public class CompressionTest extends Subsystem {
 	private static CompressionTest instance;
 
 	private boolean compressionTesting;
+	
+	private double maxCompressionRate;
 
 	// sensor values
-	private double compressionValue;
+	private double compressionRate;
 	private boolean ballIn;
 
 	@Override
@@ -18,10 +20,18 @@ public class CompressionTest extends Subsystem {
 
 	@Override
 	public void run() {
-		compressionValue = feedback.getCompressionValue();
+		compressionRate = feedback.getCompressionRate();
 		ballIn = feedback.isCompressionTestReady();
 
 		compressionTesting = input.getCompressionTesting();
+		
+		if (compressionTesting) {
+			if (compressionRate > maxCompressionRate) {
+				maxCompressionRate = compressionRate;
+			}
+		} else {
+			maxCompressionRate = 0.0;
+		}
 		
 		output();
 	}
@@ -35,7 +45,8 @@ public class CompressionTest extends Subsystem {
 	public void pushToDashboard() {
 		SmartDashboard.putBoolean("CompressionTesting", compressionTesting);
 		
-		SmartDashboard.putNumber("CompressionValue", compressionValue);
+		SmartDashboard.putNumber("CompressionRate", compressionRate);
+		SmartDashboard.putNumber("MaxCompressionRate", maxCompressionRate);
 		SmartDashboard.putBoolean("CompressionBallIn", ballIn);
 	}
 

@@ -9,6 +9,7 @@ import org.texastorque.torquelib.util.TorqueMathUtil;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Feedback {
@@ -29,6 +30,8 @@ public class Feedback {
 
 	private TorquePotentiometer tiltPot;
 	private TorquePotentiometer compressionPot;
+	private double prevTime;
+	private double prevRaw;
 
 	private DigitalInput compressionSensor;
 
@@ -63,6 +66,8 @@ public class Feedback {
 
 		compressionPot = new TorquePotentiometer(Ports.COMPRESSION_POT);
 		compressionSensor = new DigitalInput(Ports.COMPRESSON_SENSOR);
+		
+		prevTime = Timer.getFPGATimestamp();
 	}
 
 	public void init() {
@@ -149,8 +154,10 @@ public class Feedback {
 		return tiltAngle;
 	}
 
-	public double getCompressionValue() {
-		return compressionPot.getRaw();
+	public double getCompressionRate() {
+		double dt = Timer.getFPGATimestamp() - prevTime;
+		prevTime = Timer.getFPGATimestamp();
+		return (compressionPot.getRaw() - prevRaw) / dt;
 	}
 
 	public boolean isCompressionTestReady() {
