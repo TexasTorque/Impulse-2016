@@ -4,8 +4,10 @@ import org.texastorque.constants.Constants;
 import org.texastorque.feedback.Feedback;
 import org.texastorque.feedback.VisionFeedback;
 import org.texastorque.torquelib.util.GenericController;
-import org.texastorque.torquelib.util.TorqueMovingAverage;
+import org.texastorque.torquelib.util.TorqueMathUtil;
 import org.texastorque.torquelib.util.TorqueToggle;
+
+import edu.wpi.first.wpilibj.Timer;
 
 public class HumanInput extends Input {
 
@@ -15,45 +17,44 @@ public class HumanInput extends Input {
 	private GenericController driver;
 	private GenericController operator;
 
-	private TorqueMovingAverage leftCheck;
-	private TorqueMovingAverage rightCheck;
-
 	private TorqueToggle brakes;
 	private TorqueToggle compressionTester;
+
+	private double y;
+	private double lastControl;
 
 	private HumanInput() {
 		driver = new GenericController(0, .1);
 		operator = new GenericController(1, .1);
 
-		leftCheck = new TorqueMovingAverage();
-		rightCheck = new TorqueMovingAverage();
-
 		brakes = new TorqueToggle();
 		compressionTester = new TorqueToggle();
+
+		lastControl = Timer.getFPGATimestamp();
 	}
 
 	public void update() {
 		// driver
-		leftDriveSpeed = -driver.getLeftYAxis() + driver.getRightXAxis();
-		rightDriveSpeed = -driver.getLeftYAxis() - driver.getRightXAxis();
-
-		if (leftDriveSpeed > .5 && leftCheck.getAverage() < -.5 && rightDriveSpeed > .5 && rightCheck.getAverage() < -.5) {
-			leftDriveSpeed = -.5;
-			rightDriveSpeed = -.5;
-		} else if (leftDriveSpeed < -.5 && leftCheck.getAverage() > .5 && rightDriveSpeed < -.5 && rightCheck.getAverage() < .5) {
-			leftDriveSpeed = .5;
-			rightDriveSpeed = .5;
+		if (Timer.getFPGATimestamp() - lastControl < 1) {
+		} else if (Math.abs(driver.getLeftYAxis() - y) > .5 && leftDriveSpeed != 0.0 && rightDriveSpeed != 0.0) {
+			y += TorqueMathUtil.addSign(leftDriveSpeed, .01);
+			y += TorqueMathUtil.addSign(rightDriveSpeed, .01);
+			lastControl = Timer.getFPGATimestamp();
+			y = driver.getLeftYAxis();
+		} else {
+			y = driver.getLeftYAxis();
 		}
-		leftCheck.push(leftDriveSpeed);
-		rightCheck.push(rightDriveSpeed);
+
+		leftDriveSpeed = -y + driver.getRightXAxis();
+		rightDriveSpeed = -y - driver.getRightXAxis();
 
 		brakes.calc(driver.getAButton());
 		braking = brakes.get();
 
 		// operator
-		if (driver.getLeftCenterButton()) {
+		if (operator.getLeftCenterButton()) {
 			override = true;
-		} else if (driver.getRightCenterButton()) {
+		} else if (operator.getRightCenterButton()) {
 			override = false;
 		}
 
@@ -76,7 +77,8 @@ public class HumanInput extends Input {
 		}
 		if (operator.getAButton()) {
 			flywheelActive = true;
-			if (Feedback.getInstance().getFlywheelVelocity() > Constants.S_FLYWHEEL_SETPOINT_VELOCITY.getDouble() * .9) {
+			if (Feedback.getInstance().getFlywheelVelocity() > Constants.S_FLYWHEEL_SETPOINT_VELOCITY.getDouble()
+					* .9) {
 				conveyorIntaking = true;
 				intaking = true;
 			}
@@ -84,7 +86,12 @@ public class HumanInput extends Input {
 			flywheelActive = false;
 		}
 
-		tiltSetpoint += -operator.getLeftYAxis() * .01;// max 1/10 degree change
+		tiltSetpoint += -operator.getLeftYAxis();
+		if (tiltSetpoint >= 33) {
+			tiltSetpoint = 33;
+		} else if (tiltSetpoint <= -3) {
+			tiltSetpoint = -3;
+		}
 		tiltMotorSpeed = -operator.getLeftYAxis();
 	}
 

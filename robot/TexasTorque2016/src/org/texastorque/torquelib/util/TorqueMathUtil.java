@@ -21,8 +21,16 @@ public class TorqueMathUtil {
 		}
 		return closest;
 	}
-	
+
 	public static boolean near(double number, double value, double howClose) {
 		return Math.abs(number - value) < howClose;
+	}
+
+	public static double addSign(double value, double add) {
+		if (value < 0) {
+			return value - add;
+		} else {
+			return value + add;
+		}
 	}
 }

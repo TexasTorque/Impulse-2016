@@ -1,6 +1,6 @@
 package org.texastorque.output;
 
-import org.texastorque.constants.Ports;
+import org.texastorque.constants.PortsBravo;
 import org.texastorque.torquelib.component.TorqueMotor;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -32,28 +32,28 @@ public class RobotOutput {
 	// shooter
 	private TorqueMotor tiltMotor;
 	private TorqueMotor flywheelMotor;
-	
+
 	// compression testing
 	private DoubleSolenoid compressionTesting;
 
 	public RobotOutput() {
-		leftTopDrive = new TorqueMotor(new VictorSP(Ports.DRIVE_LEFT_TOP), false);
-		leftBottomDrive = new TorqueMotor(new VictorSP(Ports.DRIVE_LEFT_BOTTOM), false);
-		leftBoostDrive = new TorqueMotor(new VictorSP(Ports.DRIVE_LEFT_BOOST), false);
+		leftTopDrive = new TorqueMotor(new VictorSP(PortsBravo.DRIVE_LEFT_TOP), false);
+		leftBottomDrive = new TorqueMotor(new VictorSP(PortsBravo.DRIVE_LEFT_BOTTOM), false);
+		leftBoostDrive = new TorqueMotor(new VictorSP(PortsBravo.DRIVE_LEFT_BOOST), false);
 
-		rightTopDrive = new TorqueMotor(new VictorSP(Ports.DRIVE_RIGHT_TOP), true);
-		rightBottomDrive = new TorqueMotor(new VictorSP(Ports.DRIVE_RIGHT_BOTTOM), true);
-		rightBoostDrive = new TorqueMotor(new VictorSP(Ports.DRIVE_RIGHT_BOOST), true);
+		rightTopDrive = new TorqueMotor(new VictorSP(PortsBravo.DRIVE_RIGHT_TOP), true);
+		rightBottomDrive = new TorqueMotor(new VictorSP(PortsBravo.DRIVE_RIGHT_BOTTOM), true);
+		rightBoostDrive = new TorqueMotor(new VictorSP(PortsBravo.DRIVE_RIGHT_BOOST), true);
 
-		intakeMotor = new TorqueMotor(new VictorSP(Ports.INTAKE), false);
+		intakeMotor = new TorqueMotor(new VictorSP(PortsBravo.INTAKE), true);
 
-		conveyorMotor = new TorqueMotor(new VictorSP(Ports.CONVEYOR), false);
+		conveyorMotor = new TorqueMotor(new VictorSP(PortsBravo.CONVEYOR), false);
 
-		tiltMotor = new TorqueMotor(new VictorSP(Ports.TILT), false);
-		flywheelMotor = new TorqueMotor(new VictorSP(Ports.FLYWHEEL), true);
+		tiltMotor = new TorqueMotor(new VictorSP(PortsBravo.TILT), false);
+		flywheelMotor = new TorqueMotor(new VictorSP(PortsBravo.FLYWHEEL), true);
 
-		brakes = new DoubleSolenoid(Ports.BRAKES_SOLENOID_PORT_A, Ports.BRAKES_SOLENOID_PORT_B);
-		compressionTesting = new DoubleSolenoid(Ports.COMPRESSION_TESTING_A, Ports.COMPRESSION_TESTING_B);
+		brakes = new DoubleSolenoid(PortsBravo.BRAKES_SOLENOID_PORT_A, PortsBravo.BRAKES_SOLENOID_PORT_B);
+		compressionTesting = new DoubleSolenoid(PortsBravo.COMPRESSION_TESTING_A, PortsBravo.COMPRESSION_TESTING_B);
 	}
 
 	public void setDriveSpeeds(double left, double right) {
@@ -108,15 +108,15 @@ public class RobotOutput {
 
 	public void setBrakes(boolean on) {
 		if (OUTPUT_ENABLED) {
-			brakes.set(on ? DoubleSolenoid.Value.kForward : DoubleSolenoid.Value.kReverse);
+			brakes.set(on ? DoubleSolenoid.Value.kReverse : DoubleSolenoid.Value.kForward);
 		} else {
 			brakes.set(DoubleSolenoid.Value.kReverse);
 		}
 	}
-	
-	public void setCompressionTesting(boolean doCompressionTesting){
+
+	public void setCompressionTesting(boolean doCompressionTesting) {
 		if (OUTPUT_ENABLED) {
-			compressionTesting.set(doCompressionTesting ? DoubleSolenoid.Value.kReverse : DoubleSolenoid.Value.kForward);
+			compressionTesting.set(doCompressionTesting ? DoubleSolenoid.Value.kForward : DoubleSolenoid.Value.kReverse);
 		} else {
 			compressionTesting.set(DoubleSolenoid.Value.kForward);
 		}

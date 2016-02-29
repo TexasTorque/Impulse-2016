@@ -1,12 +1,11 @@
 package org.texastorque.feedback;
 
 import org.texastorque.constants.Constants;
-import org.texastorque.constants.Ports;
+import org.texastorque.constants.PortsBravo;
 import org.texastorque.torquelib.component.TorqueEncoder;
 import org.texastorque.torquelib.component.TorquePotentiometer;
 import org.texastorque.torquelib.util.TorqueMathUtil;
 
-import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Timer;
@@ -21,7 +20,7 @@ public class Feedback {
 
 	// sensors
 	private VisionFeedback vision;
-	private ADXRS450_Gyro gyro;
+	// private ADXRS450_Gyro gyro;
 
 	private TorqueEncoder leftDriveEncoder;
 	private TorqueEncoder rightDriveEncoder;
@@ -29,7 +28,7 @@ public class Feedback {
 	private TorqueEncoder flywheelEncoder;
 
 	private TorquePotentiometer tiltPot;
-	private TorquePotentiometer compressionPot;
+	// private TorquePotentiometer compressionPot;
 	private double prevTime;
 	private double prevRaw;
 
@@ -54,19 +53,20 @@ public class Feedback {
 
 	public Feedback() {
 		vision = VisionFeedback.getInstance();
-		gyro = new ADXRS450_Gyro();
+		// gyro = new ADXRS450_Gyro();
 
-		leftDriveEncoder = new TorqueEncoder(Ports.DRIVE_LEFT_ENCODER_A, Ports.DRIVE_LEFT_ENCODER_B, true,
+		leftDriveEncoder = new TorqueEncoder(PortsBravo.DRIVE_LEFT_ENCODER_A, PortsBravo.DRIVE_LEFT_ENCODER_B, false,
 				EncodingType.k4X);
-		rightDriveEncoder = new TorqueEncoder(Ports.DRIVE_RIGHT_ENCODER_A, Ports.DRIVE_RIGHT_ENCODER_B, false,
+		rightDriveEncoder = new TorqueEncoder(PortsBravo.DRIVE_RIGHT_ENCODER_A, PortsBravo.DRIVE_RIGHT_ENCODER_B, true,
 				EncodingType.k4X);
 
-		flywheelEncoder = new TorqueEncoder(Ports.FLYWHEEL_ENCODER_A, Ports.FLYWHEEL_ENCODER_B, true, EncodingType.k4X);
-		tiltPot = new TorquePotentiometer(Ports.TILT_POT_PORT);
+		flywheelEncoder = new TorqueEncoder(PortsBravo.FLYWHEEL_ENCODER_A, PortsBravo.FLYWHEEL_ENCODER_B, true,
+				EncodingType.k4X);
+		tiltPot = new TorquePotentiometer(PortsBravo.TILT_POT_PORT);
 
-		compressionPot = new TorquePotentiometer(Ports.COMPRESSION_POT);
-		compressionSensor = new DigitalInput(Ports.COMPRESSON_SENSOR);
-		
+		// compressionPot = new TorquePotentiometer(PortsBravo.COMPRESSION_POT);
+		compressionSensor = new DigitalInput(PortsBravo.COMPRESSON_SENSOR);
+
 		prevTime = Timer.getFPGATimestamp();
 	}
 
@@ -88,8 +88,8 @@ public class Feedback {
 		rightDriveVelocity = rightDriveEncoder.getRate() * DRIVEBASE_CONVERSION;
 		rightDriveAcceleration = rightDriveEncoder.getAcceleration() * DRIVEBASE_CONVERSION;
 
-		angle = gyro.getAngle() % 360.0;
-		angularVelocity = gyro.getRate();
+		// angle = gyro.getAngle() % 360.0;
+		// angularVelocity = gyro.getRate();
 
 		flywheelVelocity = flywheelEncoder.getRate() * FLYWHEEL_CONVERSION;
 
@@ -110,7 +110,7 @@ public class Feedback {
 	}
 
 	public void resetGyro() {
-		gyro.reset();
+		// gyro.reset();
 	}
 
 	// getters
@@ -157,7 +157,8 @@ public class Feedback {
 	public double getCompressionRate() {
 		double dt = Timer.getFPGATimestamp() - prevTime;
 		prevTime = Timer.getFPGATimestamp();
-		return (compressionPot.getRaw() - prevRaw) / dt;
+		// return (compressionPot.getRaw() - prevRaw) / dt;
+		return 0.0;
 	}
 
 	public boolean isCompressionTestReady() {

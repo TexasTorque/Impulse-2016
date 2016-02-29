@@ -42,7 +42,7 @@ public class Constants {
 	public static final Constant D_VISION_I = new Constant("D_VISION_I", 0.0);
 	public static final Constant D_VISION_D = new Constant("D_VISION_D", 0.0);
 
-	public static final Constant TUNED_VOLTAGE = new Constant("TUNED_VOLTAGE", 12.7);
+	public static final Constant TUNED_VOLTAGE = new Constant("TUNED_VOLTAGE", 12.2);
 
 	// shooter
 	public static final Constant S_TILT_P = new Constant("S_TILT_P", 0.0);

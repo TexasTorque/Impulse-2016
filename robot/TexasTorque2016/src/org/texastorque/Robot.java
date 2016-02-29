@@ -32,7 +32,7 @@ public class Robot extends TorqueIterative {
 	public void robotInit() {
 		Parameters.load();
 		numCycles = 0;
-
+		
 		subsystems = new ArrayList<>();
 		subsystems.add(Drivebase.getInstance());
 		subsystems.add(Intake.getInstance());
@@ -40,7 +40,7 @@ public class Robot extends TorqueIterative {
 		subsystems.add(Conveyor.getInstance());
 		subsystems.add(Brakes.getInstance());
 		subsystems.add(CompressionTest.getInstance());
-
+		
 		autoManager = AutoManager.getInstance();
 		feedback = Feedback.getInstance();
 		
@@ -111,5 +111,6 @@ public class Robot extends TorqueIterative {
 		SmartDashboard.putNumber("NumCycles", numCycles++);
 		SmartDashboard.putNumber("ThreadCount", Thread.activeCount());
 		SmartDashboard.putNumber("VISION_STATE", feedback.getVisionState());
+		SmartDashboard.putBoolean("Override", input.isOverride());
 	}
 }
