@@ -3,6 +3,7 @@ package org.texastorque.feedback;
 import org.texastorque.constants.Constants;
 import org.texastorque.constants.PortsBravo;
 import org.texastorque.torquelib.component.TorqueEncoder;
+import org.texastorque.torquelib.component.TorqueGyro;
 import org.texastorque.torquelib.component.TorquePotentiometer;
 import org.texastorque.torquelib.util.TorqueMathUtil;
 
@@ -21,6 +22,7 @@ public class Feedback {
 	// sensors
 	private VisionFeedback vision;
 	// private ADXRS450_Gyro gyro;
+	private TorqueGyro gyro;
 
 	private TorqueEncoder leftDriveEncoder;
 	private TorqueEncoder rightDriveEncoder;
@@ -54,7 +56,7 @@ public class Feedback {
 	public Feedback() {
 		vision = VisionFeedback.getInstance();
 		// gyro = new ADXRS450_Gyro();
-
+		gyro = new TorqueGyro(PortsBravo.TURNING_GYRO_A, PortsBravo.TURNING_GYRO_B);
 		leftDriveEncoder = new TorqueEncoder(PortsBravo.DRIVE_LEFT_ENCODER_A, PortsBravo.DRIVE_LEFT_ENCODER_B, false,
 				EncodingType.k4X);
 		rightDriveEncoder = new TorqueEncoder(PortsBravo.DRIVE_RIGHT_ENCODER_A, PortsBravo.DRIVE_RIGHT_ENCODER_B, true,
@@ -88,13 +90,13 @@ public class Feedback {
 		rightDriveVelocity = rightDriveEncoder.getRate() * DRIVEBASE_CONVERSION;
 		rightDriveAcceleration = rightDriveEncoder.getAcceleration() * DRIVEBASE_CONVERSION;
 
-		// angle = gyro.getAngle() % 360.0;
-		// angularVelocity = gyro.getRate();
+		angle = gyro.getAngle() % 360.0;
+		angularVelocity = gyro.getRate();
 
 		flywheelVelocity = flywheelEncoder.getRate() * FLYWHEEL_CONVERSION;
 
 		SmartDashboard.putNumber("POTVALUE", tiltPot.getRaw());
-
+		
 		tiltAngle = tiltPot.getPosition();
 
 		vision.calc();
@@ -110,7 +112,7 @@ public class Feedback {
 	}
 
 	public void resetGyro() {
-		// gyro.reset();
+		gyro.reset();
 	}
 
 	// getters
