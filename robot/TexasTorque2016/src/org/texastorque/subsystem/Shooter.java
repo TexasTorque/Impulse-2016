@@ -25,6 +25,9 @@ public class Shooter extends Subsystem {
 
 	private double tiltSetpoint;
 
+	// testing values
+	private boolean useSetAngle = true;
+
 	@Override
 	public void init() {
 		flywheelControl = new BangBang();
@@ -51,14 +54,19 @@ public class Shooter extends Subsystem {
 				tiltPID.setSetpoint(Constants.S_LONG_SHOT_ANGLE_SETPOINT.getDouble());
 				tiltSpeed = tiltPID.calculate(tiltAngle);
 			} else {
-				if (input.isVisionLock()) {
-					tiltSetpoint = feedback.getRequiredTilt();
+				if (useSetAngle) {
+					tiltPID.setSetpoint(input.getTiltSetAngle());
+					tiltSpeed = tiltPID.calculate(tiltAngle);
 				} else {
-					tiltSetpoint = input.getTiltSetpoint();
-				}
-				tiltPID.setSetpoint(tiltSetpoint);
+					if (input.isVisionLock()) {
+						tiltSetpoint = feedback.getRequiredTilt();
+					} else {
+						tiltSetpoint = input.getTiltSetpoint();
+					}
+					tiltPID.setSetpoint(tiltSetpoint);
 
-				tiltSpeed = tiltPID.calculate(tiltAngle);
+					tiltSpeed = tiltPID.calculate(tiltAngle);
+				}
 			}
 		}
 
@@ -82,6 +90,7 @@ public class Shooter extends Subsystem {
 		SmartDashboard.putNumber("FlywheelMotorSpeed", flywheelSpeed);
 		SmartDashboard.putNumber("TiltSpeed", tiltSpeed);
 
+		SmartDashboard.putNumber("S_TILT_SET_ANGLE", input.getTiltSetAngle());
 		SmartDashboard.putNumber("TiltAngle", tiltAngle);
 		SmartDashboard.putNumber("FlywheelVelocity", flywheelVelocity);
 

@@ -8,6 +8,7 @@ import org.texastorque.torquelib.util.TorqueMathUtil;
 import org.texastorque.torquelib.util.TorqueToggle;
 
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class HumanInput extends Input {
 
@@ -78,13 +79,15 @@ public class HumanInput extends Input {
 		if (operator.getAButton()) {
 			flywheelActive = true;
 			if (Feedback.getInstance().getFlywheelVelocity() > Constants.S_FLYWHEEL_SETPOINT_VELOCITY.getDouble()
-					* .9) {
+					* .95) {
 				conveyorIntaking = true;
 				intaking = true;
 			}
 		} else {
 			flywheelActive = false;
 		}
+
+		tiltSetAngle = SmartDashboard.getNumber("S_TILT_SET_ANGLE", 25.0);
 
 		tiltSetpoint += -operator.getLeftYAxis();
 		if (tiltSetpoint >= 33) {
