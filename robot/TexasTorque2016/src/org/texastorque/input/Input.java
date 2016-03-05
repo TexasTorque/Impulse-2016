@@ -33,17 +33,11 @@ public abstract class Input {
 
 	protected double tiltMotorSpeed = 0.0;
 	
-	protected double tiltSetAngle = 0.0;
-	
 	// compression testing
 	protected boolean compressionTesting = false;
 	
 	public abstract void update();
 
-	public double getTiltSetAngle() {
-		return tiltSetAngle;
-	}
-	
 	public boolean getCompressionTesting(){
 		return compressionTesting;
 	}

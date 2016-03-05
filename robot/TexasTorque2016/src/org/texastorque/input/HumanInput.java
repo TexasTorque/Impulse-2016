@@ -8,7 +8,6 @@ import org.texastorque.torquelib.util.TorqueMathUtil;
 import org.texastorque.torquelib.util.TorqueToggle;
 
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class HumanInput extends Input {
 
@@ -87,15 +86,23 @@ public class HumanInput extends Input {
 			flywheelActive = false;
 		}
 
-		tiltSetAngle = SmartDashboard.getNumber("S_TILT_SET_ANGLE", 25.0);
-
 		tiltSetpoint += -operator.getLeftYAxis();
-		if (tiltSetpoint >= 33) {
-			tiltSetpoint = 33;
+		if (tiltSetpoint >= 30) {
+			tiltSetpoint = 30;
 		} else if (tiltSetpoint <= -3) {
 			tiltSetpoint = -3;
 		}
 		tiltMotorSpeed = -operator.getLeftYAxis();
+		
+		if (layupShot) {
+			tiltSetpoint = Constants.S_LAYUP_ANGLE_SETPOINT.getDouble();
+		}
+		if (longShot) {
+			tiltSetpoint = Constants.S_LONG_SHOT_ANGLE_SETPOINT.getDouble();
+		}
+		if (visionLock) {
+			tiltSetpoint = Feedback.getInstance().getRequiredTilt();
+		}
 	}
 
 	// singleton

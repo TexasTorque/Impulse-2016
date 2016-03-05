@@ -120,8 +120,10 @@ public class Drivebase extends Subsystem {
 			if (input.isVisionLock()) {
 				turnSetpoint = feedback.getRequiredTurn();
 				
-				leftSpeed = visionPID.calculate(leftPosition);
-				rightSpeed = -leftSpeed;
+				visionPID.setSetpoint(0.0);
+				
+				rightSpeed = visionPID.calculate(turnSetpoint);
+				leftSpeed = -rightSpeed;
 			} else if (input.getDriveSetpoint() != 0.0) {
 				setpoint = input.getDriveSetpoint();
 				if (setpoint != previousSetpoint) {

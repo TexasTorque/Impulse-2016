@@ -9,7 +9,7 @@ public class PortsBravo {
 
 	public static final int DRIVE_RIGHT_TOP = 2;
 	public static final int DRIVE_RIGHT_BOTTOM = 10;
-	public static final int DRIVE_RIGHT_BOOST = 0;
+	public static final int DRIVE_RIGHT_BOOST = 3;
 
 	// braking - solenoids
 	public static final int BRAKES_SOLENOID_PORT_A = 2;
@@ -22,7 +22,7 @@ public class PortsBravo {
 	public static final int FLYWHEEL = 9;
 
 	// intake - motors
-	public static final int INTAKE = 3;
+	public static final int INTAKE = 0;
 
 	// conveyor - motors
 	public static final int CONVEYOR = 5;
@@ -38,7 +38,7 @@ public class PortsBravo {
 
 	public static final int TILT_POT_PORT = 2;
 
-	// public static final int COMPRESSION_POT = 0;
+	 public static final int COMPRESSION_POT = 3;
 	public static final int COMPRESSON_SENSOR = 6;
 
 	public static final int TURNING_GYRO_A = 0;

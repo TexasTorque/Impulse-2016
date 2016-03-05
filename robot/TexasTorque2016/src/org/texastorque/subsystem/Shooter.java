@@ -16,6 +16,7 @@ public class Shooter extends Subsystem {
 	// sensor
 	private double tiltAngle;
 	private double flywheelVelocity;
+	private double lidarDistance;
 
 	// flywheel profiling
 	private BangBang flywheelControl;
@@ -24,9 +25,6 @@ public class Shooter extends Subsystem {
 	private TorquePID tiltPID;
 
 	private double tiltSetpoint;
-
-	// testing values
-	private boolean useSetAngle = true;
 
 	@Override
 	public void init() {
@@ -43,31 +41,19 @@ public class Shooter extends Subsystem {
 	public void run() {
 		tiltAngle = feedback.getTiltAngle();
 		flywheelVelocity = feedback.getFlywheelVelocity();
+		lidarDistance = feedback.getLidarDistance();
 
 		if (input.isOverride()) {
 			tiltSpeed = input.getTiltOverrideSpeed();
 		} else {
-			if (input.isLayupShot()) {
-				tiltPID.setSetpoint(Constants.S_LAYUP_ANGLE_SETPOINT.getDouble());
-				tiltSpeed = tiltPID.calculate(tiltAngle);
-			} else if (input.isLongShot()) {
-				tiltPID.setSetpoint(Constants.S_LONG_SHOT_ANGLE_SETPOINT.getDouble());
-				tiltSpeed = tiltPID.calculate(tiltAngle);
+			if (input.isVisionLock()) {
+				tiltSetpoint = feedback.getRequiredTilt();
 			} else {
-				if (useSetAngle) {
-					tiltPID.setSetpoint(input.getTiltSetAngle());
-					tiltSpeed = tiltPID.calculate(tiltAngle);
-				} else {
-					if (input.isVisionLock()) {
-						tiltSetpoint = feedback.getRequiredTilt();
-					} else {
-						tiltSetpoint = input.getTiltSetpoint();
-					}
-					tiltPID.setSetpoint(tiltSetpoint);
-
-					tiltSpeed = tiltPID.calculate(tiltAngle);
-				}
+				tiltSetpoint = input.getTiltSetpoint();
 			}
+			tiltPID.setSetpoint(tiltSetpoint);
+
+			tiltSpeed = tiltPID.calculate(tiltAngle);
 		}
 
 		if (input.isFlywheelActive()) {// 8000 max rpm
@@ -90,9 +76,9 @@ public class Shooter extends Subsystem {
 		SmartDashboard.putNumber("FlywheelMotorSpeed", flywheelSpeed);
 		SmartDashboard.putNumber("TiltSpeed", tiltSpeed);
 
-		SmartDashboard.putNumber("S_TILT_SET_ANGLE", input.getTiltSetAngle());
 		SmartDashboard.putNumber("TiltAngle", tiltAngle);
 		SmartDashboard.putNumber("FlywheelVelocity", flywheelVelocity);
+		SmartDashboard.putNumber("LidarDistance", lidarDistance);
 
 		SmartDashboard.putNumber("TiltSetpoint", tiltSetpoint);
 	}

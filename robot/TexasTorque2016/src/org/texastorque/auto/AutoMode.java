@@ -29,7 +29,7 @@ public abstract class AutoMode extends Input {
 		// auto modes do not update
 	}
 
-	protected final void wait(double seconds) {
+	protected final void pause(double seconds) {
 		double start = Timer.getFPGATimestamp();
 		while (Timer.getFPGATimestamp() - start < seconds) {
 			try {

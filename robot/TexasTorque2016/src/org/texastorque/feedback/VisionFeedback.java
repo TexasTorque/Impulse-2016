@@ -1,9 +1,7 @@
 package org.texastorque.feedback;
 
 import static java.lang.Math.atan;
-import static java.lang.Math.tan;
 import static java.lang.Math.toDegrees;
-import static java.lang.Math.toRadians;
 
 import org.texastorque.constants.Constants;
 
@@ -53,6 +51,10 @@ public class VisionFeedback {
 			visionState = 1;// loading - waiting for setpoints to be met
 		}
 
+		turn = ((goalCenterX / CAM_WIDTH) - 1) * CAM_FOV;
+
+		SmartDashboard.putNumber("ReqTurn", turn);
+
 		// calc tilt
 		double distance = 0.0;// get from the Lidar sensor
 		double _tilt0 = 0.0;
@@ -78,7 +80,7 @@ public class VisionFeedback {
 			tilt = _tilt0;
 		}
 
-		if (tilt > 40 || tilt < -3) {
+		if (tilt > 35 || tilt < -3) {
 			visionState = 3;
 			tilt = 0.0;
 		}

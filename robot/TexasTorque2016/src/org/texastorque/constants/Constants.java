@@ -8,11 +8,13 @@ public class Constants {
 	public static final Constant A_DRIVE_FORWARD_AUTO_DISTANCE = new Constant("A_DRIVE_FORWARD_DISTANCE", 0.0);
 	public static final Constant A_TURN_AUTO_ANGLE = new Constant("A_TURN_ANGLE", 0.0);
 	public static final Constant A_TILT_AUTO_ANGLE = new Constant("A_TILT_AUTO_ANGLE", 0.0);
+	
+	public static final Constant A_LBS_DRIVE_DISTANCE = new Constant("A_LBS_DRIVE_DISTANCE", 0.0);
 
 	// vision
 	public static final Constant V_CAMERA_FOV = new Constant("V_CAMERA_FOV", 67.0);
-	public static final Constant V_CAMERA_WIDTH = new Constant("V_CAMERA_WIDTH", 800.0);
-	public static final Constant V_CAMERA_HEIGHT = new Constant("V_CAMERA_HEIGHT", 600.0);
+	public static final Constant V_CAMERA_WIDTH = new Constant("V_CAMERA_WIDTH", 640.0);
+	public static final Constant V_CAMERA_HEIGHT = new Constant("V_CAMERA_HEIGHT", 480.0);
 
 	public static final Constant V_G = new Constant("V_G", 9.81);
 	public static final Constant V_H = new Constant("V_H", 2.44);

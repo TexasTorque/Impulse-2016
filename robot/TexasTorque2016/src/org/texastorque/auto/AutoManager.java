@@ -1,6 +1,10 @@
 package org.texastorque.auto;
 
-import org.texastorque.auto.modes.*;
+import org.texastorque.auto.modes.DoNothingAuto;
+import org.texastorque.auto.modes.DriveForwardAuto;
+import org.texastorque.auto.modes.LowBarShootAuto;
+import org.texastorque.auto.modes.TiltAuto;
+import org.texastorque.auto.modes.TurnAuto;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -12,6 +16,7 @@ public class AutoManager {
 	private final int DRIVE_FORWARD_AUTO = 1;
 	private final int TURN_AUTO = 2;
 	private final int TILT_AUTO = 3;
+	private final int LBS_AUTO = 4;
 
 	private AutoMode currentMode;
 
@@ -42,6 +47,10 @@ public class AutoManager {
 			return currentMode;
 		case TILT_AUTO:
 			currentMode = new TiltAuto();
+			SmartDashboard.putString("RunningAutoMode", currentMode.getName());
+			return currentMode;
+		case LBS_AUTO:
+			currentMode = new LowBarShootAuto();
 			SmartDashboard.putString("RunningAutoMode", currentMode.getName());
 			return currentMode;
 		}
