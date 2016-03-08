@@ -12,6 +12,7 @@ import org.texastorque.subsystem.CompressionTest;
 import org.texastorque.subsystem.Conveyor;
 import org.texastorque.subsystem.Drivebase;
 import org.texastorque.subsystem.Intake;
+import org.texastorque.subsystem.Mechanism;
 import org.texastorque.subsystem.Shooter;
 import org.texastorque.subsystem.Subsystem;
 import org.texastorque.torquelib.base.TorqueIterative;
@@ -40,6 +41,7 @@ public class Robot extends TorqueIterative {
 		subsystems.add(Conveyor.getInstance());
 		subsystems.add(Brakes.getInstance());
 		subsystems.add(CompressionTest.getInstance());
+		subsystems.add(Mechanism.getInstance());
 		
 		autoManager = AutoManager.getInstance();
 		feedback = Feedback.getInstance();

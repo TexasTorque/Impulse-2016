@@ -17,6 +17,7 @@ public class Shooter extends Subsystem {
 	private double tiltAngle;
 	private double flywheelVelocity;
 	private double lidarDistance;
+	private boolean tiltLimitSwitchActive;
 
 	// flywheel profiling
 	private BangBang flywheelControl;
@@ -42,6 +43,7 @@ public class Shooter extends Subsystem {
 		tiltAngle = feedback.getTiltAngle();
 		flywheelVelocity = feedback.getFlywheelVelocity();
 		lidarDistance = feedback.getLidarDistance();
+		tiltLimitSwitchActive = feedback.isTiltLimitSwitchActive();
 
 		if (input.isOverride()) {
 			tiltSpeed = input.getTiltOverrideSpeed();
@@ -67,6 +69,10 @@ public class Shooter extends Subsystem {
 
 	@Override
 	protected void output() {
+		if (feedback.isTiltLimitSwitchActive() && tiltSpeed < 0) {
+			tiltSpeed = 0.0;
+		}
+		
 		output.setTiltSpeeds(tiltSpeed);
 		output.setFlywheelSpeed(flywheelSpeed);
 	}
@@ -79,6 +85,7 @@ public class Shooter extends Subsystem {
 		SmartDashboard.putNumber("TiltAngle", tiltAngle);
 		SmartDashboard.putNumber("FlywheelVelocity", flywheelVelocity);
 		SmartDashboard.putNumber("LidarDistance", lidarDistance);
+		SmartDashboard.putBoolean("TiltLimitSwitchActive", tiltLimitSwitchActive);
 
 		SmartDashboard.putNumber("TiltSetpoint", tiltSetpoint);
 	}
