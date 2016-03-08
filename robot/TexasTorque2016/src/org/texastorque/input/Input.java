@@ -36,6 +36,9 @@ public abstract class Input {
 	// compression testing
 	protected boolean compressionTesting = false;
 	
+	// mechanism
+	protected double mechanismSpeed = 0.0;
+	
 	public abstract void update();
 
 	public boolean getCompressionTesting(){
@@ -80,6 +83,10 @@ public abstract class Input {
 
 	public double getTiltOverrideSpeed() {
 		return tiltMotorSpeed;
+	}
+	
+	public double getMechanismSpeed() {
+		return mechanismSpeed;
 	}
 
 	public boolean isBraking() {

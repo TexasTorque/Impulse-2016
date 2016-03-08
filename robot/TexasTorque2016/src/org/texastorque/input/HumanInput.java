@@ -69,6 +69,8 @@ public class HumanInput extends Input {
 
 		compressionTester.calc(operator.getRightStickClick());
 		compressionTesting = compressionTester.get();
+		
+		mechanismSpeed = -operator.getRightYAxis();
 
 		prevVisionLock = visionLock;
 		visionLock = operator.getXButton();

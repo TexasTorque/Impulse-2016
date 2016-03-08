@@ -11,12 +11,6 @@ public class PortsBravo {
 	public static final int DRIVE_RIGHT_BOTTOM = 10;
 	public static final int DRIVE_RIGHT_BOOST = 3;
 
-	// braking - solenoids
-	public static final int BRAKES_SOLENOID_PORT_A = 2;
-	public static final int BRAKES_SOLENOID_PORT_B = 5;
-	public static final int COMPRESSION_TESTING_A = 3;
-	public static final int COMPRESSION_TESTING_B = 4;
-
 	// shooter - motors
 	public static final int TILT = 4;
 	public static final int FLYWHEEL = 9;
@@ -26,6 +20,15 @@ public class PortsBravo {
 
 	// conveyor - motors
 	public static final int CONVEYOR = 5;
+
+	// mechanism motors
+	public static final int A_MECHANISM = 1;
+
+	// braking - solenoids
+	public static final int BRAKES_SOLENOID_PORT_A = 2;
+	public static final int BRAKES_SOLENOID_PORT_B = 5;
+	public static final int COMPRESSION_TESTING_A = 3;
+	public static final int COMPRESSION_TESTING_B = 4;
 
 	// sensors
 	public static final int DRIVE_LEFT_ENCODER_A = 0;
@@ -38,12 +41,13 @@ public class PortsBravo {
 
 	public static final int TILT_POT_PORT = 2;
 
-	 public static final int COMPRESSION_POT = 3;
+	public static final int COMPRESSION_POT = 3;
 	public static final int COMPRESSON_SENSOR = 6;
 
 	public static final int TURNING_GYRO_A = 0;
 	public static final int TURNING_GYRO_B = 1;
-		
+
+	public static final int TILT_LIMIT_SWITCH = 7;
 }
 
 class PortsCharlie {
@@ -86,5 +90,5 @@ class PortsCharlie {
 
 	public static final int COMPRESSION_POT = 0;
 	public static final int COMPRESSON_SENSOR = 6;
-	
+
 }

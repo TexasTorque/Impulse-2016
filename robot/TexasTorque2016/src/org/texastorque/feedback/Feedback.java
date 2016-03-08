@@ -1,7 +1,5 @@
 package org.texastorque.feedback;
 
-import java.nio.ByteBuffer;
-
 import org.texastorque.constants.Constants;
 import org.texastorque.constants.PortsBravo;
 import org.texastorque.torquelib.component.TorqueEncoder;
@@ -11,8 +9,6 @@ import org.texastorque.torquelib.util.TorqueMathUtil;
 
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.I2C;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Feedback {
@@ -24,12 +20,12 @@ public class Feedback {
 
 	// sensors
 	private VisionFeedback vision;
-	
-	private I2C lidar;
-	
+
+	// private I2C lidar;
+
 	// private ADXRS450_Gyro gyro;
 	private TorqueGyro gyro;
-	
+
 	private TorqueEncoder leftDriveEncoder;
 	private TorqueEncoder rightDriveEncoder;
 
@@ -37,10 +33,9 @@ public class Feedback {
 
 	private TorquePotentiometer tiltPot;
 	private TorquePotentiometer compressionPot;
-	private double prevTime;
-	private double prevRaw;
 
 	private DigitalInput compressionSensor;
+	private DigitalInput tiltLimitSwitch;
 
 	// drivebase values
 	private double leftDrivePosition;
@@ -58,14 +53,18 @@ public class Feedback {
 	private double flywheelVelocity;
 
 	private double tiltAngle;
-	
+
+	// other values
+
 	private double lidarDistance;
+	
+	private boolean tiltLimitSwitchActive;
 
 	public Feedback() {
 		vision = VisionFeedback.getInstance();
-		
-		lidar = new I2C(I2C.Port.kMXP, 62);
-		
+
+		// lidar = new I2C(I2C.Port.kMXP, 62);
+
 		// gyro = new ADXRS450_Gyro();
 		gyro = new TorqueGyro(PortsBravo.TURNING_GYRO_A, PortsBravo.TURNING_GYRO_B);
 		leftDriveEncoder = new TorqueEncoder(PortsBravo.DRIVE_LEFT_ENCODER_A, PortsBravo.DRIVE_LEFT_ENCODER_B, false,
@@ -77,10 +76,10 @@ public class Feedback {
 				EncodingType.k4X);
 		tiltPot = new TorquePotentiometer(PortsBravo.TILT_POT_PORT);
 
-		 compressionPot = new TorquePotentiometer(PortsBravo.COMPRESSION_POT);
+		compressionPot = new TorquePotentiometer(PortsBravo.COMPRESSION_POT);
 		compressionSensor = new DigitalInput(PortsBravo.COMPRESSON_SENSOR);
 
-		prevTime = Timer.getFPGATimestamp();
+		tiltLimitSwitch = new DigitalInput(PortsBravo.TILT_LIMIT_SWITCH);
 	}
 
 	public void init() {
@@ -109,11 +108,13 @@ public class Feedback {
 		SmartDashboard.putNumber("POTVALUE", tiltPot.getRaw());
 
 		tiltAngle = tiltPot.getPosition();
+
+		// byte[] temp = new byte[8];
+		// lidar.readOnly(temp, 8);
+		// lidarDistance = (double) temp[0];
+		// lidarDistance = ByteBuffer.wrap(temp).getDouble();
 		
-		byte[] temp = new byte[8];
-		lidar.readOnly(temp, 8);
-		lidarDistance = (double) temp[0];
-//		lidarDistance = ByteBuffer.wrap(temp).getDouble();
+		tiltLimitSwitchActive = tiltLimitSwitch.get();
 
 		vision.calc();
 	}
@@ -172,14 +173,18 @@ public class Feedback {
 		return tiltAngle;
 	}
 
-	public double getCompressionRate() {
-		 return compressionPot.getRaw();
+	public double getCompressionValue() {
+		return compressionPot.getRaw();
 	}
 
 	public boolean isCompressionTestReady() {
 		return compressionSensor.get();
 	}
 	
+	public boolean isTiltLimitSwitchActive() {
+		return tiltLimitSwitchActive;
+	}
+
 	public double getLidarDistance() {
 		return lidarDistance;
 	}
