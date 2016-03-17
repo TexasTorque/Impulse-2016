@@ -8,7 +8,7 @@ public class Constants {
 	public static final Constant A_DRIVE_FORWARD_AUTO_DISTANCE = new Constant("A_DRIVE_FORWARD_DISTANCE", 0.0);
 	public static final Constant A_TURN_AUTO_ANGLE = new Constant("A_TURN_ANGLE", 0.0);
 	public static final Constant A_TILT_AUTO_ANGLE = new Constant("A_TILT_AUTO_ANGLE", 0.0);
-	
+
 	public static final Constant A_LBS_DRIVE_DISTANCE = new Constant("A_LBS_DRIVE_DISTANCE", 0.0);
 
 	// vision
@@ -39,7 +39,7 @@ public class Constants {
 	public static final Constant D_TURN_PV_V = new Constant("D_TURN_PV_V", 0.0);
 	public static final Constant D_TURN_PV_ffV = new Constant("D_TURN_PV_ffV", 0.0);
 	public static final Constant D_TURN_PV_ffA = new Constant("D_TURN_PV_ffA", 0.0);
-	
+
 	public static final Constant D_VISION_P = new Constant("D_VISION_P", 0.0);
 	public static final Constant D_VISION_I = new Constant("D_VISION_I", 0.0);
 	public static final Constant D_VISION_D = new Constant("D_VISION_D", 0.0);
@@ -55,10 +55,22 @@ public class Constants {
 	public static final Constant S_TILT_MAX_VOLTAGE = new Constant("S_TILT_MAX_VOLTAGE", 0.0);
 	public static final Constant S_TILT_MIN_ANGLE = new Constant("S_TILT_MIN_ANGLE", 0.0);
 	public static final Constant S_TILT_MAX_ANGLE = new Constant("S_TILT_MAX_ANGLE", 0.0);
-	
+
 	public static final Constant S_TILT_SET_ANGLE = new Constant("S_TILT_SET_ANGLE", 0.0);
 
 	public static final Constant S_FLYWHEEL_SETPOINT_VELOCITY = new Constant("S_FLYWHEEL_SETPOINT_VELOCITY", 0.0);
 	public static final Constant S_LAYUP_ANGLE_SETPOINT = new Constant("S_LAYUP_ANGLE_SETPOINT", 23);
 	public static final Constant S_LONG_SHOT_ANGLE_SETPOINT = new Constant("S_LONG_SHOT_ANGLE_SETPOINT", 39);
+
+	// a mechanism
+	public static final Constant AMECH_MIN_VOLTAGE = new Constant("A_MIN_VOLTAGE", 0.0);
+	public static final Constant AMECH_MAX_VOLTAGE = new Constant("A_MAX_VOLTAGE", 0.0);
+	public static final Constant AMECH_MIN_ANGLE = new Constant("A_MIN_ANGLE", 0.0);
+	public static final Constant AMECH_MAX_ANGLE = new Constant("A_MAX_ANGLE", 0.0);
+
+	public static final Constant AMECH_P = new Constant("AMECH_P", 0.0);
+	public static final Constant AMECH_I = new Constant("AMECH_I", 0.0);
+	public static final Constant AMECH_D = new Constant("AMECH_D", 0.0);
+	
+	public static final Constant AMECH_HOLD_SETPOINT = new Constant("AMECH_HOLD_SETPOINT", 0.0);
 }
