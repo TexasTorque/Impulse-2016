@@ -65,6 +65,16 @@ public class TorqueEncoder extends Encoder {
 	}
 
 	/**
+	 * Get the position of the encoder. This position is an int number ranging
+	 * from 0 - 5.
+	 * 
+	 * @return the position of the encoder
+	 */
+	public double getPosition() {
+		return super.get();
+	}
+
+	/**
 	 * Get the average rate at which encoder position changes over time. This
 	 * rate is calculated in the dx/dt method rather than 1 / period method.
 	 *
@@ -82,4 +92,5 @@ public class TorqueEncoder extends Encoder {
 	public double getAcceleration() {
 		return acceleration;
 	}
+
 }
