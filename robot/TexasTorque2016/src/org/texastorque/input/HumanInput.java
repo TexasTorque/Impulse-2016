@@ -4,10 +4,7 @@ import org.texastorque.constants.Constants;
 import org.texastorque.feedback.Feedback;
 import org.texastorque.feedback.VisionFeedback;
 import org.texastorque.torquelib.util.GenericController;
-import org.texastorque.torquelib.util.TorqueMathUtil;
 import org.texastorque.torquelib.util.TorqueToggle;
-
-import edu.wpi.first.wpilibj.Timer;
 
 public class HumanInput extends Input {
 
@@ -20,33 +17,18 @@ public class HumanInput extends Input {
 	private TorqueToggle brakes;
 	private TorqueToggle compressionTester;
 
-	private double y;
-	private double lastControl;
-
 	private HumanInput() {
 		driver = new GenericController(0, .1);
 		operator = new GenericController(1, .1);
 
 		brakes = new TorqueToggle();
 		compressionTester = new TorqueToggle();
-
-		lastControl = Timer.getFPGATimestamp();
 	}
 
 	public void update() {
 		// driver
-		if (Timer.getFPGATimestamp() - lastControl < 1) {
-		} else if (Math.abs(driver.getLeftYAxis() - y) > .5 && leftDriveSpeed != 0.0 && rightDriveSpeed != 0.0) {
-			y += TorqueMathUtil.addSign(leftDriveSpeed, .01);
-			y += TorqueMathUtil.addSign(rightDriveSpeed, .01);
-			lastControl = Timer.getFPGATimestamp();
-			y = driver.getLeftYAxis();
-		} else {
-			y = driver.getLeftYAxis();
-		}
-
-		leftDriveSpeed = -y + driver.getRightXAxis();
-		rightDriveSpeed = -y - driver.getRightXAxis();
+		leftDriveSpeed = -driver.getLeftYAxis() + driver.getRightXAxis();
+		rightDriveSpeed = -driver.getLeftYAxis() - driver.getRightXAxis();
 
 		brakes.calc(driver.getAButton());
 		braking = brakes.get();
@@ -67,9 +49,19 @@ public class HumanInput extends Input {
 		layupShot = operator.getYButton();
 		longShot = operator.getBButton();
 
-		compressionTester.calc(operator.getRightStickClick());
-		compressionTesting = compressionTester.get();
-		
+//		compressionTester.calc(operator.getRightStickClick());
+//		compressionTesting = compressionTester.get();
+
+		mechanismSetpoint += -operator.getRightYAxis() * .01;
+		if (mechanismSetpoint >= 1) { 
+			mechanismSetpoint = 1;
+		} else if (mechanismSetpoint <= 0) {
+			mechanismSetpoint = 0;
+		}
+		mechanismHold = operator.getRightStickClick();
+		if (mechanismHold) {
+			mechanismSetpoint = Constants.AMECH_HOLD_SETPOINT.getDouble();
+		}
 		mechanismSpeed = -operator.getRightYAxis();
 
 		prevVisionLock = visionLock;
@@ -79,8 +71,7 @@ public class HumanInput extends Input {
 		}
 		if (operator.getAButton()) {
 			flywheelActive = true;
-			if (Feedback.getInstance().getFlywheelVelocity() > Constants.S_FLYWHEEL_SETPOINT_VELOCITY.getDouble()
-					* .95) {
+			if (Feedback.getInstance().getFlywheelVelocity() > Constants.S_FLYWHEEL_SETPOINT_VELOCITY.getDouble()) {
 				conveyorIntaking = true;
 				intaking = true;
 			}
@@ -89,13 +80,14 @@ public class HumanInput extends Input {
 		}
 
 		tiltSetpoint += -operator.getLeftYAxis();
-		if (tiltSetpoint >= 30) {
-			tiltSetpoint = 30;
-		} else if (tiltSetpoint <= -3) {
-			tiltSetpoint = -3;
+		if (tiltSetpoint >= 37) {
+			tiltSetpoint = 37;
+		} else if (tiltSetpoint <= -10) {
+			tiltSetpoint = -10;
 		}
+
 		tiltMotorSpeed = -operator.getLeftYAxis();
-		
+
 		if (layupShot) {
 			tiltSetpoint = Constants.S_LAYUP_ANGLE_SETPOINT.getDouble();
 		}
