@@ -9,7 +9,7 @@ public class DoNothingAuto extends AutoMode {
 	}
 	
 	@Override
-	public String getName() {
-		return "DoNothingAuto";
+	public double getLinearMaxSpeed() {
+		return 0.0;
 	}
 }

@@ -25,7 +25,7 @@ public class LowBarShootAuto extends AutoMode {
 	}
 
 	@Override
-	public String getName() {
-		return "LowBarShootAuto";
+	public double getLinearMaxSpeed() {
+		return 0.0;// TODO
 	}
 }

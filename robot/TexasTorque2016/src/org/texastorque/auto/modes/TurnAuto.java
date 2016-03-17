@@ -11,7 +11,7 @@ public class TurnAuto extends AutoMode {
 	}
 	
 	@Override
-	public String getName() {
-		return "TurnAuto";
+	public double getLinearMaxSpeed() {
+		return 0.0;
 	}
 }

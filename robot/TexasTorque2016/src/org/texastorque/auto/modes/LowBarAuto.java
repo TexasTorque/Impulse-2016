@@ -3,15 +3,15 @@ package org.texastorque.auto.modes;
 import org.texastorque.auto.AutoMode;
 import org.texastorque.constants.Constants;
 
-public class TiltAuto extends AutoMode {
+public class LowBarAuto extends AutoMode {
 
 	@Override
 	protected void run() {
-		tiltSetpoint = Constants.A_TILT_AUTO_ANGLE.getDouble();
+		driveSetpoint = Constants.A_DRIVE_FORWARD_AUTO_DISTANCE.getDouble();
 	}
 
 	@Override
-	public double getLinearMaxSpeed() {
-		return 0.0;
+	protected double getLinearMaxSpeed() {
+		return 50.0;// TODO
 	}
 }

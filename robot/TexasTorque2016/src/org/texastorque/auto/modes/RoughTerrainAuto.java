@@ -3,15 +3,15 @@ package org.texastorque.auto.modes;
 import org.texastorque.auto.AutoMode;
 import org.texastorque.constants.Constants;
 
-public class DriveForwardAuto extends AutoMode {
+public class RoughTerrainAuto extends AutoMode {
 
 	@Override
 	protected void run() {
 		driveSetpoint = Constants.A_DRIVE_FORWARD_AUTO_DISTANCE.getDouble();
 	}
-	
+
 	@Override
-	public double getLinearMaxSpeed() {
-		return 100.0;
+	protected double getLinearMaxSpeed() {
+		return 70.0;// TODO
 	}
 }
