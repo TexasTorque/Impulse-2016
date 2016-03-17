@@ -1,5 +1,6 @@
 package org.texastorque.subsystem;
 
+import org.texastorque.auto.AutoManager;
 import org.texastorque.constants.Constants;
 import org.texastorque.torquelib.controlLoop.TorquePID;
 import org.texastorque.torquelib.controlLoop.TorquePV;
@@ -60,7 +61,12 @@ public class Drivebase extends Subsystem {
 	@Override
 	public void init() {
 		// linear
-		profile = new TorqueTMP(Constants.D_MAX_VELOCITY.getDouble(), Constants.D_MAX_ACCELERATION.getDouble());
+		if (driverStation.isAutonomous()) {
+			profile = new TorqueTMP(AutoManager.getInstance().getAutoMaxSpeed(), Constants.D_MAX_ACCELERATION.getDouble());
+		} else {
+			profile = new TorqueTMP(Constants.D_MAX_VELOCITY.getDouble(), Constants.D_MAX_ACCELERATION.getDouble());
+		}
+		
 		leftPV = new TorquePV();
 		rightPV = new TorquePV();
 
@@ -118,11 +124,11 @@ public class Drivebase extends Subsystem {
 			rightSpeed = input.getRightDriveSpeed();
 		} else {
 			if (input.isVisionLock()) {
-				turnSetpoint = feedback.getRequiredTurn();
+				turnSetpoint = feedback.getRequiredTurn() + feedback.getAngle();
 				
-				visionPID.setSetpoint(0.0);
+				visionPID.setSetpoint(turnSetpoint);
 				
-				rightSpeed = visionPID.calculate(turnSetpoint);
+				rightSpeed = visionPID.calculate(angle);
 				leftSpeed = -rightSpeed;
 			} else if (input.getDriveSetpoint() != 0.0) {
 				setpoint = input.getDriveSetpoint();
