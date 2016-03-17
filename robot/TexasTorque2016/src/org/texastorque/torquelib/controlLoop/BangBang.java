@@ -25,7 +25,7 @@ public class BangBang extends ControlLoop {
 	public double calculate(double current) {
 		currentValue = current;
 		if (currentValue < setPoint) {
-			return 1.0;
+			return 0.75;
 		} else {
 			return 0.0;
 		}
