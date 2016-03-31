@@ -1,58 +1,8 @@
 package org.texastorque.constants;
 
-class PortsBravo {
+class Ports {
 
-	// drivebase - motors
-	public static final int DRIVE_LEFT_TOP = 6;
-	public static final int DRIVE_LEFT_BOTTOM = 7;
-	public static final int DRIVE_LEFT_BOOST = 8;
-
-	public static final int DRIVE_RIGHT_TOP = 2;
-	public static final int DRIVE_RIGHT_BOTTOM = 10;
-	public static final int DRIVE_RIGHT_BOOST = 3;
-
-	// shooter - motors
-	public static final int TILT = 4;
-	public static final int FLYWHEEL = 9;
-
-	// intake - motors
-	public static final int INTAKE = 0;
-
-	// conveyor - motors
-	public static final int CONVEYOR = 5;
-
-	// mechanism motors
-	public static final int A_MECHANISM = 1;
-
-	// braking - solenoids
-	public static final int BRAKES_SOLENOID_PORT_A = 2;
-	public static final int BRAKES_SOLENOID_PORT_B = 5;
-	public static final int COMPRESSION_TESTING_A = 3;
-	public static final int COMPRESSION_TESTING_B = 4;
-
-	// sensors
-	public static final int DRIVE_LEFT_ENCODER_A = 0;
-	public static final int DRIVE_LEFT_ENCODER_B = 1;
-	public static final int DRIVE_RIGHT_ENCODER_A = 2;
-	public static final int DRIVE_RIGHT_ENCODER_B = 3;
-
-	public static final int FLYWHEEL_ENCODER_A = 4;
-	public static final int FLYWHEEL_ENCODER_B = 5;
-
-	public static final int TILT_POT_PORT = 3;
-
-	public static final int COMPRESSION_POT = 2;
-	public static final int COMPRESSON_SENSOR = 6;
-
-	public static final int TURNING_GYRO_A = 0;
-	public static final int TURNING_GYRO_B = 1;
-
-	public static final int TILT_LIMIT_SWITCH = 7;
-}
-
-public class Ports {
-
-	// drivebase motors
+	// motors
 	public static final int DRIVE_LEFT_TOP = 6;
 	public static final int DRIVE_LEFT_BOTTOM = 7;
 	public static final int DRIVE_LEFT_BOOST = 5;
@@ -61,20 +11,17 @@ public class Ports {
 	public static final int DRIVE_RIGHT_BOTTOM = 2;
 	public static final int DRIVE_RIGHT_BOOST = 10;
 
-	// shooter motor
 	public static final int TILT = 8;
 	public static final int FLYWHEEL = 4;
 
-	// intake motor
 	public static final int INTAKE = 3;
 
-	// conveyor`motor
 	public static final int CONVEYOR = 9;
 
-	// mechanism motor
-	public static final int A_MECHANISM = 0;
+	public static final int ARM_LEFT = 1;
+	public static final int ARM_RIGHT = 0;
 
-	// brakeing solenoids
+	// pneumatics
 	public static final int BRAKES_SOLENOID_PORT_A = 3;
 	public static final int BRAKES_SOLENOID_PORT_B = 4;
 	public static final int COMPRESSION_TESTING_A = 0;
@@ -89,11 +36,56 @@ public class Ports {
 	public static final int FLYWHEEL_ENCODER_A = 6;
 	public static final int FLYWHEEL_ENCODER_B = 7;
 
-	public static final int TILT_POT_PORT = 3;
+	public static final int TILT_ENCODER_A = 12;
+	public static final int TILT_ENCODER_B = 13;
 
-	public static final int A_MECHANISM_POT = 2;
+	public static final int ARM_LEFT_ENCODER_A = 8;
+	public static final int ARM_LEFT_ENCODER_B = 9;
+	public static final int ARM_RIGHT_ENCODER_A = 2;
+	public static final int ARM_RIGHT_ENCODER_B = 3;
+}
 
-	public static final int COMPRESSION_POT = 0;
-	// public static final int COMPRESSON_SENSOR = 6;
+public class PortsBravo {
 
+	// motors
+	public static final int DRIVE_LEFT_TOP = 6;
+	public static final int DRIVE_LEFT_BOTTOM = 7;
+	public static final int DRIVE_LEFT_BOOST = 5;
+
+	public static final int DRIVE_RIGHT_TOP = 11;
+	public static final int DRIVE_RIGHT_BOTTOM = 1;
+	public static final int DRIVE_RIGHT_BOOST = 10;
+
+	public static final int TILT = 8;
+	public static final int FLYWHEEL = 4;
+
+	public static final int INTAKE = 0;
+
+	public static final int CONVEYOR = 9;
+
+	public static final int ARM_LEFT = 2;
+	public static final int ARM_RIGHT = 3;
+
+	// pneumatics
+	public static final int BRAKES_SOLENOID_PORT_A = 3;
+	public static final int BRAKES_SOLENOID_PORT_B = 4;
+	public static final int COMPRESSION_TESTING_A = 0;
+	public static final int COMPRESSION_TESTING_B = 5;
+
+	// sensors
+	public static final int DRIVE_LEFT_ENCODER_A = 4;
+	public static final int DRIVE_LEFT_ENCODER_B = 5;
+	public static final int DRIVE_RIGHT_ENCODER_A = 0;
+	public static final int DRIVE_RIGHT_ENCODER_B = 1;
+
+	public static final int FLYWHEEL_ENCODER_A = 6;
+	public static final int FLYWHEEL_ENCODER_B = 7;
+
+	public static final int TILT_ENCODER_A = 13;
+	public static final int TILT_ENCODER_B = 14;
+
+	public static final int ARM_LEFT_ENCODER_A = 8;
+	public static final int ARM_LEFT_ENCODER_B = 9;
+	public static final int ARM_RIGHT_ENCODER_A = 2;
+	public static final int ARM_RIGHT_ENCODER_B = 3;
 }
