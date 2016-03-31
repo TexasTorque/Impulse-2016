@@ -15,9 +15,11 @@ public class Constants {
 	public static final Constant V_CAMERA_FOV = new Constant("V_CAMERA_FOV", 67.0);
 	public static final Constant V_CAMERA_WIDTH = new Constant("V_CAMERA_WIDTH", 640.0);
 	public static final Constant V_CAMERA_HEIGHT = new Constant("V_CAMERA_HEIGHT", 480.0);
-
-	public static final Constant V_G = new Constant("V_G", 9.81);
-	public static final Constant V_H = new Constant("V_H", 2.44);
+	public static final Constant V_CAMERA_MOUNT_ANGLE = new Constant("V_CAMERA_MOUNT_ANGLE", 50.0);
+	public static final Constant V_ROBOT_CAMERA_DISTANCE = new Constant("V_ROBOT_CAMERA_DISTANCE", 0.0);
+	public static final Constant V_TOWER_HEIGHT = new Constant("V_TOWER_HEIGHT", 0.0);
+	public static final Constant V_ROBOT_HEIGHT = new Constant("V_ROBOT_HEIGHT", 0.0);
+	public static final Constant V_G = new Constant("V_G", 0.0);
 
 	// drivebase
 	public static final Constant D_MAX_VELOCITY = new Constant("D_MAX_VELOCITY", 0.0);
@@ -44,17 +46,12 @@ public class Constants {
 	public static final Constant D_VISION_I = new Constant("D_VISION_I", 0.0);
 	public static final Constant D_VISION_D = new Constant("D_VISION_D", 0.0);
 
-	public static final Constant TUNED_VOLTAGE = new Constant("TUNED_VOLTAGE", 12.2);
+	public static final Constant TUNED_VOLTAGE = new Constant("TUNED_VOLTAGE", 12.5);
 
 	// shooter
 	public static final Constant S_TILT_P = new Constant("S_TILT_P", 0.0);
 	public static final Constant S_TILT_I = new Constant("S_TILT_I", 0.0);
 	public static final Constant S_TILT_D = new Constant("S_TILT_D", 0.0);
-
-	public static final Constant S_TILT_MIN_VOLTAGE = new Constant("S_TILT_MIN_VOLTAGE", 0.0);
-	public static final Constant S_TILT_MAX_VOLTAGE = new Constant("S_TILT_MAX_VOLTAGE", 0.0);
-	public static final Constant S_TILT_MIN_ANGLE = new Constant("S_TILT_MIN_ANGLE", 0.0);
-	public static final Constant S_TILT_MAX_ANGLE = new Constant("S_TILT_MAX_ANGLE", 0.0);
 
 	public static final Constant S_TILT_SET_ANGLE = new Constant("S_TILT_SET_ANGLE", 0.0);
 
@@ -63,14 +60,10 @@ public class Constants {
 	public static final Constant S_LONG_SHOT_ANGLE_SETPOINT = new Constant("S_LONG_SHOT_ANGLE_SETPOINT", 39);
 
 	// a mechanism
-	public static final Constant AMECH_MIN_VOLTAGE = new Constant("A_MIN_VOLTAGE", 0.0);
-	public static final Constant AMECH_MAX_VOLTAGE = new Constant("A_MAX_VOLTAGE", 0.0);
-	public static final Constant AMECH_MIN_ANGLE = new Constant("A_MIN_ANGLE", 0.0);
-	public static final Constant AMECH_MAX_ANGLE = new Constant("A_MAX_ANGLE", 0.0);
+	public static final Constant ARM_P = new Constant("ARM_P", 0.0);
+	public static final Constant ARM_I = new Constant("ARM_I", 0.0);
+	public static final Constant ARM_D = new Constant("ARM_D", 0.0);
 
-	public static final Constant AMECH_P = new Constant("AMECH_P", 0.0);
-	public static final Constant AMECH_I = new Constant("AMECH_I", 0.0);
-	public static final Constant AMECH_D = new Constant("AMECH_D", 0.0);
-	
-	public static final Constant AMECH_HOLD_SETPOINT = new Constant("AMECH_HOLD_SETPOINT", 0.0);
+	public static final Constant ARM_UP_SETPOINT = new Constant("ARM_UP_SETPOINT", 0.0);
+	public static final Constant ARM_DOWN_SETPOINT = new Constant("ARM_DOWN_SETPOINT", 0.0);
 }
