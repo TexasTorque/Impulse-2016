@@ -62,11 +62,12 @@ public class Drivebase extends Subsystem {
 	public void init() {
 		// linear
 		if (driverStation.isAutonomous()) {
-			profile = new TorqueTMP(AutoManager.getInstance().getAutoMaxSpeed(), Constants.D_MAX_ACCELERATION.getDouble());
+			profile = new TorqueTMP(AutoManager.getInstance().getAutoMaxSpeed(),
+					Constants.D_MAX_ACCELERATION.getDouble());
 		} else {
 			profile = new TorqueTMP(Constants.D_MAX_VELOCITY.getDouble(), Constants.D_MAX_ACCELERATION.getDouble());
 		}
-		
+
 		leftPV = new TorquePV();
 		rightPV = new TorquePV();
 
@@ -95,9 +96,9 @@ public class Drivebase extends Subsystem {
 				Constants.D_TURN_PV_ffV.getDouble(), Constants.D_TURN_PV_ffA.getDouble());
 		angularPV.setTunedVoltage(Constants.TUNED_VOLTAGE.getDouble());
 
-		// vision PID
 		visionPID = new TorquePID();
-		visionPID.setPIDGains(Constants.D_VISION_P.getDouble(), Constants.D_VISION_I.getDouble(), Constants.D_VISION_D.getDouble());
+		visionPID.setPIDGains(Constants.D_VISION_P.getDouble(), Constants.D_VISION_I.getDouble(),
+				Constants.D_VISION_D.getDouble());
 		visionPID.setTunedVoltage(Constants.TUNED_VOLTAGE.getDouble());
 		visionPID.setMaxOutput(1.0);
 
@@ -124,11 +125,11 @@ public class Drivebase extends Subsystem {
 			rightSpeed = input.getRightDriveSpeed();
 		} else {
 			if (input.isVisionLock()) {
-				turnSetpoint = feedback.getRequiredTurn() + feedback.getAngle();
-				
-				visionPID.setSetpoint(turnSetpoint);
-				
-				rightSpeed = visionPID.calculate(angle);
+				turnSetpoint = feedback.getRequiredTurn();
+
+				visionPID.setSetpoint(0.0);
+
+				rightSpeed = visionPID.calculate(turnSetpoint);
 				leftSpeed = -rightSpeed;
 			} else if (input.getDriveSetpoint() != 0.0) {
 				setpoint = input.getDriveSetpoint();
