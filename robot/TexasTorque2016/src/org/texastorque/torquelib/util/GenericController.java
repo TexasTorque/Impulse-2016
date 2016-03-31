@@ -170,6 +170,22 @@ public final class GenericController extends Joystick {
 	public synchronized boolean getAButton() {
 		return getRawButton(controllerMap[17]);
 	}
+	
+	public synchronized boolean getDPADUp() {
+		return getPOV() == 0;
+	}
+	
+	public synchronized boolean getDPADRight() {
+		return getPOV() == 90;
+	}
+	
+	public synchronized boolean getDPADDown() {
+		return getPOV() == 180;
+	}
+	
+	public synchronized boolean getDPADLeft() {
+		return getPOV() == 315;
+	}
 
 	public synchronized void setLeftRumble(boolean on) {
 		setRumble(Joystick.RumbleType.kLeftRumble, on ? 1 : 0);
