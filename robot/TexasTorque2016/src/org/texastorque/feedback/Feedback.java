@@ -8,6 +8,7 @@ import org.texastorque.torquelib.util.TorqueMathUtil;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Feedback {
 
@@ -193,6 +194,16 @@ public class Feedback {
 			return false;
 		}
 		return false;
+	}
+
+	public void pushToDashboard() {
+		SmartDashboard.putNumber("VISION_STATE", getVisionState());
+
+		SmartDashboard.putNumber("Turn", vision.getTurn());
+		SmartDashboard.putNumber("Tilt", vision.getTilt());
+		SmartDashboard.putNumber("Distance", vision.getDistance());
+		SmartDashboard.putNumber("Tilt1", vision.getTilt1());
+		SmartDashboard.putNumber("Tilt2", vision.getTilt2());
 	}
 
 	// singleton

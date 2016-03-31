@@ -57,7 +57,6 @@ public class Constants {
 
 	public static final Constant S_FLYWHEEL_SETPOINT_VELOCITY = new Constant("S_FLYWHEEL_SETPOINT_VELOCITY", 0.0);
 	public static final Constant S_LAYUP_ANGLE_SETPOINT = new Constant("S_LAYUP_ANGLE_SETPOINT", 23);
-	public static final Constant S_LONG_SHOT_ANGLE_SETPOINT = new Constant("S_LONG_SHOT_ANGLE_SETPOINT", 39);
 
 	// a mechanism
 	public static final Constant ARM_P = new Constant("ARM_P", 0.0);

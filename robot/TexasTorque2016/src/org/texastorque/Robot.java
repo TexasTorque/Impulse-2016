@@ -111,12 +111,11 @@ public class Robot extends TorqueIterative {
 	// private
 	private void updateDashboard() {
 		subsystems.forEach((subsystem) -> subsystem.pushToDashboard());
+		
 		SmartDashboard.putNumber("NumCycles", numCycles++);
 		SmartDashboard.putNumber("ThreadCount", Thread.activeCount());
-		SmartDashboard.putNumber("VISION_STATE", feedback.getVisionState());
 		SmartDashboard.putBoolean("Override", input.isOverride());
-		SmartDashboard.putNumber("Turn", VisionFeedback.getInstance().getTurn());
-		SmartDashboard.putNumber("Tilt", VisionFeedback.getInstance().getTilt());
-		SmartDashboard.putNumber("Distance", VisionFeedback.getInstance().getDistance());
+
+		feedback.pushToDashboard();
 	}
 }

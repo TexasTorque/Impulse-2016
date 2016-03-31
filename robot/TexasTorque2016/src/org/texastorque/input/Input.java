@@ -30,7 +30,6 @@ public abstract class Input {
 	// shooter variable
 	protected boolean flywheelActive = false;
 	protected boolean layupShot = false;
-	protected boolean longShot = false;
 
 	protected double tiltMotorSpeed = 0.0;
 	
@@ -75,10 +74,6 @@ public abstract class Input {
 		return layupShot;
 	}
 
-	public boolean isLongShot() {
-		return longShot;
-	}
-	
 	public boolean isOverride() {
 		return override;
 	}

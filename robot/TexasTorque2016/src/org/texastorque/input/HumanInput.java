@@ -1,6 +1,7 @@
 package org.texastorque.input;
 
 import org.texastorque.constants.Constants;
+import org.texastorque.feedback.Feedback;
 import org.texastorque.feedback.VisionFeedback;
 import org.texastorque.torquelib.util.GenericController;
 import org.texastorque.torquelib.util.TorqueToggle;
@@ -15,11 +16,15 @@ public class HumanInput extends Input {
 
 	private TorqueToggle brakes;
 
+	private Feedback feedback;
+
 	private HumanInput() {
 		driver = new GenericController(0, .1);
 		operator = new GenericController(1, .1);
 
 		brakes = new TorqueToggle();
+
+		feedback = Feedback.getInstance();
 	}
 
 	public void update() {
@@ -76,11 +81,8 @@ public class HumanInput extends Input {
 		if (operator.getBButton()) {
 			tiltSetpoint = -6.0;
 		}
-		// if (longShot) {
-		// tiltSetpoint = Constants.S_LONG_SHOT_ANGLE_SETPOINT.getDouble();
-		// }
 		if (visionLock) {
-			tiltSetpoint = Constants.S_LAYUP_ANGLE_SETPOINT.getDouble();
+			tiltSetpoint = feedback.getRequiredTilt();
 		}
 
 		overrideReset = operator.getRightStickClick();

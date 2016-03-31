@@ -1,12 +1,16 @@
 package org.texastorque.feedback;
 
+import static java.lang.Math.atan;
+import static java.lang.Math.cos;
+import static java.lang.Math.sqrt;
+import static java.lang.Math.tan;
+import static java.lang.Math.toDegrees;
+import static java.lang.Math.toRadians;
+
 import org.texastorque.constants.Constants;
 
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.tables.ITable;
-
-import static java.lang.Math.*;
 
 public class VisionFeedback {
 
@@ -28,6 +32,10 @@ public class VisionFeedback {
 	private double goalCenterY;
 	private double turn;
 	private double tilt;
+	private double _tilt1;
+	private boolean t1valid;
+	private double _tilt2;
+	private boolean t2valid;
 
 	private double distance;
 
@@ -39,11 +47,6 @@ public class VisionFeedback {
 	}
 
 	private double calcTilt() {
-		double _tilt1;
-		boolean t1valid;
-		double _tilt2;
-		boolean t2valid;
-
 		try {
 			_tilt1 = atan((Vsq - sqrt(Vsq * Vsq - G * (G * distance * distance + k1))) / (G * distance));
 			_tilt1 = 90 - toDegrees(_tilt1);
@@ -57,9 +60,6 @@ public class VisionFeedback {
 		} catch (Exception e) {
 			_tilt2 = 0.0;
 		}
-
-		SmartDashboard.putNumber("Tilt1", _tilt1);
-		SmartDashboard.putNumber("Tilt2", _tilt2);
 
 		t1valid = _tilt1 != 0.0 && _tilt1 > -7 && _tilt1 < 37;
 		t2valid = _tilt2 != 0.0 && _tilt2 > -7 && _tilt2 < 37;
@@ -129,6 +129,14 @@ public class VisionFeedback {
 
 	public double getDistance() {
 		return distance;
+	}
+
+	public double getTilt1() {
+		return _tilt1;
+	}
+
+	public double getTilt2() {
+		return _tilt2;
 	}
 
 	public int getVisionState() {
