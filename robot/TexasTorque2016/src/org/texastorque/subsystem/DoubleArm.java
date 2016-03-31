@@ -5,67 +5,72 @@ import org.texastorque.torquelib.controlLoop.TorquePID;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class Mechanism extends Subsystem {
+public class DoubleArm extends Subsystem {
 
-	private static Mechanism instance;
+	private static DoubleArm instance;
 
-	private double mechanismSpeed;
+	private double leftArmSpeed;
+	private double rightArmSpeed;
 
-	private double mechanismSetpoint;
-	private double mechanismAngle;
-	private double mechanismPotRaw;
-	private boolean mechanismHold;
+	private double armSetpoint;
+	private double leftArmAngle;
+	private double rightArmAngle;
+
+	private boolean armHold;
 
 	// profiling
-	private TorquePID mechanismPID;
+	private TorquePID leftArmPID;
+	private TorquePID rightArmPID;
 
 	@Override
 	public void init() {
-		mechanismPID = new TorquePID();
-		mechanismPID.setPIDGains(Constants.AMECH_P.getDouble(), Constants.AMECH_I.getDouble(),
-				Constants.AMECH_D.getDouble());
-		mechanismPID.setMaxOutput(1.0);
+		leftArmPID = new TorquePID();
+		leftArmPID.setPIDGains(Constants.ARM_P.getDouble(), Constants.ARM_I.getDouble(), Constants.ARM_D.getDouble());
+		leftArmPID.setMaxOutput(1.0);
+
+		rightArmPID = new TorquePID();
+		rightArmPID.setPIDGains(Constants.ARM_P.getDouble(), Constants.ARM_I.getDouble(), Constants.ARM_D.getDouble());
+		rightArmPID.setMaxOutput(1.0);
 	}
 
 	@Override
 	public void run() {
-		mechanismAngle = feedback.getMechanismAngle();
-		mechanismPotRaw = feedback.getMechanismPotRaw();
+		leftArmAngle = feedback.getLeftArmAngle();
+		rightArmAngle = feedback.getRightArmAngle();
 
-//		if (input.isOverride()) {
-			mechanismSpeed = input.getMechanismOverrideSpeed() / 2.0;
-//		} else {
-//			mechanismHold = input.isMechanismHold();
-//			if (mechanismHold) {
-//				mechanismSetpoint = Constants.AMECH_HOLD_SETPOINT.getDouble();
-//			} else {
-//				mechanismSetpoint = input.getMechanismSetpoint();
-//			}
-//			mechanismPID.setSetpoint(mechanismSetpoint);
+		if (input.isOverride()) {
+			leftArmSpeed = rightArmSpeed = input.getArmOverrideSpeed() / 3.0;
+		} else {
+			armSetpoint = input.getArmSetpoint();
+			leftArmPID.setSetpoint(armSetpoint);
+			rightArmPID.setSetpoint(armSetpoint);
 
-//			mechanismSpeed = mechanismPID.calculate(mechanismAngle);
-//		}
+			leftArmSpeed = leftArmPID.calculate(leftArmAngle);
+			rightArmSpeed = rightArmPID.calculate(rightArmAngle);
+		}
 
 		output();
 	}
 
 	@Override
 	protected void output() {
-		output.setMechanismSpeed(mechanismSpeed);
+		output.setArmSpeeds(leftArmSpeed, rightArmSpeed);
 	}
 
 	@Override
 	public void pushToDashboard() {
-		SmartDashboard.putNumber("MechanismAngle", mechanismAngle);
-		SmartDashboard.putNumber("MechanismPotRaw", mechanismPotRaw);
-		SmartDashboard.putNumber("MechanismSetpoint", mechanismSetpoint);
-		SmartDashboard.putBoolean("MechanismHold", mechanismHold);
+		SmartDashboard.putNumber("LeftArmAngle", leftArmAngle);
+		SmartDashboard.putNumber("RightArmAngle", rightArmAngle);
 
-		SmartDashboard.putNumber("MechanismSpeed", mechanismSpeed);
+		SmartDashboard.putNumber("ArmSetpoint", armSetpoint);
+		SmartDashboard.putBoolean("ArmHold", armHold);
+
+		SmartDashboard.putNumber("LeftArmSpeed", leftArmSpeed);
+		SmartDashboard.putNumber("RightArmSpeed", rightArmSpeed);
 	}
 
 	// singleton
-	public static Mechanism getInstance() {
-		return instance == null ? instance = new Mechanism() : instance;
+	public static DoubleArm getInstance() {
+		return instance == null ? instance = new DoubleArm() : instance;
 	}
 }
