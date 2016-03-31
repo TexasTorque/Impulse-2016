@@ -15,9 +15,7 @@ public class Shooter extends Subsystem {
 
 	// sensor
 	private double tiltAngle;
-	private double tiltPotRaw;
 	private double flywheelVelocity;
-	private double lidarDistance;
 
 	// flywheel profiling
 	private BangBang flywheelControl;
@@ -31,7 +29,7 @@ public class Shooter extends Subsystem {
 	public void init() {
 		flywheelControl = new BangBang();
 		flywheelControl.setSetpoint(Constants.S_FLYWHEEL_SETPOINT_VELOCITY.getDouble());
-		
+
 		tiltPID = new TorquePID(Constants.S_TILT_P.getDouble(), Constants.S_TILT_I.getDouble(),
 				Constants.S_TILT_D.getDouble());
 		tiltPID.setTunedVoltage(Constants.TUNED_VOLTAGE.getDouble());
@@ -41,12 +39,13 @@ public class Shooter extends Subsystem {
 	@Override
 	public void run() {
 		tiltAngle = feedback.getTiltAngle();
-		tiltPotRaw = feedback.getTiltPotRaw();
 		flywheelVelocity = feedback.getFlywheelVelocity();
-		lidarDistance = feedback.getLidarDistance();
-		
+
 		if (input.isOverride()) {
 			tiltSpeed = input.getTiltOverrideSpeed();
+			if (input.isOverrideReset()) {
+				feedback.resetTiltEncoder();
+			}
 		} else {
 			if (input.isVisionLock()) {
 				tiltSetpoint = feedback.getRequiredTilt();
@@ -58,7 +57,7 @@ public class Shooter extends Subsystem {
 			tiltSpeed = tiltPID.calculate(tiltAngle);
 		}
 
-		if (input.isFlywheelActive()) {// 8000 max rpm
+		if (input.isFlywheelActive() || input.isVisionLock()) {// 8000 max rpm
 			flywheelSpeed = flywheelControl.calculate(flywheelVelocity);
 		} else {
 			flywheelSpeed = 0.0;
@@ -79,9 +78,7 @@ public class Shooter extends Subsystem {
 		SmartDashboard.putNumber("TiltSpeed", tiltSpeed);
 
 		SmartDashboard.putNumber("TiltAngle", tiltAngle);
-		SmartDashboard.putNumber("TiltPotRaw", tiltPotRaw);
 		SmartDashboard.putNumber("FlywheelVelocity", flywheelVelocity);
-		SmartDashboard.putNumber("LidarDistance", lidarDistance);
 
 		SmartDashboard.putNumber("TiltSetpoint", tiltSetpoint);
 	}
