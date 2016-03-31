@@ -1,9 +1,9 @@
 package org.texastorque.feedback;
 
 import org.texastorque.constants.Constants;
-import org.texastorque.constants.Ports;
+import org.texastorque.constants.PortsBravo;
+import org.texastorque.input.Input;
 import org.texastorque.torquelib.component.TorqueEncoder;
-import org.texastorque.torquelib.component.TorquePotentiometer;
 import org.texastorque.torquelib.util.TorqueMathUtil;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
@@ -13,25 +13,22 @@ public class Feedback {
 
 	private static Feedback instance;
 
-	private static final double DRIVEBASE_CONVERSION = 0.084883;
-	private static final double FLYWHEEL_CONVERSION = .24;
+	private static final double DRIVEBASE_DISTANCE_CONVERSION = 0.084883;
+	private static final double FLYWHEEL_VELOCITY_CONVERSION = .24;
+
+	private Input currentInput;
 
 	// sensors
 	private VisionFeedback vision;
-
-	// private I2C lidar;
 
 	private ADXRS450_Gyro gyro;
 
 	private TorqueEncoder leftDriveEncoder;
 	private TorqueEncoder rightDriveEncoder;
+	private TorqueEncoder leftArmEncoder;
+	private TorqueEncoder rightArmEncoder;
 	private TorqueEncoder flywheelEncoder;
-
-	private TorquePotentiometer tiltPot;
-	private TorquePotentiometer compressionPot;
-	private TorquePotentiometer mechanismPot;
-
-//	private DigitalInput compressionSensor;
+	private TorqueEncoder tiltEncoder;
 
 	// drivebase values
 	private double leftDrivePosition;
@@ -49,41 +46,31 @@ public class Feedback {
 	private double flywheelVelocity;
 
 	private double tiltAngle;
-	private double tiltPotRaw;
-
-	private double lidarDistance;
 
 	// a mechanism values
-	private double mechanismAngle;
-	private double mechanismPotRaw;
+	private double leftArmAngle;
+	private double rightArmAngle;
 
 	public Feedback() {
 		vision = VisionFeedback.getInstance();
 
-		// lidar = new I2C(I2C.Port.kMXP, 62);
-
 		gyro = new ADXRS450_Gyro();
-		leftDriveEncoder = new TorqueEncoder(Ports.DRIVE_LEFT_ENCODER_A, Ports.DRIVE_LEFT_ENCODER_B, true,
+
+		leftDriveEncoder = new TorqueEncoder(PortsBravo.DRIVE_LEFT_ENCODER_A, PortsBravo.DRIVE_LEFT_ENCODER_B, true,
 				EncodingType.k4X);
-		rightDriveEncoder = new TorqueEncoder(Ports.DRIVE_RIGHT_ENCODER_A, Ports.DRIVE_RIGHT_ENCODER_B, false,
+		rightDriveEncoder = new TorqueEncoder(PortsBravo.DRIVE_RIGHT_ENCODER_A, PortsBravo.DRIVE_RIGHT_ENCODER_B, false,
 				EncodingType.k4X);
-
-		flywheelEncoder = new TorqueEncoder(Ports.FLYWHEEL_ENCODER_A, Ports.FLYWHEEL_ENCODER_B, true, EncodingType.k4X);
-		tiltPot = new TorquePotentiometer(Ports.TILT_POT_PORT);
-
-//		compressionSensor = new DigitalInput(Ports.COMPRESSON_SENSOR);
-
-		compressionPot = new TorquePotentiometer(Ports.COMPRESSION_POT);
-		mechanismPot = new TorquePotentiometer(Ports.A_MECHANISM_POT);
+		leftArmEncoder = new TorqueEncoder(PortsBravo.ARM_LEFT_ENCODER_A, PortsBravo.ARM_LEFT_ENCODER_B, false,
+				EncodingType.k4X);
+		rightArmEncoder = new TorqueEncoder(PortsBravo.ARM_RIGHT_ENCODER_A, PortsBravo.ARM_RIGHT_ENCODER_B, false,
+				EncodingType.k4X);
+		flywheelEncoder = new TorqueEncoder(PortsBravo.FLYWHEEL_ENCODER_A, PortsBravo.FLYWHEEL_ENCODER_B, false,
+				EncodingType.k4X);
+		tiltEncoder = new TorqueEncoder(PortsBravo.TILT_ENCODER_A, PortsBravo.TILT_ENCODER_B, false, EncodingType.k4X);
 	}
 
-	public void init() {
-		tiltPot.setInputRange(Constants.S_TILT_MIN_VOLTAGE.getDouble(), Constants.S_TILT_MAX_VOLTAGE.getDouble());
-		tiltPot.setPositionRange(Constants.S_TILT_MIN_ANGLE.getDouble(), Constants.S_TILT_MAX_ANGLE.getDouble());
-
-		mechanismPot.setInputRange(Constants.AMECH_MIN_VOLTAGE.getDouble(), Constants.AMECH_MAX_VOLTAGE.getDouble());
-		mechanismPot.setPositionRange(Constants.AMECH_MIN_ANGLE.getDouble(), Constants.AMECH_MAX_ANGLE.getDouble());
-
+	public void setInput(Input input) {
+		currentInput = input;
 	}
 
 	public void update() {
@@ -91,31 +78,27 @@ public class Feedback {
 		rightDriveEncoder.calc();
 		flywheelEncoder.calc();
 
-		leftDrivePosition = leftDriveEncoder.get() * DRIVEBASE_CONVERSION;
-		leftDriveVelocity = leftDriveEncoder.getRate() * DRIVEBASE_CONVERSION;
-		leftDriveAcceleration = leftDriveEncoder.getAcceleration() * DRIVEBASE_CONVERSION;
+		leftDrivePosition = leftDriveEncoder.get() * DRIVEBASE_DISTANCE_CONVERSION;
+		leftDriveVelocity = leftDriveEncoder.getRate() * DRIVEBASE_DISTANCE_CONVERSION;
+		leftDriveAcceleration = leftDriveEncoder.getAcceleration() * DRIVEBASE_DISTANCE_CONVERSION;
 
-		rightDrivePosition = rightDriveEncoder.get() * DRIVEBASE_CONVERSION;
-		rightDriveVelocity = rightDriveEncoder.getRate() * DRIVEBASE_CONVERSION;
-		rightDriveAcceleration = rightDriveEncoder.getAcceleration() * DRIVEBASE_CONVERSION;
+		rightDrivePosition = rightDriveEncoder.get() * DRIVEBASE_DISTANCE_CONVERSION;
+		rightDriveVelocity = rightDriveEncoder.getRate() * DRIVEBASE_DISTANCE_CONVERSION;
+		rightDriveAcceleration = rightDriveEncoder.getAcceleration() * DRIVEBASE_DISTANCE_CONVERSION;
 
-		angle = gyro.getAngle() % 360.0;
+		angle = gyro.getAngle();
 		angularVelocity = gyro.getRate();
 
-		flywheelVelocity = flywheelEncoder.getRate() * FLYWHEEL_CONVERSION;
+		flywheelVelocity = flywheelEncoder.getRate() * FLYWHEEL_VELOCITY_CONVERSION;
 
-		tiltAngle = tiltPot.getPosition();
-		tiltPotRaw = tiltPot.getRaw();
+		tiltAngle = (tiltEncoder.getRaw() * .04234) - 7;
 
-		mechanismAngle = mechanismPot.getPosition();
-		mechanismPotRaw = mechanismPot.getRaw();
+		leftArmAngle = leftArmEncoder.get();
+		rightArmAngle = rightArmEncoder.get();
 
-		// byte[] temp = new byte[8];
-		// lidar.readOnly(temp, 8);
-		// lidarDistance = (double) temp[0];
-		// lidarDistance = ByteBuffer.wrap(temp).getDouble();
-
-		vision.calc();
+		if (currentInput.isVisionLock()) {
+			vision.calc();
+		}
 	}
 
 	public void resetDriveEncoders() {
@@ -123,12 +106,12 @@ public class Feedback {
 		rightDriveEncoder.reset();
 	}
 
-	public void resetFlywheelEncoder() {
-		flywheelEncoder.reset();
-	}
-
 	public void resetGyro() {
 		gyro.reset();
+	}
+
+	public void resetTiltEncoder() {
+		tiltEncoder.reset();
 	}
 
 	// getters
@@ -172,29 +155,12 @@ public class Feedback {
 		return tiltAngle;
 	}
 
-	public double getTiltPotRaw() {
-		return tiltPotRaw;
+	public double getLeftArmAngle() {
+		return leftArmAngle;
 	}
 
-	public double getMechanismAngle() {
-		return mechanismAngle;
-	}
-
-	public double getMechanismPotRaw() {
-		return mechanismPotRaw;
-	}
-
-	public double getCompressionValue() {
-		return compressionPot.getRaw();
-	}
-
-	public boolean isCompressionTestReady() {
-//		return compressionSensor.get();
-		return false;
-	}
-
-	public double getLidarDistance() {
-		return lidarDistance;
+	public double getRightArmAngle() {
+		return rightArmAngle;
 	}
 
 	public double getRequiredTurn() {
@@ -205,21 +171,25 @@ public class Feedback {
 		return vision.getTilt();
 	}
 
+	public double getVisionDistance() {
+		return vision.getDistance();
+	}
+
 	public int getVisionState() {
 		return vision.getVisionState();
 	}
 
 	public boolean visionShotReady() {
-		if (!TorqueMathUtil.near(getRequiredTilt(), 0, 5.0)) {
-			// must be within 5 degrees of required tilt
+		if (!TorqueMathUtil.near(getRequiredTurn(), 0, 2.0)) {
+			// must be within 2 degrees of required turn
 			return false;
 		}
-		if (!TorqueMathUtil.near(getRequiredTurn(), 0, 5.0)) {
-			// must be with 5 degrees of required turn
+		if (!TorqueMathUtil.near(getTiltAngle(), getRequiredTilt(), .5)) {
+			// must be within .5 degrees of tilt angle
 			return false;
 		}
-		if (!TorqueMathUtil.near(getFlywheelVelocity(), Constants.S_FLYWHEEL_SETPOINT_VELOCITY.getDouble(), 500)) {
-			// must be near flywheel velocity
+		if (!TorqueMathUtil.near(getFlywheelVelocity(), Constants.S_FLYWHEEL_SETPOINT_VELOCITY.getDouble(), 100)) {
+			// must be within 100 rpm of flywheel velocity
 			return false;
 		}
 		return false;
