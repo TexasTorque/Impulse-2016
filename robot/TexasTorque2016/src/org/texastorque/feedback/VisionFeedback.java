@@ -158,9 +158,7 @@ public class VisionFeedback {
 		THETA_PLUS = Constants.V_CAMERA_MOUNT_ANGLE.getDouble() - CAM_FOV / 2.0;
 
 		G = Constants.V_G.getDouble();
-		// Vsq = 0.24765 * 0.10472 *
-		// Constants.S_FLYWHEEL_SETPOINT_VELOCITY.getDouble();
-		Vsq = 10;
+		Vsq = 9.5;
 		Vsq *= Vsq;
 
 		k1 = 2 * H_DIFF * Vsq;
