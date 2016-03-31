@@ -18,6 +18,7 @@ public class AutoManager {
 	private final int ROCK_WALL_AUTO = 7;
 	private final int ROUGH_TERRAIN_AUTO = 8;
 	private final int LOW_BAR_BACK_AUTO = 9;
+	private final int PORT_DE_CULLIS_AUTO = 10;
 
 	private AutoMode currentMode;
 
@@ -44,6 +45,8 @@ public class AutoManager {
 			return currentMode = new LowBarBackAuto();
 		case LBS_AUTO:
 			return currentMode = new LowBarShootAuto();
+		case PORT_DE_CULLIS_AUTO:
+			return currentMode = new PortDeCullisAuto();
 		case RAMPARTS_AUTO:
 			return currentMode = new RampartsAuto();
 		case ROCK_WALL_AUTO:
