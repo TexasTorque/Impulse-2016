@@ -8,11 +8,10 @@ import org.texastorque.feedback.VisionFeedback;
 import org.texastorque.input.HumanInput;
 import org.texastorque.input.Input;
 import org.texastorque.subsystem.Brakes;
-import org.texastorque.subsystem.CompressionTest;
 import org.texastorque.subsystem.Conveyor;
 import org.texastorque.subsystem.Drivebase;
 import org.texastorque.subsystem.Intake;
-import org.texastorque.subsystem.Mechanism;
+import org.texastorque.subsystem.DoubleArm;
 import org.texastorque.subsystem.Shooter;
 import org.texastorque.subsystem.Subsystem;
 import org.texastorque.torquelib.base.TorqueIterative;
@@ -28,27 +27,28 @@ public class Robot extends TorqueIterative {
 	private AutoManager autoManager;
 	private Input input;
 	private Feedback feedback;
-	
+
 	@Override
 	public void robotInit() {
 		Parameters.load();
 		numCycles = 0;
-		
+
 		subsystems = new ArrayList<>();
 		subsystems.add(Drivebase.getInstance());
 		subsystems.add(Intake.getInstance());
 		subsystems.add(Shooter.getInstance());
 		subsystems.add(Conveyor.getInstance());
 		subsystems.add(Brakes.getInstance());
-		subsystems.add(CompressionTest.getInstance());
-		subsystems.add(Mechanism.getInstance());
-		
+		subsystems.add(DoubleArm.getInstance());
+
 		autoManager = AutoManager.getInstance();
 		feedback = Feedback.getInstance();
-		
+
 		VisionFeedback.init();
 
 		autoManager.reset();
+
+		Feedback.getInstance().resetTiltEncoder();
 	}
 
 	// auto
@@ -57,8 +57,8 @@ public class Robot extends TorqueIterative {
 		Parameters.load();
 		numCycles = 0;
 
-		feedback.init();
 		input = autoManager.createAutoMode();
+		feedback.setInput(input);
 		subsystems.forEach((subsystem) -> subsystem.init());
 		subsystems.forEach((subsystem) -> subsystem.setInput(input));
 		autoManager.runAutoMode();
@@ -80,12 +80,13 @@ public class Robot extends TorqueIterative {
 	@Override
 	public void teleopInit() {
 		Parameters.load();
-		feedback.init();
 		numCycles = 0;
 		subsystems.forEach((subsystem) -> subsystem.init());
 
 		input = HumanInput.getInstance();
+		feedback.setInput(input);
 		subsystems.forEach((subsystem) -> subsystem.setInput(input));
+		SmartDashboard.putNumber("VISIONMOD", 7);
 	}
 
 	@Override
@@ -114,5 +115,8 @@ public class Robot extends TorqueIterative {
 		SmartDashboard.putNumber("ThreadCount", Thread.activeCount());
 		SmartDashboard.putNumber("VISION_STATE", feedback.getVisionState());
 		SmartDashboard.putBoolean("Override", input.isOverride());
+		SmartDashboard.putNumber("Turn", VisionFeedback.getInstance().getTurn());
+		SmartDashboard.putNumber("Tilt", VisionFeedback.getInstance().getTilt());
+		SmartDashboard.putNumber("Distance", VisionFeedback.getInstance().getDistance());
 	}
 }
