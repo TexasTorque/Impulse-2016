@@ -8,7 +8,7 @@ public abstract class Input {
 
 	protected double driveSetpoint = 0.0;
 	protected double turnSetpoint = 0.0;
-	protected double tiltSetpoint = -5.0;
+	protected double tiltSetpoint = -6.0;
 
 	// brakeing
 	protected boolean braking = false;
@@ -17,6 +17,7 @@ public abstract class Input {
 	protected boolean override = false;
 	protected boolean visionLock = false;
 	protected boolean prevVisionLock = false;
+	protected boolean overrideReset = false;
 
 	// intake variables
 	protected boolean intaking = false;
@@ -37,9 +38,8 @@ public abstract class Input {
 	protected boolean compressionTesting = false;
 	
 	// mechanism
-	protected double mechanismSetpoint = 1.0;
-	protected double mechanismSpeed = 0.0;
-	protected boolean mechanismHold;
+	protected double armSetpoint = 0.0;
+	protected double armSpeed = 0.0;
 	
 	public abstract void update();
 
@@ -67,8 +67,8 @@ public abstract class Input {
 		return tiltSetpoint;
 	}
 	
-	public double getMechanismSetpoint() {
-		return mechanismSetpoint;
+	public double getArmSetpoint() {
+		return armSetpoint;
 	}
 
 	public boolean isLayupShot() {
@@ -79,10 +79,6 @@ public abstract class Input {
 		return longShot;
 	}
 	
-	public boolean isMechanismHold() {
-		return mechanismHold;
-	}
-
 	public boolean isOverride() {
 		return override;
 	}
@@ -95,8 +91,8 @@ public abstract class Input {
 		return tiltMotorSpeed;
 	}
 	
-	public double getMechanismOverrideSpeed() {
-		return mechanismSpeed;
+	public double getArmOverrideSpeed() {
+		return armSpeed;
 	}
 
 	public boolean isBraking() {
@@ -121,5 +117,9 @@ public abstract class Input {
 
 	public boolean isFlywheelActive() {
 		return flywheelActive;
+	}
+	
+	public boolean isOverrideReset() {
+		return overrideReset;
 	}
 }

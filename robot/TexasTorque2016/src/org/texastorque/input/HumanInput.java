@@ -1,7 +1,6 @@
 package org.texastorque.input;
 
 import org.texastorque.constants.Constants;
-import org.texastorque.feedback.Feedback;
 import org.texastorque.feedback.VisionFeedback;
 import org.texastorque.torquelib.util.GenericController;
 import org.texastorque.torquelib.util.TorqueToggle;
@@ -15,14 +14,12 @@ public class HumanInput extends Input {
 	private GenericController operator;
 
 	private TorqueToggle brakes;
-	private TorqueToggle compressionTester;
 
 	private HumanInput() {
 		driver = new GenericController(0, .1);
 		operator = new GenericController(1, .1);
 
 		brakes = new TorqueToggle();
-		compressionTester = new TorqueToggle();
 	}
 
 	public void update() {
@@ -47,56 +44,46 @@ public class HumanInput extends Input {
 		conveyorOuttaking = operator.getLeftTrigger();
 
 		layupShot = operator.getYButton();
-		longShot = operator.getBButton();
+		// longShot = operator.getYButton();
 
-//		compressionTester.calc(operator.getRightStickClick());
-//		compressionTesting = compressionTester.get();
-
-		mechanismSetpoint += -operator.getRightYAxis() * .01;
-		if (mechanismSetpoint >= 1) { 
-			mechanismSetpoint = 1;
-		} else if (mechanismSetpoint <= 0) {
-			mechanismSetpoint = 0;
+		if (operator.getDPADUp()) {
+			armSetpoint = Constants.ARM_UP_SETPOINT.getDouble();
+		} else if (operator.getDPADDown()) {
+			armSetpoint = Constants.ARM_DOWN_SETPOINT.getDouble();
 		}
-		mechanismHold = operator.getRightStickClick();
-		if (mechanismHold) {
-			mechanismSetpoint = Constants.AMECH_HOLD_SETPOINT.getDouble();
-		}
-		mechanismSpeed = -operator.getRightYAxis();
+		armSpeed = operator.getRightYAxis();
 
 		prevVisionLock = visionLock;
 		visionLock = operator.getXButton();
 		if (prevVisionLock != visionLock && visionLock == true) {
 			VisionFeedback.init();
 		}
-		if (operator.getAButton()) {
-			flywheelActive = true;
-			if (Feedback.getInstance().getFlywheelVelocity() > Constants.S_FLYWHEEL_SETPOINT_VELOCITY.getDouble()) {
-				conveyorIntaking = true;
-				intaking = true;
-			}
-		} else {
-			flywheelActive = false;
+
+		flywheelActive = operator.getAButton();
+
+		tiltSetpoint += -operator.getLeftYAxis() / 3.0;
+		if (tiltSetpoint >= 35) {
+			tiltSetpoint = 35;
+		} else if (tiltSetpoint <= -7) {
+			tiltSetpoint = -7;
 		}
 
-		tiltSetpoint += -operator.getLeftYAxis();
-		if (tiltSetpoint >= 37) {
-			tiltSetpoint = 37;
-		} else if (tiltSetpoint <= -10) {
-			tiltSetpoint = -10;
-		}
-
-		tiltMotorSpeed = -operator.getLeftYAxis();
+		tiltMotorSpeed = -operator.getLeftYAxis() / 3.0;
 
 		if (layupShot) {
 			tiltSetpoint = Constants.S_LAYUP_ANGLE_SETPOINT.getDouble();
 		}
-		if (longShot) {
-			tiltSetpoint = Constants.S_LONG_SHOT_ANGLE_SETPOINT.getDouble();
+		if (operator.getBButton()) {
+			tiltSetpoint = -6.0;
 		}
+		// if (longShot) {
+		// tiltSetpoint = Constants.S_LONG_SHOT_ANGLE_SETPOINT.getDouble();
+		// }
 		if (visionLock) {
-			tiltSetpoint = Feedback.getInstance().getRequiredTilt();
+			tiltSetpoint = Constants.S_LAYUP_ANGLE_SETPOINT.getDouble();
 		}
+
+		overrideReset = operator.getRightStickClick();
 	}
 
 	// singleton
