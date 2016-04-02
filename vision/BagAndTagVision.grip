@@ -1,7 +1,7 @@
 <grip:Pipeline>
   <sources>
     <grip:Camera>
-      <property name="address" value="http://10.14.77.20"/>
+      <property name="address" value="http://10.14.77.32"/>
     </grip:Camera>
   </sources>
   <steps>
@@ -11,7 +11,7 @@
         <value>BOX</value>
       </grip:Input>
       <grip:Input step="0" socket="2">
-        <value>3.6036036036036028</value>
+        <value>2.702702702702702</value>
       </grip:Input>
       <grip:Output step="0" socket="0" previewed="false"/>
     </grip:Step>
@@ -20,18 +20,18 @@
       <grip:Input step="1" socket="1">
         <value>
           <double>0.0</double>
-          <double>98.34470989761093</double>
+          <double>104.87201365187713</double>
         </value>
       </grip:Input>
       <grip:Input step="1" socket="2">
         <value>
-          <double>190.33273381294964</double>
+          <double>130.71043165467626</double>
           <double>255.0</double>
         </value>
       </grip:Input>
       <grip:Input step="1" socket="3">
         <value>
-          <double>176.57374100719426</double>
+          <double>162.81474820143885</double>
           <double>255.0</double>
         </value>
       </grip:Input>
@@ -47,7 +47,7 @@
     <grip:Step name="Filter Contours">
       <grip:Input step="3" socket="0"/>
       <grip:Input step="3" socket="1">
-        <value>250.0</value>
+        <value>500.0</value>
       </grip:Input>
       <grip:Input step="3" socket="2">
         <value>0.0</value>
@@ -99,12 +99,12 @@
   </steps>
   <connections>
     <grip:Connection>
-      <grip:Output source="0" socket="0" previewed="true"/>
-      <grip:Input step="0" socket="0"/>
-    </grip:Connection>
-    <grip:Connection>
       <grip:Output step="0" socket="0" previewed="false"/>
       <grip:Input step="1" socket="0"/>
+    </grip:Connection>
+    <grip:Connection>
+      <grip:Output source="0" socket="0" previewed="false"/>
+      <grip:Input step="0" socket="0"/>
     </grip:Connection>
     <grip:Connection>
       <grip:Output step="3" socket="0" previewed="true"/>
