@@ -43,6 +43,9 @@ class Ports {
 	public static final int ARM_LEFT_ENCODER_B = 9;
 	public static final int ARM_RIGHT_ENCODER_A = 2;
 	public static final int ARM_RIGHT_ENCODER_B = 3;
+
+	// misc
+	public static final int FLASHLIGHT = -1;
 }
 
 public class PortsBravo {
@@ -67,10 +70,10 @@ public class PortsBravo {
 	public static final int ARM_RIGHT = 3;
 
 	// pneumatics
-	public static final int BRAKES_SOLENOID_PORT_A = 3;
-	public static final int BRAKES_SOLENOID_PORT_B = 4;
-	public static final int COMPRESSION_TESTING_A = 0;
-	public static final int COMPRESSION_TESTING_B = 5;
+	public static final int BRAKES_SOLENOID_PORT_A = 0;
+	public static final int BRAKES_SOLENOID_PORT_B = 5;
+	public static final int COMPRESSION_TESTING_A = 3;
+	public static final int COMPRESSION_TESTING_B = 4;
 
 	// sensors
 	public static final int DRIVE_LEFT_ENCODER_A = 4;
@@ -88,4 +91,7 @@ public class PortsBravo {
 	public static final int ARM_LEFT_ENCODER_B = 9;
 	public static final int ARM_RIGHT_ENCODER_A = 2;
 	public static final int ARM_RIGHT_ENCODER_B = 3;
+
+	// misc
+	public static final int FLASHLIGHT = 0;
 }
