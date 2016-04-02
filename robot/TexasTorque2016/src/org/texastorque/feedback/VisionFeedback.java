@@ -61,8 +61,8 @@ public class VisionFeedback {
 			_tilt2 = 0.0;
 		}
 
-		t1valid = _tilt1 != 0.0 && _tilt1 > -7 && _tilt1 < 37;
-		t2valid = _tilt2 != 0.0 && _tilt2 > -7 && _tilt2 < 37;
+		t1valid = _tilt1 != 0.0 && _tilt1 > Constants.S_DOWN_SETPOINT.getDouble() && _tilt1 < 37;
+		t2valid = _tilt2 != 0.0 && _tilt2 > Constants.S_DOWN_SETPOINT.getDouble() && _tilt2 < 37;
 
 		if (t1valid && t2valid) {
 			if (_tilt1 > _tilt2) {
@@ -92,7 +92,7 @@ public class VisionFeedback {
 
 		if (goalCenterX == -1.0 || goalCenterY == -1.0) {
 			turn = 0.0;
-			tilt = -6.0;
+			tilt = Constants.S_DOWN_SETPOINT.getDouble();
 			visionState = 3;// failed - could not find goal
 			return;
 		} else {
@@ -105,7 +105,7 @@ public class VisionFeedback {
 		// linear tilt angle for distance
 		tilt = (1 - (goalCenterY / CAM_HEIGHT)) * CAM_FOV;
 		tilt += THETA_PLUS;
-
+		
 		distance = H_DIFF / tan(toRadians(tilt));
 
 		// real tilt
@@ -158,7 +158,7 @@ public class VisionFeedback {
 		THETA_PLUS = Constants.V_CAMERA_MOUNT_ANGLE.getDouble() - CAM_FOV / 2.0;
 
 		G = Constants.V_G.getDouble();
-		Vsq = 9.5;
+		Vsq = 7.5;
 		Vsq *= Vsq;
 
 		k1 = 2 * H_DIFF * Vsq;
