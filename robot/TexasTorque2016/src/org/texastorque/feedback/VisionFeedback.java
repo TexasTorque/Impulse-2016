@@ -1,11 +1,6 @@
 package org.texastorque.feedback;
 
-import static java.lang.Math.atan;
-import static java.lang.Math.cos;
-import static java.lang.Math.sqrt;
-import static java.lang.Math.tan;
-import static java.lang.Math.toDegrees;
-import static java.lang.Math.toRadians;
+import static java.lang.Math.*;
 
 import org.texastorque.constants.Constants;
 
@@ -105,7 +100,7 @@ public class VisionFeedback {
 		// linear tilt angle for distance
 		tilt = (1 - (goalCenterY / CAM_HEIGHT)) * CAM_FOV;
 		tilt += THETA_PLUS;
-		
+
 		distance = H_DIFF / tan(toRadians(tilt));
 
 		// real tilt

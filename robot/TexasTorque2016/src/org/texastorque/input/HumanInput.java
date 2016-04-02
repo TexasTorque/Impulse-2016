@@ -52,7 +52,7 @@ public class HumanInput extends Input {
 		} else if (operator.getDPADDown()) {
 			armUp = false;
 		}
-		armSpeed = operator.getRightYAxis();
+		armSpeed = operator.getRightYAxis() / 3.0;
 
 		visionLock = operator.getXButton();
 

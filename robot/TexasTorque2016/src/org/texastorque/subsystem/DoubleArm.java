@@ -45,7 +45,7 @@ public class DoubleArm extends Subsystem {
 		}
 
 		if (input.isOverride()) {
-			leftArmSpeed = rightArmSpeed = input.getArmOverrideSpeed() / 3.0;
+			leftArmSpeed = rightArmSpeed = input.getArmOverrideSpeed();
 		} else {
 			armSetpoint = input.getArmSetpoint();
 			leftArmPID.setSetpoint(armSetpoint);

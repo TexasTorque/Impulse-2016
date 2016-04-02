@@ -60,11 +60,6 @@ public class Shooter extends Subsystem {
 			} else {
 				tiltSetpoint = Constants.S_DOWN_SETPOINT.getDouble();
 			}
-			if (tiltSetpoint >= 38) {
-				tiltSetpoint = 38;
-			} else if (tiltSetpoint <= Constants.S_DOWN_SETPOINT.getDouble()) {
-				tiltSetpoint = Constants.S_DOWN_SETPOINT.getDouble();
-			}
 
 			tiltPID.setSetpoint(tiltSetpoint);
 
