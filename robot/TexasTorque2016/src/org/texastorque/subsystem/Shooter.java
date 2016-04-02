@@ -19,6 +19,7 @@ public class Shooter extends Subsystem {
 
 	// flywheel profiling
 	private BangBang flywheelControl;
+	private boolean flywheelActive;
 
 	// tilt profiling
 	private TorquePID tiltPID;
@@ -33,13 +34,14 @@ public class Shooter extends Subsystem {
 		tiltPID = new TorquePID(Constants.S_TILT_P.getDouble(), Constants.S_TILT_I.getDouble(),
 				Constants.S_TILT_D.getDouble());
 		tiltPID.setTunedVoltage(Constants.TUNED_VOLTAGE.getDouble());
-		tiltPID.setMaxOutput(1.0);
+		tiltPID.setMaxOutput(.5);
 	}
 
 	@Override
 	public void run() {
 		tiltAngle = feedback.getTiltAngle();
 		flywheelVelocity = feedback.getFlywheelVelocity();
+		flywheelActive = input.isFlywheelActive() || input.isVisionLock() || input.isShooting();
 
 		if (input.isOverride()) {
 			tiltSpeed = input.getTiltOverrideSpeed();
@@ -49,21 +51,36 @@ public class Shooter extends Subsystem {
 		} else {
 			if (input.isVisionLock()) {
 				tiltSetpoint = feedback.getRequiredTilt();
+			} else if (input.isLongShot()) {
+				tiltSetpoint = Constants.S_LONG_SHOT_SETPOINT.getDouble();
+			} else if (input.isLayupShot()) {
+				tiltSetpoint = Constants.S_LAYUP_ANGLE_SETPOINT.getDouble();
+			} else if (input.isBatterShot()) {
+				tiltSetpoint = Constants.S_BATTER_SHOT_SETPOINT.getDouble();
 			} else {
-				tiltSetpoint = input.getTiltSetpoint();
+				tiltSetpoint = Constants.S_DOWN_SETPOINT.getDouble();
 			}
+			if (tiltSetpoint >= 38) {
+				tiltSetpoint = 38;
+			} else if (tiltSetpoint <= Constants.S_DOWN_SETPOINT.getDouble()) {
+				tiltSetpoint = Constants.S_DOWN_SETPOINT.getDouble();
+			}
+
 			tiltPID.setSetpoint(tiltSetpoint);
 
 			tiltSpeed = tiltPID.calculate(tiltAngle);
 		}
 
-		if (input.isFlywheelActive() || input.isVisionLock()) {// 8000 max rpm
+		if (flywheelActive)
+
+		{// 8000 max rpm
 			flywheelSpeed = flywheelControl.calculate(flywheelVelocity);
 		} else {
 			flywheelSpeed = 0.0;
 		}
 
 		output();
+
 	}
 
 	@Override
@@ -74,13 +91,13 @@ public class Shooter extends Subsystem {
 
 	@Override
 	public void pushToDashboard() {
-		SmartDashboard.putNumber("FlywheelMotorSpeed", flywheelSpeed);
 		SmartDashboard.putNumber("TiltSpeed", tiltSpeed);
-
 		SmartDashboard.putNumber("TiltAngle", tiltAngle);
-		SmartDashboard.putNumber("FlywheelVelocity", flywheelVelocity);
-
 		SmartDashboard.putNumber("TiltSetpoint", tiltSetpoint);
+
+		SmartDashboard.putBoolean("FlywheelActive", flywheelActive);
+		SmartDashboard.putNumber("FlywheelMotorSpeed", flywheelSpeed);
+		SmartDashboard.putNumber("FlywheelVelocity", flywheelVelocity);
 	}
 
 	// singleton

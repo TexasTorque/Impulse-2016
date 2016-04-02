@@ -1,5 +1,7 @@
 package org.texastorque.input;
 
+import org.texastorque.constants.Constants;
+
 public abstract class Input {
 
 	// drivebase
@@ -8,7 +10,7 @@ public abstract class Input {
 
 	protected double driveSetpoint = 0.0;
 	protected double turnSetpoint = 0.0;
-	protected double tiltSetpoint = -6.0;
+	protected double tiltSetpoint = Constants.S_DOWN_SETPOINT.getDouble();
 
 	// brakeing
 	protected boolean braking = false;
@@ -16,7 +18,6 @@ public abstract class Input {
 	// override variables
 	protected boolean override = false;
 	protected boolean visionLock = false;
-	protected boolean prevVisionLock = false;
 	protected boolean overrideReset = false;
 
 	// intake variables
@@ -30,22 +31,28 @@ public abstract class Input {
 	// shooter variable
 	protected boolean flywheelActive = false;
 	protected boolean layupShot = false;
+	protected boolean batterShot = false;
+	protected boolean longShot = false;
 
 	protected double tiltMotorSpeed = 0.0;
-	
+
 	// compression testing
 	protected boolean compressionTesting = false;
-	
-	// mechanism
+
+	// arm
+	protected boolean armUp = true;
 	protected double armSetpoint = 0.0;
 	protected double armSpeed = 0.0;
-	
+
+	// flashlight
+	protected boolean flashlight = false;
+
 	public abstract void update();
 
-	public boolean getCompressionTesting(){
+	public boolean getCompressionTesting() {
 		return compressionTesting;
 	}
-	
+
 	public double getLeftDriveSpeed() {
 		return leftDriveSpeed;
 	}
@@ -65,7 +72,7 @@ public abstract class Input {
 	public double getTiltSetpoint() {
 		return tiltSetpoint;
 	}
-	
+
 	public double getArmSetpoint() {
 		return armSetpoint;
 	}
@@ -74,8 +81,24 @@ public abstract class Input {
 		return layupShot;
 	}
 
+	public boolean isBatterShot() {
+		return batterShot;
+	}
+
+	public boolean isLongShot() {
+		return longShot;
+	}
+
+	public boolean isShooting() {
+		return longShot || batterShot || layupShot;
+	}
+
 	public boolean isOverride() {
 		return override;
+	}
+	
+	public boolean isArmUp() {
+		return armUp;
 	}
 
 	public boolean isVisionLock() {
@@ -85,7 +108,7 @@ public abstract class Input {
 	public double getTiltOverrideSpeed() {
 		return tiltMotorSpeed;
 	}
-	
+
 	public double getArmOverrideSpeed() {
 		return armSpeed;
 	}
@@ -113,8 +136,12 @@ public abstract class Input {
 	public boolean isFlywheelActive() {
 		return flywheelActive;
 	}
-	
+
 	public boolean isOverrideReset() {
 		return overrideReset;
+	}
+
+	public boolean isFlashlightOn() {
+		return flashlight;
 	}
 }

@@ -1,8 +1,5 @@
 package org.texastorque.input;
 
-import org.texastorque.constants.Constants;
-import org.texastorque.feedback.Feedback;
-import org.texastorque.feedback.VisionFeedback;
 import org.texastorque.torquelib.util.GenericController;
 import org.texastorque.torquelib.util.TorqueToggle;
 
@@ -16,15 +13,11 @@ public class HumanInput extends Input {
 
 	private TorqueToggle brakes;
 
-	private Feedback feedback;
-
 	private HumanInput() {
 		driver = new GenericController(0, .1);
 		operator = new GenericController(1, .1);
 
 		brakes = new TorqueToggle();
-
-		feedback = Feedback.getInstance();
 	}
 
 	public void update() {
@@ -34,6 +27,8 @@ public class HumanInput extends Input {
 
 		brakes.calc(driver.getAButton());
 		braking = brakes.get();
+
+		flashlight = driver.getRightBumper();
 
 		// operator
 		if (operator.getLeftCenterButton()) {
@@ -48,42 +43,23 @@ public class HumanInput extends Input {
 		conveyorIntaking = operator.getLeftBumper();
 		conveyorOuttaking = operator.getLeftTrigger();
 
-		layupShot = operator.getYButton();
-		// longShot = operator.getYButton();
+		longShot = operator.getYButton();
+		batterShot = operator.getAButton();
+		layupShot = operator.getBButton();
 
 		if (operator.getDPADUp()) {
-			armSetpoint = Constants.ARM_UP_SETPOINT.getDouble();
+			armUp = true;
 		} else if (operator.getDPADDown()) {
-			armSetpoint = Constants.ARM_DOWN_SETPOINT.getDouble();
+			armUp = false;
 		}
 		armSpeed = operator.getRightYAxis();
 
-		prevVisionLock = visionLock;
 		visionLock = operator.getXButton();
-		if (prevVisionLock != visionLock && visionLock == true) {
-			VisionFeedback.init();
-		}
 
 		flywheelActive = operator.getAButton();
 
 		tiltSetpoint += -operator.getLeftYAxis() / 3.0;
-		if (tiltSetpoint >= 35) {
-			tiltSetpoint = 35;
-		} else if (tiltSetpoint <= -7) {
-			tiltSetpoint = -7;
-		}
-
 		tiltMotorSpeed = -operator.getLeftYAxis() / 3.0;
-
-		if (layupShot) {
-			tiltSetpoint = Constants.S_LAYUP_ANGLE_SETPOINT.getDouble();
-		}
-		if (operator.getBButton()) {
-			tiltSetpoint = -6.0;
-		}
-		if (visionLock) {
-			tiltSetpoint = feedback.getRequiredTilt();
-		}
 
 		overrideReset = operator.getRightStickClick();
 	}
