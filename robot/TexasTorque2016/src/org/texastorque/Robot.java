@@ -53,14 +53,13 @@ public class Robot extends TorqueIterative {
 		Feedback.getInstance().resetTiltEncoder();
 	}
 
-	// auto
 	@Override
 	public void autonomousInit() {
 		Parameters.load();
 		numCycles = 0;
 
 		VisionFeedback.init();
-		
+
 		input = autoManager.createAutoMode();
 		feedback.setInput(input);
 		subsystems.forEach((subsystem) -> subsystem.init());
@@ -80,19 +79,17 @@ public class Robot extends TorqueIterative {
 		updateDashboard();
 	}
 
-	// teleop
 	@Override
 	public void teleopInit() {
 		Parameters.load();
 		numCycles = 0;
 		subsystems.forEach((subsystem) -> subsystem.init());
-		
+
 		VisionFeedback.init();
 
 		input = HumanInput.getInstance();
 		feedback.setInput(input);
 		subsystems.forEach((subsystem) -> subsystem.setInput(input));
-		SmartDashboard.putNumber("VISIONMOD", 7);
 	}
 
 	@Override
@@ -107,17 +104,15 @@ public class Robot extends TorqueIterative {
 		updateDashboard();
 	}
 
-	// disabled
 	@Override
 	public void disabledInit() {
 		numCycles = 0;
 		autoManager.reset();
 	}
 
-	// private
 	private void updateDashboard() {
 		subsystems.forEach((subsystem) -> subsystem.pushToDashboard());
-		
+
 		SmartDashboard.putNumber("NumCycles", numCycles++);
 		SmartDashboard.putNumber("ThreadCount", Thread.activeCount());
 		SmartDashboard.putBoolean("Override", input.isOverride());
