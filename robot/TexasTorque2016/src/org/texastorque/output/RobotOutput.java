@@ -5,6 +5,9 @@ import org.texastorque.torquelib.component.TorqueMotor;
 
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Relay;
+import edu.wpi.first.wpilibj.Relay.Direction;
+import edu.wpi.first.wpilibj.Relay.Value;
 import edu.wpi.first.wpilibj.VictorSP;
 
 public class RobotOutput {
@@ -43,6 +46,9 @@ public class RobotOutput {
 	// compression testing
 	private DoubleSolenoid compressionTesting;
 
+	// flashlight
+	private Relay flashlight;
+
 	public RobotOutput() {
 		compressor = new Compressor();
 		compressor.start();
@@ -67,6 +73,8 @@ public class RobotOutput {
 
 		brakes = new DoubleSolenoid(PortsBravo.BRAKES_SOLENOID_PORT_A, PortsBravo.BRAKES_SOLENOID_PORT_B);
 		compressionTesting = new DoubleSolenoid(PortsBravo.COMPRESSION_TESTING_A, PortsBravo.COMPRESSION_TESTING_B);
+
+		flashlight = new Relay(PortsBravo.FLASHLIGHT, Direction.kBoth);
 	}
 
 	public void setDriveSpeeds(double left, double right) {
@@ -131,9 +139,9 @@ public class RobotOutput {
 
 	public void setBrakes(boolean on) {
 		if (OUTPUT_ENABLED) {
-			brakes.set(on ? DoubleSolenoid.Value.kForward : DoubleSolenoid.Value.kReverse);
+			brakes.set(on ? DoubleSolenoid.Value.kReverse : DoubleSolenoid.Value.kForward);
 		} else {
-			brakes.set(DoubleSolenoid.Value.kReverse);
+			brakes.set(DoubleSolenoid.Value.kForward);
 		}
 	}
 
@@ -143,6 +151,14 @@ public class RobotOutput {
 					.set(doCompressionTesting ? DoubleSolenoid.Value.kReverse : DoubleSolenoid.Value.kForward);
 		} else {
 			compressionTesting.set(DoubleSolenoid.Value.kForward);
+		}
+	}
+
+	public void setFlashlight(boolean on) {
+		if (OUTPUT_ENABLED) {
+			flashlight.set(on ? Value.kOn : Value.kOff);
+		} else {
+			flashlight.set(Value.kOff);
 		}
 	}
 
