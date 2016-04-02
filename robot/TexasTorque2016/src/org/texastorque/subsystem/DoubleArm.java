@@ -38,6 +38,12 @@ public class DoubleArm extends Subsystem {
 		leftArmAngle = feedback.getLeftArmAngle();
 		rightArmAngle = feedback.getRightArmAngle();
 
+		if (input.isArmUp()) {
+			armSetpoint = Constants.ARM_UP_SETPOINT.getDouble();
+		} else {
+			armSetpoint = Constants.ARM_DOWN_SETPOINT.getDouble();
+		}
+
 		if (input.isOverride()) {
 			leftArmSpeed = rightArmSpeed = input.getArmOverrideSpeed() / 3.0;
 		} else {

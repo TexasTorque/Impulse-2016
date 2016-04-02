@@ -100,7 +100,7 @@ public class Drivebase extends Subsystem {
 		visionPID.setPIDGains(Constants.D_VISION_P.getDouble(), Constants.D_VISION_I.getDouble(),
 				Constants.D_VISION_D.getDouble());
 		visionPID.setTunedVoltage(Constants.TUNED_VOLTAGE.getDouble());
-		visionPID.setMaxOutput(1.0);
+		visionPID.setMaxOutput(0.35);
 
 		// time
 		prevTime = Timer.getFPGATimestamp();
@@ -131,6 +131,10 @@ public class Drivebase extends Subsystem {
 
 				rightSpeed = visionPID.calculate(turnSetpoint);
 				leftSpeed = -rightSpeed;
+
+				if (feedback.visionShotReady()) {
+					rightSpeed = leftSpeed = 0.0;
+				}
 			} else if (input.getDriveSetpoint() != 0.0) {
 				setpoint = input.getDriveSetpoint();
 				if (setpoint != previousSetpoint) {
