@@ -8,6 +8,7 @@ import org.texastorque.torquelib.util.TorqueMathUtil;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
+import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Feedback {
@@ -92,12 +93,13 @@ public class Feedback {
 
 		flywheelVelocity = flywheelEncoder.getRate() * FLYWHEEL_VELOCITY_CONVERSION;
 
-		tiltAngle = (tiltEncoder.getRaw() * .04234) - 7;
+		// down setpoint is negative
+		tiltAngle = (tiltEncoder.getRaw() * .04234) + Constants.S_DOWN_SETPOINT.getDouble();
 
 		leftArmAngle = leftArmEncoder.get();
 		rightArmAngle = rightArmEncoder.get();
 
-		if (currentInput.isVisionLock()) {
+		if (currentInput.isVisionLock() && !visionShotReady()) {
 			vision.calc();
 		}
 	}
@@ -185,7 +187,7 @@ public class Feedback {
 			// must be within 2 degrees of required turn
 			return false;
 		}
-		if (!TorqueMathUtil.near(getTiltAngle(), getRequiredTilt(), .5)) {
+		if (!TorqueMathUtil.near(getTiltAngle(), getRequiredTilt(), 0.5)) {
 			// must be within .5 degrees of tilt angle
 			return false;
 		}
@@ -193,7 +195,7 @@ public class Feedback {
 			// must be within 100 rpm of flywheel velocity
 			return false;
 		}
-		return false;
+		return true;
 	}
 
 	public void pushToDashboard() {
