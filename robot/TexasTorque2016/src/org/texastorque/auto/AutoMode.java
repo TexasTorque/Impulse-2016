@@ -8,11 +8,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public abstract class AutoMode extends Input {
 
 	private Thread thread;
-	
+
 	public AutoMode() {
 		SmartDashboard.putString("RunningAutoMode", getClass().getSimpleName());
 	}
-	
+
 	public final void start() {
 		thread = new Thread(() -> run());
 		thread.start();
@@ -26,9 +26,9 @@ public abstract class AutoMode extends Input {
 	}
 
 	protected abstract void run();
-	
+
 	protected abstract double getLinearMaxSpeed();
-	
+
 	@Override
 	public void update() {
 		// auto modes do not update

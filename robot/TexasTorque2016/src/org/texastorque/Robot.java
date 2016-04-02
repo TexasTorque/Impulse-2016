@@ -109,6 +109,11 @@ public class Robot extends TorqueIterative {
 		numCycles = 0;
 		autoManager.reset();
 	}
+	
+	@Override
+	public void disabledContinuous() {
+		autoManager.updateDashboard();
+	}
 
 	private void updateDashboard() {
 		subsystems.forEach((subsystem) -> subsystem.pushToDashboard());
