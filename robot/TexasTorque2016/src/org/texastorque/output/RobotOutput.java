@@ -1,6 +1,6 @@
 package org.texastorque.output;
 
-import org.texastorque.constants.PortsBravo;
+import org.texastorque.constants.Ports;
 import org.texastorque.torquelib.component.TorqueMotor;
 
 import edu.wpi.first.wpilibj.Compressor;
@@ -46,35 +46,30 @@ public class RobotOutput {
 	// compression testing
 	private DoubleSolenoid compressionTesting;
 
-	// flashlight
-	private Relay flashlight;
-
 	public RobotOutput() {
 		compressor = new Compressor();
 		compressor.start();
 
-		leftTopDrive = new TorqueMotor(new VictorSP(PortsBravo.DRIVE_LEFT_TOP), false);
-		leftBottomDrive = new TorqueMotor(new VictorSP(PortsBravo.DRIVE_LEFT_BOTTOM), false);
-		leftBoostDrive = new TorqueMotor(new VictorSP(PortsBravo.DRIVE_LEFT_BOOST), false);
+		leftTopDrive = new TorqueMotor(new VictorSP(Ports.DRIVE_LEFT_TOP), false);
+		leftBottomDrive = new TorqueMotor(new VictorSP(Ports.DRIVE_LEFT_BOTTOM), false);
+		leftBoostDrive = new TorqueMotor(new VictorSP(Ports.DRIVE_LEFT_BOOST), false);
 
-		rightTopDrive = new TorqueMotor(new VictorSP(PortsBravo.DRIVE_RIGHT_TOP), true);
-		rightBottomDrive = new TorqueMotor(new VictorSP(PortsBravo.DRIVE_RIGHT_BOTTOM), true);
-		rightBoostDrive = new TorqueMotor(new VictorSP(PortsBravo.DRIVE_RIGHT_BOOST), true);
+		rightTopDrive = new TorqueMotor(new VictorSP(Ports.DRIVE_RIGHT_TOP), true);
+		rightBottomDrive = new TorqueMotor(new VictorSP(Ports.DRIVE_RIGHT_BOTTOM), true);
+		rightBoostDrive = new TorqueMotor(new VictorSP(Ports.DRIVE_RIGHT_BOOST), true);
 
-		intakeMotor = new TorqueMotor(new VictorSP(PortsBravo.INTAKE), true);
+		intakeMotor = new TorqueMotor(new VictorSP(Ports.INTAKE), true);
 
-		conveyorMotor = new TorqueMotor(new VictorSP(PortsBravo.CONVEYOR), false);
+		conveyorMotor = new TorqueMotor(new VictorSP(Ports.CONVEYOR), false);
 
-		tiltMotor = new TorqueMotor(new VictorSP(PortsBravo.TILT), false);
-		flywheelMotor = new TorqueMotor(new VictorSP(PortsBravo.FLYWHEEL), true);
+		tiltMotor = new TorqueMotor(new VictorSP(Ports.TILT), false);
+		flywheelMotor = new TorqueMotor(new VictorSP(Ports.FLYWHEEL), true);
 
-		leftArmMotor = new TorqueMotor(new VictorSP(PortsBravo.ARM_LEFT), false);
-		rightArmMotor = new TorqueMotor(new VictorSP(PortsBravo.ARM_RIGHT), true);
+		leftArmMotor = new TorqueMotor(new VictorSP(Ports.ARM_LEFT), false);
+		rightArmMotor = new TorqueMotor(new VictorSP(Ports.ARM_RIGHT), true);
 
-		brakes = new DoubleSolenoid(PortsBravo.BRAKES_SOLENOID_PORT_A, PortsBravo.BRAKES_SOLENOID_PORT_B);
-		compressionTesting = new DoubleSolenoid(PortsBravo.COMPRESSION_TESTING_A, PortsBravo.COMPRESSION_TESTING_B);
-
-		flashlight = new Relay(PortsBravo.FLASHLIGHT, Direction.kBoth);
+		brakes = new DoubleSolenoid(Ports.BRAKES_SOLENOID_PORT_A, Ports.BRAKES_SOLENOID_PORT_B);
+		compressionTesting = new DoubleSolenoid(Ports.COMPRESSION_TESTING_A, Ports.COMPRESSION_TESTING_B);
 	}
 
 	public void setDriveSpeeds(double left, double right) {
@@ -151,14 +146,6 @@ public class RobotOutput {
 					.set(doCompressionTesting ? DoubleSolenoid.Value.kReverse : DoubleSolenoid.Value.kForward);
 		} else {
 			compressionTesting.set(DoubleSolenoid.Value.kForward);
-		}
-	}
-
-	public void setFlashlight(boolean on) {
-		if (OUTPUT_ENABLED) {
-			flashlight.set(on ? Value.kOn : Value.kOff);
-		} else {
-			flashlight.set(Value.kOff);
 		}
 	}
 
