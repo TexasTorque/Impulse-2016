@@ -62,7 +62,7 @@ public class HumanInput extends Input {
 		batterShot = operator.getBButton();
 		layupShot = operator.getAButton();
 		
-		visionLock = operator.getXButton();
+		visionLock = visionLock || operator.getXButton();
 
 		if (operator.getDPADUp()) {
 			armUp = true;
