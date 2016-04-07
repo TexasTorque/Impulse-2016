@@ -25,7 +25,7 @@ public class AutoManager {
 	public AutoMode createAutoMode() {
 		int dashboardMode = (int) SmartDashboard.getNumber("AutoMode");
 
-		return AutoModes.convert(dashboardMode).create();
+		return currentMode = AutoModes.convert(dashboardMode).create();
 	}
 
 	public void runAutoMode() {
