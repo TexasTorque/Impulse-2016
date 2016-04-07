@@ -29,11 +29,11 @@ public abstract class Input {
 	protected boolean conveyorOuttaking = false;
 
 	// shooter variable
-	protected boolean flywheelActive = false;
 	protected boolean layupShot = false;
 	protected boolean batterShot = false;
 	protected boolean longShot = false;
-
+	protected boolean spinningUp = false;
+	
 	protected double tiltMotorSpeed = 0.0;
 
 	// compression testing
@@ -88,6 +88,10 @@ public abstract class Input {
 	public boolean isLongShot() {
 		return longShot;
 	}
+	
+	public boolean isSpinningUp() {
+		return spinningUp;
+	}
 
 	public boolean isShooting() {
 		return longShot || batterShot || layupShot;
@@ -131,10 +135,6 @@ public abstract class Input {
 
 	public boolean isConveyorOuttaking() {
 		return conveyorOuttaking;
-	}
-
-	public boolean isFlywheelActive() {
-		return flywheelActive;
 	}
 
 	public boolean isOverrideReset() {

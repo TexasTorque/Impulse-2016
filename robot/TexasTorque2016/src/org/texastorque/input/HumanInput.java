@@ -1,6 +1,7 @@
 package org.texastorque.input;
 
 import org.texastorque.torquelib.util.GenericController;
+import org.texastorque.torquelib.util.TorqueMathUtil;
 import org.texastorque.torquelib.util.TorqueToggle;
 
 public class HumanInput extends Input {
@@ -12,6 +13,9 @@ public class HumanInput extends Input {
 	private GenericController operator;
 
 	private TorqueToggle brakes;
+	
+	private double y;
+	private double prevY;
 
 	private HumanInput() {
 		driver = new GenericController(0, .1);
@@ -22,13 +26,24 @@ public class HumanInput extends Input {
 
 	public void update() {
 		// driver
-		leftDriveSpeed = -driver.getLeftYAxis() + driver.getRightXAxis();
-		rightDriveSpeed = -driver.getLeftYAxis() - driver.getRightXAxis();
+		prevY = y;
+		y = driver.getLeftYAxis();
+		
+		if (Math.abs(prevY - y) > .5 && !TorqueMathUtil.near(Math.abs(y), 0, .1)) {
+			y = 0.0;
+		}
+		
+		leftDriveSpeed = -y + driver.getRightXAxis();
+		rightDriveSpeed = -y - driver.getRightXAxis();
 
 		brakes.calc(driver.getAButton());
 		braking = brakes.get();
 
 		flashlight = driver.getRightBumper();
+
+		spinningUp = driver.getRightTrigger();
+
+		visionLock = driver.getXButton();
 
 		// operator
 		if (operator.getLeftCenterButton()) {
@@ -44,8 +59,10 @@ public class HumanInput extends Input {
 		conveyorOuttaking = operator.getLeftTrigger();
 
 		longShot = operator.getYButton();
-		batterShot = operator.getAButton();
-		layupShot = operator.getBButton();
+		batterShot = operator.getBButton();
+		layupShot = operator.getAButton();
+		
+		visionLock = operator.getXButton();
 
 		if (operator.getDPADUp()) {
 			armUp = true;
@@ -53,10 +70,6 @@ public class HumanInput extends Input {
 			armUp = false;
 		}
 		armSpeed = operator.getRightYAxis() / 3.0;
-
-		visionLock = operator.getXButton();
-
-		flywheelActive = operator.getAButton();
 
 		tiltSetpoint += -operator.getLeftYAxis() / 3.0;
 		tiltMotorSpeed = -operator.getLeftYAxis() / 3.0;
