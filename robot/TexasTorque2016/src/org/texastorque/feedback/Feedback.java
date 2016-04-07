@@ -1,12 +1,12 @@
 package org.texastorque.feedback;
 
 import org.texastorque.constants.Constants;
-import org.texastorque.constants.PortsBravo;
+import org.texastorque.constants.Ports;
 import org.texastorque.input.Input;
 import org.texastorque.torquelib.component.TorqueEncoder;
+import org.texastorque.torquelib.component.TorqueGyro;
 import org.texastorque.torquelib.util.TorqueMathUtil;
 
-import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -22,7 +22,8 @@ public class Feedback {
 	// sensors
 	private VisionFeedback vision;
 
-	private ADXRS450_Gyro gyro;
+//	private ADXRS450_Gyro gyro;
+	private TorqueGyro gyro;
 
 	private TorqueEncoder leftDriveEncoder;
 	private TorqueEncoder rightDriveEncoder;
@@ -55,19 +56,20 @@ public class Feedback {
 	public Feedback() {
 		vision = VisionFeedback.getInstance();
 
-		gyro = new ADXRS450_Gyro();
+//		gyro = new ADXRS450_Gyro();
+		gyro = new TorqueGyro(1, 0);
 
-		leftDriveEncoder = new TorqueEncoder(PortsBravo.DRIVE_LEFT_ENCODER_A, PortsBravo.DRIVE_LEFT_ENCODER_B, true,
+		leftDriveEncoder = new TorqueEncoder(Ports.DRIVE_LEFT_ENCODER_A, Ports.DRIVE_LEFT_ENCODER_B, false,
 				EncodingType.k4X);
-		rightDriveEncoder = new TorqueEncoder(PortsBravo.DRIVE_RIGHT_ENCODER_A, PortsBravo.DRIVE_RIGHT_ENCODER_B, false,
+		rightDriveEncoder = new TorqueEncoder(Ports.DRIVE_RIGHT_ENCODER_A, Ports.DRIVE_RIGHT_ENCODER_B, false,
 				EncodingType.k4X);
-		leftArmEncoder = new TorqueEncoder(PortsBravo.ARM_LEFT_ENCODER_A, PortsBravo.ARM_LEFT_ENCODER_B, false,
+		leftArmEncoder = new TorqueEncoder(Ports.ARM_LEFT_ENCODER_A, Ports.ARM_LEFT_ENCODER_B, false,
 				EncodingType.k4X);
-		rightArmEncoder = new TorqueEncoder(PortsBravo.ARM_RIGHT_ENCODER_A, PortsBravo.ARM_RIGHT_ENCODER_B, false,
+		rightArmEncoder = new TorqueEncoder(Ports.ARM_RIGHT_ENCODER_A, Ports.ARM_RIGHT_ENCODER_B, false,
 				EncodingType.k4X);
-		flywheelEncoder = new TorqueEncoder(PortsBravo.FLYWHEEL_ENCODER_A, PortsBravo.FLYWHEEL_ENCODER_B, false,
+		flywheelEncoder = new TorqueEncoder(Ports.FLYWHEEL_ENCODER_A, Ports.FLYWHEEL_ENCODER_B, false,
 				EncodingType.k4X);
-		tiltEncoder = new TorqueEncoder(PortsBravo.TILT_ENCODER_A, PortsBravo.TILT_ENCODER_B, false, EncodingType.k4X);
+		tiltEncoder = new TorqueEncoder(Ports.TILT_ENCODER_A, Ports.TILT_ENCODER_B, false, EncodingType.k4X);
 	}
 
 	public void setInput(Input input) {
@@ -182,21 +184,18 @@ public class Feedback {
 	}
 
 	public boolean visionShotReady() {
-		if (!TorqueMathUtil.near(getRequiredTurn(), 0, 2.0)) {
-			// must be within 2 degrees of required turn
+		if (!TorqueMathUtil.near(getRequiredTurn(), 0, 4.0)) {
 			return false;
 		}
-		if (!TorqueMathUtil.near(getTiltAngle(), getRequiredTilt(), 0.5)) {
-			// must be within .5 degrees of tilt angle
+		if (!TorqueMathUtil.near(getTiltAngle(), getRequiredTilt(), 1.0)) {
 			return false;
 		}
-		if (!TorqueMathUtil.near(getFlywheelVelocity(), Constants.S_FLYWHEEL_SETPOINT_VELOCITY.getDouble(), 100)) {
-			// must be within 100 rpm of flywheel velocity
+		if (!TorqueMathUtil.near(getFlywheelVelocity(), Constants.S_VISION_FLYWHEEL.getDouble(), 1000)) {
 			return false;
 		}
 		return true;
 	}
-
+	
 	public void pushToDashboard() {
 		SmartDashboard.putNumber("VISION_STATE", getVisionState());
 
@@ -205,6 +204,7 @@ public class Feedback {
 		SmartDashboard.putNumber("Distance", vision.getDistance());
 		SmartDashboard.putNumber("Tilt1", vision.getTilt1());
 		SmartDashboard.putNumber("Tilt2", vision.getTilt2());
+		SmartDashboard.putBoolean("VisionShotReady", visionShotReady());
 	}
 
 	// singleton

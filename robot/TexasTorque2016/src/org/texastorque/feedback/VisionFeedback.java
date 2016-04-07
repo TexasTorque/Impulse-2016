@@ -3,6 +3,7 @@ package org.texastorque.feedback;
 import static java.lang.Math.*;
 
 import org.texastorque.constants.Constants;
+import org.texastorque.torquelib.util.TorqueMathUtil;
 
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.tables.ITable;
@@ -31,9 +32,9 @@ public class VisionFeedback {
 	private boolean t1valid;
 	private double _tilt2;
 	private boolean t2valid;
-
+	
 	private double distance;
-
+	
 	private int visionState;
 
 	public VisionFeedback() {
@@ -137,7 +138,7 @@ public class VisionFeedback {
 	public int getVisionState() {
 		return visionState;
 	}
-
+	
 	// singleton
 	public static VisionFeedback getInstance() {
 		return instance == null ? instance = new VisionFeedback() : instance;
