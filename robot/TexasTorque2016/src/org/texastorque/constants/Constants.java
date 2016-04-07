@@ -54,8 +54,11 @@ public class Constants {
 	public static final Constant S_TILT_D = new Constant("S_TILT_D", 0.0);
 
 	public static final Constant S_TILT_SET_ANGLE = new Constant("S_TILT_SET_ANGLE", 0.0);
-
-	public static final Constant S_FLYWHEEL_SETPOINT_VELOCITY = new Constant("S_FLYWHEEL_SETPOINT_VELOCITY", 0.0);
+	
+	public static final Constant S_VISION_FLYWHEEL = new Constant("S_VISION_FLYWHEEL", 0.0);
+	public static final Constant S_BATTER_FLYWHEEL = new Constant("S_BATTER_FLYWHEEL", 0.0);
+	public static final Constant S_LAYUP_FLYWHEEL = new Constant("S_LAYUP_FLYWHEEL", 0.0);
+	public static final Constant S_LONG_FLYWHEEL = new Constant("S_LONG_FLYWHEEL", 0.0);
 
 	public static final Constant S_LONG_SHOT_SETPOINT = new Constant("S_LONG_SHOT_SETPOINT", 32);
 	public static final Constant S_LAYUP_ANGLE_SETPOINT = new Constant("S_LAYUP_ANGLE_SETPOINT", 23);
