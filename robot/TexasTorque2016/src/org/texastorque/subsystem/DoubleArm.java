@@ -16,7 +16,7 @@ public class DoubleArm extends Subsystem {
 	private double leftArmAngle;
 	private double rightArmAngle;
 
-	private boolean armHold;
+	private boolean armUp;
 
 	// profiling
 	private TorquePID leftArmPID;
@@ -37,8 +37,9 @@ public class DoubleArm extends Subsystem {
 	public void run() {
 		leftArmAngle = feedback.getLeftArmAngle();
 		rightArmAngle = feedback.getRightArmAngle();
+		armUp = input.isArmUp();
 
-		if (input.isArmUp()) {
+		if (armUp) {
 			armSetpoint = Constants.ARM_UP_SETPOINT.getDouble();
 		} else {
 			armSetpoint = Constants.ARM_DOWN_SETPOINT.getDouble();
@@ -47,7 +48,6 @@ public class DoubleArm extends Subsystem {
 		if (input.isOverride()) {
 			leftArmSpeed = rightArmSpeed = input.getArmOverrideSpeed();
 		} else {
-			armSetpoint = input.getArmSetpoint();
 			leftArmPID.setSetpoint(armSetpoint);
 			rightArmPID.setSetpoint(armSetpoint);
 
@@ -69,7 +69,7 @@ public class DoubleArm extends Subsystem {
 		SmartDashboard.putNumber("RightArmAngle", rightArmAngle);
 
 		SmartDashboard.putNumber("ArmSetpoint", armSetpoint);
-		SmartDashboard.putBoolean("ArmHold", armHold);
+		SmartDashboard.putBoolean("ArmUp", armUp);
 
 		SmartDashboard.putNumber("LeftArmSpeed", leftArmSpeed);
 		SmartDashboard.putNumber("RightArmSpeed", rightArmSpeed);

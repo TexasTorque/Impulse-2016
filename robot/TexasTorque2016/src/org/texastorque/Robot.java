@@ -10,7 +10,6 @@ import org.texastorque.input.Input;
 import org.texastorque.subsystem.Brakes;
 import org.texastorque.subsystem.Conveyor;
 import org.texastorque.subsystem.Drivebase;
-import org.texastorque.subsystem.Flashlight;
 import org.texastorque.subsystem.Intake;
 import org.texastorque.subsystem.DoubleArm;
 import org.texastorque.subsystem.Shooter;
@@ -41,7 +40,6 @@ public class Robot extends TorqueIterative {
 		subsystems.add(Conveyor.getInstance());
 		subsystems.add(Brakes.getInstance());
 		subsystems.add(DoubleArm.getInstance());
-		subsystems.add(Flashlight.getInstance());
 
 		autoManager = AutoManager.getInstance();
 		feedback = Feedback.getInstance();

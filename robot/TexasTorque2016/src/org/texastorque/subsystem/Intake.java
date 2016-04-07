@@ -14,7 +14,7 @@ public class Intake extends Subsystem {
 
 	@Override
 	public void run() {
-		if (input.isIntaking()) {
+		if (input.isIntaking() || feedback.visionShotReady()) {
 			intakeSpeed = 1.0;
 		} else if (input.isOuttaking()) {
 			intakeSpeed = -1.0;
