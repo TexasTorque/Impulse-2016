@@ -1,9 +1,13 @@
 package org.texastorque.feedback;
 
-import static java.lang.Math.*;
+import static java.lang.Math.atan;
+import static java.lang.Math.cos;
+import static java.lang.Math.sqrt;
+import static java.lang.Math.tan;
+import static java.lang.Math.toDegrees;
+import static java.lang.Math.toRadians;
 
 import org.texastorque.constants.Constants;
-import org.texastorque.torquelib.util.TorqueMathUtil;
 
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.tables.ITable;
