@@ -4,10 +4,12 @@ import org.texastorque.constants.Constants;
 import org.texastorque.constants.Ports;
 import org.texastorque.input.Input;
 import org.texastorque.torquelib.component.TorqueEncoder;
-import org.texastorque.torquelib.component.TorqueGyro;
 import org.texastorque.torquelib.util.TorqueMathUtil;
 
+import edu.wpi.first.wpilibj.BuiltInAccelerometer;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
+import edu.wpi.first.wpilibj.interfaces.Accelerometer.Range;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Feedback {
@@ -22,16 +24,15 @@ public class Feedback {
 	// sensors
 	private VisionFeedback vision;
 
-//	private ADXRS450_Gyro gyro;
-	private TorqueGyro gyro;
-
 	private TorqueEncoder leftDriveEncoder;
 	private TorqueEncoder rightDriveEncoder;
 	private TorqueEncoder leftArmEncoder;
 	private TorqueEncoder rightArmEncoder;
 	private TorqueEncoder flywheelEncoder;
 	private TorqueEncoder tiltEncoder;
-
+	
+	private BuiltInAccelerometer accel;
+	
 	// drivebase values
 	private double leftDrivePosition;
 	private double leftDriveVelocity;
@@ -42,6 +43,8 @@ public class Feedback {
 	private double rightDriveAcceleration;
 
 	private double angle;
+	private double prevAngle;
+	private double prevTime;
 	private double angularVelocity;
 
 	// shooter values
@@ -56,9 +59,6 @@ public class Feedback {
 	public Feedback() {
 		vision = VisionFeedback.getInstance();
 
-//		gyro = new ADXRS450_Gyro();
-		gyro = new TorqueGyro(1, 0);
-
 		leftDriveEncoder = new TorqueEncoder(Ports.DRIVE_LEFT_ENCODER_A, Ports.DRIVE_LEFT_ENCODER_B, false,
 				EncodingType.k4X);
 		rightDriveEncoder = new TorqueEncoder(Ports.DRIVE_RIGHT_ENCODER_A, Ports.DRIVE_RIGHT_ENCODER_B, false,
@@ -70,9 +70,12 @@ public class Feedback {
 		flywheelEncoder = new TorqueEncoder(Ports.FLYWHEEL_ENCODER_A, Ports.FLYWHEEL_ENCODER_B, false,
 				EncodingType.k4X);
 		tiltEncoder = new TorqueEncoder(Ports.TILT_ENCODER_A, Ports.TILT_ENCODER_B, false, EncodingType.k4X);
+		
+		accel = new BuiltInAccelerometer();
 	}
 
 	public void setInput(Input input) {
+		prevTime = Timer.getFPGATimestamp();
 		currentInput = input;
 	}
 
@@ -89,8 +92,11 @@ public class Feedback {
 		rightDriveVelocity = rightDriveEncoder.getRate() * DRIVEBASE_DISTANCE_CONVERSION;
 		rightDriveAcceleration = rightDriveEncoder.getAcceleration() * DRIVEBASE_DISTANCE_CONVERSION;
 
-		angle = gyro.getAngle();
-		angularVelocity = gyro.getRate();
+		prevAngle = angle;
+		angle = accel.getZ() / Math.sqrt(accel.getY() * accel.getY() + accel.getZ() + accel.getZ());
+		angle = Math.toDegrees(Math.atan(angle));
+		angularVelocity = (angle - prevAngle) / (Timer.getFPGATimestamp() - prevTime);
+		prevTime = Timer.getFPGATimestamp();
 
 		flywheelVelocity = flywheelEncoder.getRate() * FLYWHEEL_VELOCITY_CONVERSION;
 
@@ -111,7 +117,9 @@ public class Feedback {
 	}
 
 	public void resetGyro() {
-		gyro.reset();
+		angle = 0;
+		prevAngle = 0;
+		prevTime = Timer.getFPGATimestamp();
 	}
 
 	public void resetTiltEncoder() {
