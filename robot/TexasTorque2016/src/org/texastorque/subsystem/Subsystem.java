@@ -25,7 +25,12 @@ public abstract class Subsystem {
 
 	public abstract void init();
 
-	public abstract void run();
+	public final void run() {
+		_run();
+		output();
+	}
+
+	public abstract void _run();
 
 	protected abstract void output();
 

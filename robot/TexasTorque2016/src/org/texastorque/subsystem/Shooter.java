@@ -33,11 +33,11 @@ public class Shooter extends Subsystem {
 		tiltPID = new TorquePID(Constants.S_TILT_P.getDouble(), Constants.S_TILT_I.getDouble(),
 				Constants.S_TILT_D.getDouble());
 		tiltPID.setTunedVoltage(Constants.TUNED_VOLTAGE.getDouble());
-		tiltPID.setMaxOutput(.5);
+		tiltPID.setMaxOutput(.4);
 	}
 
 	@Override
-	public void run() {
+	public void _run() {
 		tiltAngle = feedback.getTiltAngle();
 		flywheelVelocity = feedback.getFlywheelVelocity();
 
@@ -53,18 +53,17 @@ public class Shooter extends Subsystem {
 		} else if (input.isBatterShot()) {
 			tiltSetpoint = Constants.S_BATTER_SHOT_SETPOINT.getDouble();
 			flywheelSetpoint = Constants.S_BATTER_FLYWHEEL.getDouble();
-		} else if (input.isSpinningUp()) {
-			flywheelSetpoint = 6500;
 		} else {
 			tiltSetpoint = Constants.S_DOWN_SETPOINT.getDouble();
 			flywheelSetpoint = 0;
 		}
 
-		if (input.isOverride()) {
+		if (input.isHoodOverrideReset()) {
+			feedback.resetTiltEncoder();
+		}
+
+		if (input.isOverride() || input.isHoodOverride()) {
 			tiltSpeed = input.getTiltOverrideSpeed();
-			if (input.isOverrideReset()) {
-				feedback.resetTiltEncoder();
-			}
 		} else {
 			tiltPID.setSetpoint(tiltSetpoint);
 
@@ -77,8 +76,6 @@ public class Shooter extends Subsystem {
 		} else {
 			flywheelSpeed = 0.0;
 		}
-
-		output();
 
 	}
 

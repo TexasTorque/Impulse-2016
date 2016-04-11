@@ -2,6 +2,7 @@ package org.texastorque.subsystem;
 
 import org.texastorque.auto.AutoManager;
 import org.texastorque.constants.Constants;
+import org.texastorque.input.DriveControlType;
 import org.texastorque.torquelib.controlLoop.TorquePID;
 import org.texastorque.torquelib.controlLoop.TorquePV;
 import org.texastorque.torquelib.controlLoop.TorqueTMP;
@@ -32,6 +33,7 @@ public class Drivebase extends Subsystem {
 
 	// generic profile variables
 	private double prevTime;
+	private DriveControlType driveControlType;
 
 	// linear profile
 	private TorqueTMP profile;
@@ -39,7 +41,9 @@ public class Drivebase extends Subsystem {
 	private TorquePV rightPV;
 
 	private double targetPosition;
+
 	private double targetVelocity;
+
 	private double targetAcceleration;
 
 	private double setpoint;
@@ -60,6 +64,8 @@ public class Drivebase extends Subsystem {
 
 	@Override
 	public void init() {
+		driveControlType = DriveControlType.MANUAL;
+
 		// linear
 		if (driverStation.isAutonomous()) {
 			profile = new TorqueTMP(AutoManager.getInstance().getAutoMaxSpeed(),
@@ -108,7 +114,7 @@ public class Drivebase extends Subsystem {
 	}
 
 	@Override
-	public void run() {
+	public void _run() {
 		leftPosition = feedback.getLeftDrivePosition();
 		rightPosition = feedback.getRightDrivePosition();
 
@@ -121,61 +127,58 @@ public class Drivebase extends Subsystem {
 		angle = feedback.getAngle();
 		angularVelocity = feedback.getAngularVelocity();
 
-		if (input.isOverride()) {
+		driveControlType = input.getDriveControlType();
+
+		if (driveControlType == DriveControlType.MANUAL || input.isOverride()) {
 			leftSpeed = input.getLeftDriveSpeed();
 			rightSpeed = input.getRightDriveSpeed();
-		} else {
-			if (input.isVisionLock()) {
-				turnSetpoint = feedback.getRequiredTurn();
+		} else if (driveControlType == DriveControlType.VISION) {
+			turnSetpoint = feedback.getRequiredTurn();
 
-				rightSpeed = visionPID.calculate(turnSetpoint);
-				leftSpeed = -rightSpeed;
+			rightSpeed = visionPID.calculate(turnSetpoint);
+			leftSpeed = -rightSpeed;
 
-				if (feedback.visionShotReady()) {
-					rightSpeed = leftSpeed = 0.0;
-				}
-			} else if (input.getDriveSetpoint() != 0.0) {
-				setpoint = input.getDriveSetpoint();
-				if (setpoint != previousSetpoint) {
-					previousSetpoint = setpoint;
-					feedback.resetDriveEncoders();
-					profile.generateTrapezoid(setpoint, 0.0, 0.0);
-				}
-
-				double dt = Timer.getFPGATimestamp() - prevTime;
-				prevTime = Timer.getFPGATimestamp();
-				profile.calculateNextSituation(dt);
-
-				targetPosition = profile.getCurrentPosition();
-				targetVelocity = profile.getCurrentVelocity();
-				targetAcceleration = profile.getCurrentAcceleration();
-
-				leftSpeed = leftPV.calculate(profile, leftPosition, leftVelocity);
-				rightSpeed = rightPV.calculate(profile, rightPosition, rightVelocity);
-			} else if (input.getTurnSetpoint() != 0.0) {
-				turnSetpoint = input.getTurnSetpoint();
-				if (turnSetpoint != turnPreviousSetpoint) {
-					turnPreviousSetpoint = turnSetpoint;
-					feedback.resetGyro();
-					angularProfile.generateTrapezoid(turnSetpoint, 0.0, 0.0);
-				}
-
-				double dt = Timer.getFPGATimestamp() - prevTime;
-				prevTime = Timer.getFPGATimestamp();
-				angularProfile.calculateNextSituation(dt);
-
-				targetAngle = profile.getCurrentPosition();
-				targetAngularVelocity = profile.getCurrentVelocity();
-
-				leftSpeed = angularPV.calculate(angularProfile, angle, angularVelocity);
-				rightSpeed = -leftSpeed;
-			} else {
-				leftSpeed = input.getLeftDriveSpeed();
-				rightSpeed = input.getRightDriveSpeed();
+			if (feedback.visionShotReady()) {
+				rightSpeed = leftSpeed = 0.0;
 			}
-		}
+		} else if (driveControlType == DriveControlType.LINEAR) {
+			setpoint = input.getDriveSetpoint();
+			if (setpoint != previousSetpoint) {
+				previousSetpoint = setpoint;
+				feedback.resetDriveEncoders();
+				profile.generateTrapezoid(setpoint, 0.0, 0.0);
+			}
 
-		output();
+			double dt = Timer.getFPGATimestamp() - prevTime;
+			prevTime = Timer.getFPGATimestamp();
+			profile.calculateNextSituation(dt);
+
+			targetPosition = profile.getCurrentPosition();
+
+			targetVelocity = profile.getCurrentVelocity();
+
+			targetAcceleration = profile.getCurrentAcceleration();
+
+			leftSpeed = leftPV.calculate(profile, leftPosition, leftVelocity);
+			rightSpeed = rightPV.calculate(profile, rightPosition, rightVelocity);
+		} else if (driveControlType == DriveControlType.TURN) {
+			turnSetpoint = input.getTurnSetpoint();
+			if (turnSetpoint != turnPreviousSetpoint) {
+				turnPreviousSetpoint = turnSetpoint;
+				feedback.resetGyro();
+				angularProfile.generateTrapezoid(turnSetpoint, 0.0, 0.0);
+			}
+
+			double dt = Timer.getFPGATimestamp() - prevTime;
+			prevTime = Timer.getFPGATimestamp();
+			angularProfile.calculateNextSituation(dt);
+
+			targetAngle = angularProfile.getCurrentPosition();
+			targetAngularVelocity = angularProfile.getCurrentVelocity();
+
+			leftSpeed = angularPV.calculate(angularProfile, angle, angularVelocity);
+			rightSpeed = -leftSpeed;
+		}
 	}
 
 	@Override
@@ -202,6 +205,8 @@ public class Drivebase extends Subsystem {
 		SmartDashboard.putNumber("DrivebaseTargetAngularVelocity", targetAngularVelocity);
 
 		// values
+		SmartDashboard.putString("DriveControlType", driveControlType.getName());
+
 		SmartDashboard.putNumber("DrivebaseLeftPosition", leftPosition);
 		SmartDashboard.putNumber("DrivebaseRightPosition", rightPosition);
 

@@ -26,15 +26,15 @@ public class DoubleArm extends Subsystem {
 	public void init() {
 		leftArmPID = new TorquePID();
 		leftArmPID.setPIDGains(Constants.ARM_P.getDouble(), Constants.ARM_I.getDouble(), Constants.ARM_D.getDouble());
-		leftArmPID.setMaxOutput(1.0);
+		leftArmPID.setMaxOutput(.6);
 
 		rightArmPID = new TorquePID();
 		rightArmPID.setPIDGains(Constants.ARM_P.getDouble(), Constants.ARM_I.getDouble(), Constants.ARM_D.getDouble());
-		rightArmPID.setMaxOutput(1.0);
+		rightArmPID.setMaxOutput(.6);
 	}
 
 	@Override
-	public void run() {
+	public void _run() {
 		leftArmAngle = feedback.getLeftArmAngle();
 		rightArmAngle = feedback.getRightArmAngle();
 		armUp = input.isArmUp();
@@ -54,8 +54,6 @@ public class DoubleArm extends Subsystem {
 			leftArmSpeed = leftArmPID.calculate(leftArmAngle);
 			rightArmSpeed = rightArmPID.calculate(rightArmAngle);
 		}
-
-		output();
 	}
 
 	@Override

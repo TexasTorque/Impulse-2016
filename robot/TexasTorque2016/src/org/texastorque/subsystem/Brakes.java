@@ -13,10 +13,8 @@ public class Brakes extends Subsystem {
 	}
 
 	@Override
-	public void run() {
+	public void _run() {
 		braking = input.isBraking();
-		
-		output();
 	}
 
 	@Override

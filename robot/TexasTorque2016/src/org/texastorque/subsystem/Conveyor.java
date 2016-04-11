@@ -13,16 +13,14 @@ public class Conveyor extends Subsystem {
 	}
 
 	@Override
-	public void run() {
-		if (input.isConveyorIntaking() || feedback.visionShotReady()) {
+	public void _run() {
+		if (input.isConveyorIntaking() || (feedback.visionShotReady() && input.isVisionLock())) {
 			conveyorSpeed = 1.0;
 		} else if (input.isConveyorOuttaking()) {
 			conveyorSpeed = -1.0;
 		} else {
 			conveyorSpeed = 0.0;
 		}
-
-		output();
 	}
 
 	@Override
