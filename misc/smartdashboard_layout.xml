@@ -1,0 +1,162 @@
+<xml version="1.0">
+<dashboard>
+	<widget field="RPM_READY" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="709" y="687"/>
+	</widget>
+	<widget field="LeftArmAngle" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="291" y="491"/>
+	</widget>
+	<widget field="Distance" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="300" y="778"/>
+	</widget>
+	<widget field="DrivebaseAngularVelocity" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="721" y="212"/>
+	</widget>
+	<widget field="DrivebaseTargetVelocity" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="263" y="246"/>
+	</widget>
+	<widget field="WillRunAutoMode" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="44" y="442"/>
+	</widget>
+	<widget field="TiltAngle" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="396" y="74"/>
+	</widget>
+	<widget field="ConveyorSpeed" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="358" y="41"/>
+	</widget>
+	<widget field="FlywheelSetpointVelocity" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="381" y="386"/>
+	</widget>
+	<widget field="DrivebaseRightSpeed" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="490" y="153"/>
+	</widget>
+	<widget field="Override" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="731" y="812"/>
+	</widget>
+	<widget field="ThreadCount" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="17" y="800"/>
+	</widget>
+	<widget field="TurnSetpoint" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="358" y="184"/>
+	</widget>
+	<widget field="RunningAutoMode" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="32" y="415"/>
+	</widget>
+	<widget field="Braking" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="736" y="787"/>
+	</widget>
+	<widget field="LeftArmSpeed" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="290" y="456"/>
+	</widget>
+	<widget field="DrivebaseAngle" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="766" y="132"/>
+	</widget>
+	<widget field="DrivebaseLeftPosition" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="41" y="219"/>
+	</widget>
+	<widget field="NumCycles" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="29" y="774"/>
+	</widget>
+	<widget field="DrivebaseTargetPosition" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="256" y="215"/>
+	</widget>
+	<widget field="TiltSpeed" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="243" y="75"/>
+	</widget>
+	<widget field="DrivebaseTargetAngle" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="734" y="161"/>
+	</widget>
+	<widget field="DrivebaseRightVelocity" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="488" y="248"/>
+	</widget>
+	<widget field="VisionLock" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="724" y="764"/>
+	</widget>
+	<widget field="AutoMode" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="70" y="392"/>
+	</widget>
+	<widget field="Tilt" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="436" y="817"/>
+	</widget>
+	<widget field="Tilt2" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="321" y="829"/>
+	</widget>
+	<widget field="VISION_STATE" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="8" y="823"/>
+	</widget>
+	<widget field="ArmSetpoint" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="452" y="474"/>
+	</widget>
+	<widget field="DrivebaseLeftSpeed" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="42" y="158"/>
+	</widget>
+	<widget field="DrivebsaeLeftVelocity" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="38" y="249"/>
+	</widget>
+	<widget field="RobotTurn" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="765" y="600"/>
+	</widget>
+	<widget field="Tilt1" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="320" y="802"/>
+	</widget>
+	<widget field="IntakeSpeed" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="373" y="16"/>
+	</widget>
+	<widget field="VisionShotReady" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="258" y="854"/>
+		<height>20</height>
+	</widget>
+	<widget field="DrivebaseLeftAcceleration" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="18" y="276"/>
+	</widget>
+	<widget field="DrivebaseRightPosition" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="483" y="214"/>
+	</widget>
+	<widget field="DrivebaseTargetAcceleration" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="238" y="274"/>
+		<height>20</height>
+	</widget>
+	<widget field="Flashlight" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="723" y="711"/>
+	</widget>
+	<widget field="RightArmAngle" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="607" y="489"/>
+	</widget>
+	<widget field="FlywheelMotorSpeed" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="399" y="334"/>
+	</widget>
+	<widget field="RobotPitch" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="762" y="570"/>
+	</widget>
+	<widget field="DriveControlType" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="668" y="342"/>
+	</widget>
+	<widget field="RightArmSpeed" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="603" y="455"/>
+	</widget>
+	<widget field="DrivebaseTargetAngularVelocity" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="690" y="237"/>
+	</widget>
+	<widget field="TiltSetpoint" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="527" y="73"/>
+	</widget>
+	<widget field="DriveSetpoint" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="202" y="185"/>
+		<height>20</height>
+	</widget>
+	<widget field="FlywheelVelocity" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="419" y="360"/>
+	</widget>
+	<widget field="Turn" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="430" y="778"/>
+	</widget>
+	<widget field="ArmUp" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="737" y="739"/>
+	</widget>
+	<widget field="DrivebaseRightAcceleration" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="467" y="273"/>
+	</widget>
+</dashboard>
+<live-window>
+</live-window>
+</xml>
