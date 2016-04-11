@@ -7,7 +7,7 @@ public class RoughTerrainAuto extends AutoMode {
 
 	@Override
 	protected void run() {
-		driveSetpoint = Constants.A_DRIVE_FORWARD_AUTO_DISTANCE.getDouble();
+		drive(Constants.A_DRIVE_FORWARD_AUTO_DISTANCE.getDouble());
 	}
 
 	@Override

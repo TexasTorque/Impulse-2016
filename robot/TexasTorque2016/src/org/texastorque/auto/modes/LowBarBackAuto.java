@@ -7,10 +7,10 @@ public class LowBarBackAuto extends AutoMode {
 
 	@Override
 	protected void run() {
-		armSetpoint = Constants.ARM_DOWN_SETPOINT.getDouble();
-		driveSetpoint = Constants.A_DRIVE_FORWARD_AUTO_DISTANCE.getDouble();
+		armUp = false;
+		drive(Constants.A_DRIVE_FORWARD_AUTO_DISTANCE.getDouble());
 		pause(5);
-		driveSetpoint = Constants.A_DRIVE_FORWARD_AUTO_DISTANCE.getDouble() * -.75; 
+		drive(Constants.A_DRIVE_FORWARD_AUTO_DISTANCE.getDouble() * -.9);
 	}
 
 	@Override

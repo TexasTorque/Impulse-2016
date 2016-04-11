@@ -13,7 +13,8 @@ public enum AutoModes {
 	ROCK_WALL_AUTO(7, RockWallAuto.class),
 	ROUGH_TERRAIN_AUTO(8, RoughTerrainAuto.class),
 	LOW_BAR_BACK_AUTO(9, LowBarBackAuto.class),
-	PORT_DE_CULLIS_AUTO(10, PortDeCullisAuto.class);
+	PORT_DE_CULLIS_AUTO(10, PortDeCullisAuto.class),
+	ONLY_VISION_AUTO(11, OnlyVisionAuto.class);
 
 	public int pass;
 	public Class<?> call;

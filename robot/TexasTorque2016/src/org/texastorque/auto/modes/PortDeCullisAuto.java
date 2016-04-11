@@ -7,8 +7,8 @@ public class PortDeCullisAuto extends AutoMode {
 
 	@Override
 	protected void run() {
-		armSetpoint = Constants.ARM_DOWN_SETPOINT.getDouble();
-		driveSetpoint = -Constants.A_DRIVE_FORWARD_AUTO_DISTANCE.getDouble();
+		armUp = false;
+		drive(-Constants.A_DRIVE_FORWARD_AUTO_DISTANCE.getDouble());
 	}
 
 	@Override
