@@ -5,12 +5,13 @@ import org.texastorque.torquelib.util.Parameters.Constant;
 public class Constants {
 
 	// auto
-	public static final Constant A_DRIVE_FORWARD_AUTO_DISTANCE = new Constant("A_DRIVE_FORWARD_DISTANCE", 0.0);
 	public static final Constant A_TURN_AUTO_ANGLE = new Constant("A_TURN_ANGLE", 0.0);
 	public static final Constant A_TILT_AUTO_ANGLE = new Constant("A_TILT_AUTO_ANGLE", 0.0);
 
-	public static final Constant A_LBS_DRIVE_DISTANCE = new Constant("A_LBS_DRIVE_DISTANCE", 0.0);
+	public static final Constant A_DRIVE_FORWARD_AUTO_DISTANCE = new Constant("A_DRIVE_FORWARD_DISTANCE", 0.0);
 
+	public static final Constant A_LBS_DRIVE_DISTANCE = new Constant("A_LBS_DRIVE_DISTANCE", 0.0);
+	
 	// vision
 	public static final Constant V_CAMERA_FOV = new Constant("V_CAMERA_FOV", 67.0);
 	public static final Constant V_CAMERA_WIDTH = new Constant("V_CAMERA_WIDTH", 640.0);
@@ -54,7 +55,7 @@ public class Constants {
 	public static final Constant S_TILT_D = new Constant("S_TILT_D", 0.0);
 
 	public static final Constant S_TILT_SET_ANGLE = new Constant("S_TILT_SET_ANGLE", 0.0);
-	
+
 	public static final Constant S_VISION_FLYWHEEL = new Constant("S_VISION_FLYWHEEL", 0.0);
 	public static final Constant S_BATTER_FLYWHEEL = new Constant("S_BATTER_FLYWHEEL", 0.0);
 	public static final Constant S_LAYUP_FLYWHEEL = new Constant("S_LAYUP_FLYWHEEL", 0.0);
@@ -63,7 +64,7 @@ public class Constants {
 	public static final Constant S_LONG_SHOT_SETPOINT = new Constant("S_LONG_SHOT_SETPOINT", 32);
 	public static final Constant S_LAYUP_ANGLE_SETPOINT = new Constant("S_LAYUP_ANGLE_SETPOINT", 23);
 	public static final Constant S_BATTER_SHOT_SETPOINT = new Constant("S_BATTER_SHOT_SETPOINT", 14);
-	public static final Constant S_DOWN_SETPOINT = new Constant("S_DOWN_SETPOINT", -11.0);// -7
+	public static final Constant S_DOWN_SETPOINT = new Constant("S_DOWN_SETPOINT", -11.0);
 
 	// a mechanism
 	public static final Constant ARM_P = new Constant("ARM_P", 0.0);

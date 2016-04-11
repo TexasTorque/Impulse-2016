@@ -22,8 +22,8 @@ public class Ports {
 	public static final int ARM_RIGHT = 0;
 
 	// pneumatics
-	public static final int BRAKES_SOLENOID_PORT_A = 3;
-	public static final int BRAKES_SOLENOID_PORT_B = 4;
+	public static final int BRAKES_SOLENOID_PORT_A = 4;
+	public static final int BRAKES_SOLENOID_PORT_B = 3;
 	public static final int COMPRESSION_TESTING_A = 0;
 	public static final int COMPRESSION_TESTING_B = 5;
 

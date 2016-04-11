@@ -8,17 +8,21 @@ public abstract class Input {
 	protected double leftDriveSpeed = 0.0;
 	protected double rightDriveSpeed = 0.0;
 
+	protected DriveControlType driveControlType = DriveControlType.MANUAL;
+
 	protected double driveSetpoint = 0.0;
 	protected double turnSetpoint = 0.0;
 	protected double tiltSetpoint = Constants.S_DOWN_SETPOINT.getDouble();
 
-	// brakeing
+	// braking
 	protected boolean braking = false;
 
 	// override variables
 	protected boolean override = false;
 	protected boolean visionLock = false;
-	protected boolean overrideReset = false;
+
+	protected boolean hoodOverride = false;
+	protected boolean hoodOverrideReset = false;
 
 	// intake variables
 	protected boolean intaking = false;
@@ -32,8 +36,7 @@ public abstract class Input {
 	protected boolean layupShot = false;
 	protected boolean batterShot = false;
 	protected boolean longShot = false;
-	protected boolean spinningUp = false;
-	
+
 	protected double tiltMotorSpeed = 0.0;
 
 	// compression testing
@@ -88,10 +91,6 @@ public abstract class Input {
 	public boolean isLongShot() {
 		return longShot;
 	}
-	
-	public boolean isSpinningUp() {
-		return spinningUp;
-	}
 
 	public boolean isShooting() {
 		return longShot || batterShot || layupShot;
@@ -100,7 +99,7 @@ public abstract class Input {
 	public boolean isOverride() {
 		return override;
 	}
-	
+
 	public boolean isArmUp() {
 		return armUp;
 	}
@@ -137,11 +136,19 @@ public abstract class Input {
 		return conveyorOuttaking;
 	}
 
-	public boolean isOverrideReset() {
-		return overrideReset;
+	public boolean isHoodOverride() {
+		return hoodOverride;
+	}
+
+	public boolean isHoodOverrideReset() {
+		return hoodOverrideReset;
 	}
 
 	public boolean isFlashlightOn() {
 		return flashlight;
+	}
+
+	public DriveControlType getDriveControlType() {
+		return driveControlType;
 	}
 }

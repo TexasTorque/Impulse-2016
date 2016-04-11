@@ -12,36 +12,41 @@ public class HumanInput extends Input {
 	private GenericController driver;
 	private GenericController operator;
 
-	private TorqueToggle brakes;
-	
+	private TorqueToggle brakesToggle;
+	private TorqueToggle flashlightToggle;
+
 	private double y;
 	private double prevY;
+
+	private boolean prevHoodOverride;
 
 	private HumanInput() {
 		driver = new GenericController(0, .1);
 		operator = new GenericController(1, .1);
 
-		brakes = new TorqueToggle();
+		brakesToggle = new TorqueToggle();
+		flashlightToggle = new TorqueToggle();
 	}
 
 	public void update() {
+		hoodOverrideReset = false;
+
 		// driver
 		prevY = y;
 		y = driver.getLeftYAxis();
-		
+
 		if (Math.abs(prevY - y) > .5 && !TorqueMathUtil.near(Math.abs(y), 0, .1)) {
 			y = 0.0;
 		}
-		
+
 		leftDriveSpeed = -y + driver.getRightXAxis();
 		rightDriveSpeed = -y - driver.getRightXAxis();
 
-		brakes.calc(driver.getAButton());
-		braking = brakes.get();
+		brakesToggle.calc(driver.getAButton());
+		braking = brakesToggle.get();
 
-		flashlight = driver.getRightBumper();
-
-		spinningUp = driver.getRightTrigger();
+		flashlightToggle.calc(driver.getRightTrigger() || driver.getRightBumper());
+		flashlight = flashlightToggle.get();
 
 		visionLock = driver.getXButton();
 
@@ -61,7 +66,7 @@ public class HumanInput extends Input {
 		longShot = operator.getYButton();
 		batterShot = operator.getBButton();
 		layupShot = operator.getAButton();
-		
+
 		visionLock = visionLock || operator.getXButton();
 
 		if (operator.getDPADUp()) {
@@ -69,12 +74,23 @@ public class HumanInput extends Input {
 		} else if (operator.getDPADDown()) {
 			armUp = false;
 		}
-		armSpeed = operator.getRightYAxis() / 3.0;
+		armSpeed = operator.getRightYAxis() / 4.0;
 
-		tiltSetpoint += -operator.getLeftYAxis() / 3.0;
 		tiltMotorSpeed = -operator.getLeftYAxis() / 3.0;
 
-		overrideReset = operator.getRightStickClick();
+		prevHoodOverride = hoodOverride;
+		hoodOverride = operator.getLeftStickClick();
+
+		// post operations
+		if (prevHoodOverride != hoodOverride && !hoodOverride) {
+			hoodOverrideReset = true;
+		}
+
+		if (visionLock) {
+			driveControlType = DriveControlType.VISION;
+		} else {
+			driveControlType = DriveControlType.MANUAL;
+		}
 	}
 
 	// singleton
