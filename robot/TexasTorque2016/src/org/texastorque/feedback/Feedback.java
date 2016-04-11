@@ -6,10 +6,9 @@ import org.texastorque.input.Input;
 import org.texastorque.torquelib.component.TorqueEncoder;
 import org.texastorque.torquelib.util.TorqueMathUtil;
 
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.BuiltInAccelerometer;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
-import edu.wpi.first.wpilibj.interfaces.Accelerometer.Range;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Feedback {
@@ -30,9 +29,11 @@ public class Feedback {
 	private TorqueEncoder rightArmEncoder;
 	private TorqueEncoder flywheelEncoder;
 	private TorqueEncoder tiltEncoder;
-	
+
+	private ADXRS450_Gyro gyro;
+
 	private BuiltInAccelerometer accel;
-	
+
 	// drivebase values
 	private double leftDrivePosition;
 	private double leftDriveVelocity;
@@ -43,39 +44,38 @@ public class Feedback {
 	private double rightDriveAcceleration;
 
 	private double angle;
-	private double prevAngle;
-	private double prevTime;
 	private double angularVelocity;
+
+	private double robotPitch;
 
 	// shooter values
 	private double flywheelVelocity;
 
 	private double tiltAngle;
 
-	// a mechanism values
+	// arm values
 	private double leftArmAngle;
 	private double rightArmAngle;
 
 	public Feedback() {
 		vision = VisionFeedback.getInstance();
 
-		leftDriveEncoder = new TorqueEncoder(Ports.DRIVE_LEFT_ENCODER_A, Ports.DRIVE_LEFT_ENCODER_B, false,
+		leftDriveEncoder = new TorqueEncoder(Ports.DRIVE_LEFT_ENCODER_A, Ports.DRIVE_LEFT_ENCODER_B, true,
 				EncodingType.k4X);
 		rightDriveEncoder = new TorqueEncoder(Ports.DRIVE_RIGHT_ENCODER_A, Ports.DRIVE_RIGHT_ENCODER_B, false,
 				EncodingType.k4X);
-		leftArmEncoder = new TorqueEncoder(Ports.ARM_LEFT_ENCODER_A, Ports.ARM_LEFT_ENCODER_B, false,
+		leftArmEncoder = new TorqueEncoder(Ports.ARM_LEFT_ENCODER_A, Ports.ARM_LEFT_ENCODER_B, true, EncodingType.k4X);
+		rightArmEncoder = new TorqueEncoder(Ports.ARM_RIGHT_ENCODER_A, Ports.ARM_RIGHT_ENCODER_B, true,
 				EncodingType.k4X);
-		rightArmEncoder = new TorqueEncoder(Ports.ARM_RIGHT_ENCODER_A, Ports.ARM_RIGHT_ENCODER_B, false,
-				EncodingType.k4X);
-		flywheelEncoder = new TorqueEncoder(Ports.FLYWHEEL_ENCODER_A, Ports.FLYWHEEL_ENCODER_B, false,
-				EncodingType.k4X);
+		flywheelEncoder = new TorqueEncoder(Ports.FLYWHEEL_ENCODER_A, Ports.FLYWHEEL_ENCODER_B, true, EncodingType.k4X);
 		tiltEncoder = new TorqueEncoder(Ports.TILT_ENCODER_A, Ports.TILT_ENCODER_B, false, EncodingType.k4X);
-		
+
+		gyro = new ADXRS450_Gyro();
+
 		accel = new BuiltInAccelerometer();
 	}
 
 	public void setInput(Input input) {
-		prevTime = Timer.getFPGATimestamp();
 		currentInput = input;
 	}
 
@@ -92,11 +92,8 @@ public class Feedback {
 		rightDriveVelocity = rightDriveEncoder.getRate() * DRIVEBASE_DISTANCE_CONVERSION;
 		rightDriveAcceleration = rightDriveEncoder.getAcceleration() * DRIVEBASE_DISTANCE_CONVERSION;
 
-		prevAngle = angle;
-		angle = accel.getZ() / Math.sqrt(accel.getY() * accel.getY() + accel.getZ() + accel.getZ());
-		angle = Math.toDegrees(Math.atan(angle));
-		angularVelocity = (angle - prevAngle) / (Timer.getFPGATimestamp() - prevTime);
-		prevTime = Timer.getFPGATimestamp();
+		angle = gyro.getAngle();
+		angularVelocity = gyro.getRate();
 
 		flywheelVelocity = flywheelEncoder.getRate() * FLYWHEEL_VELOCITY_CONVERSION;
 
@@ -105,6 +102,10 @@ public class Feedback {
 
 		leftArmAngle = leftArmEncoder.get();
 		rightArmAngle = rightArmEncoder.get();
+
+		robotPitch = accel.getX() / (accel.getY() * accel.getY() + accel.getZ() + accel.getZ());
+		robotPitch = Math.toDegrees(Math.atan(robotPitch));
+//		tiltAngle += robotPitch;
 
 		if (currentInput.isVisionLock() && !visionShotReady()) {
 			vision.calc();
@@ -117,9 +118,7 @@ public class Feedback {
 	}
 
 	public void resetGyro() {
-		angle = 0;
-		prevAngle = 0;
-		prevTime = Timer.getFPGATimestamp();
+		gyro.reset();
 	}
 
 	public void resetTiltEncoder() {
@@ -198,6 +197,9 @@ public class Feedback {
 		if (!TorqueMathUtil.near(getTiltAngle(), getRequiredTilt(), 1.0)) {
 			return false;
 		}
+		if (getRequiredTilt() < 0.0) {
+			return false;
+		}
 		if (!TorqueMathUtil.near(getFlywheelVelocity(), Constants.S_VISION_FLYWHEEL.getDouble(), 1000)) {
 			return false;
 		}
@@ -206,6 +208,7 @@ public class Feedback {
 	
 	public void pushToDashboard() {
 		SmartDashboard.putNumber("VISION_STATE", getVisionState());
+		SmartDashboard.putBoolean("RPM_READY", getFlywheelVelocity() > SmartDashboard.getNumber("FlywheelSetpointVelocity") && SmartDashboard.getNumber("FlywheelSetpointVelocity") != 0);
 
 		SmartDashboard.putNumber("Turn", vision.getTurn());
 		SmartDashboard.putNumber("Tilt", vision.getTilt());
@@ -213,6 +216,8 @@ public class Feedback {
 		SmartDashboard.putNumber("Tilt1", vision.getTilt1());
 		SmartDashboard.putNumber("Tilt2", vision.getTilt2());
 		SmartDashboard.putBoolean("VisionShotReady", visionShotReady());
+
+		SmartDashboard.putNumber("RobotPitch", robotPitch);
 	}
 
 	// singleton
