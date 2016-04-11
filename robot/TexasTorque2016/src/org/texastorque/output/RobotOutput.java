@@ -6,7 +6,6 @@ import org.texastorque.torquelib.component.TorqueMotor;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Relay;
-import edu.wpi.first.wpilibj.Relay.Direction;
 import edu.wpi.first.wpilibj.Relay.Value;
 import edu.wpi.first.wpilibj.VictorSP;
 
@@ -46,6 +45,9 @@ public class RobotOutput {
 	// compression testing
 	private DoubleSolenoid compressionTesting;
 
+	// misc
+	private Relay flashlight;
+
 	public RobotOutput() {
 		compressor = new Compressor();
 		compressor.start();
@@ -70,6 +72,8 @@ public class RobotOutput {
 
 		brakes = new DoubleSolenoid(Ports.BRAKES_SOLENOID_PORT_A, Ports.BRAKES_SOLENOID_PORT_B);
 		compressionTesting = new DoubleSolenoid(Ports.COMPRESSION_TESTING_A, Ports.COMPRESSION_TESTING_B);
+		
+		flashlight = new Relay(3, Relay.Direction.kBoth);
 	}
 
 	public void setDriveSpeeds(double left, double right) {
@@ -146,6 +150,14 @@ public class RobotOutput {
 					.set(doCompressionTesting ? DoubleSolenoid.Value.kReverse : DoubleSolenoid.Value.kForward);
 		} else {
 			compressionTesting.set(DoubleSolenoid.Value.kForward);
+		}
+	}
+	
+	public void setFlashlight(boolean on) {
+		if (OUTPUT_ENABLED) {
+			flashlight.set(on ? Value.kOn : Value.kOff);
+		} else {
+			flashlight.set(Value.kOff);
 		}
 	}
 
