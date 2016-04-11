@@ -10,7 +10,7 @@ public class AutoManager {
 
 	public void reset() {
 		if (currentMode != null) {
-			currentMode.interrupt();
+			currentMode.stop();
 		}
 		SmartDashboard.putNumber("AutoMode", 0);
 		SmartDashboard.putString("RunningAutoMode", "N/A");

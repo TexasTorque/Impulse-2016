@@ -10,18 +10,15 @@ public abstract class AutoMode extends Input {
 
 	private Thread thread;
 
-	public AutoMode() {
-		SmartDashboard.putString("RunningAutoMode", getClass().getSimpleName());
-	}
-
 	public final void start() {
+		SmartDashboard.putString("RunningAutoMode", getClass().getSimpleName());
 		thread = new Thread(() -> run());
 		thread.start();
 	}
 
-	public final void interrupt() {
+	public final void stop() {
 		try {
-			thread.join(500);// .5 seconds to kill auto
+			thread.join(500);
 		} catch (Exception e) {
 		}
 	}
