@@ -73,7 +73,6 @@ public class Robot extends TorqueIterative {
 	public void teleopInit() {
 		Parameters.load();
 		numCycles = 0;
-		
 
 		VisionFeedback.init();
 
