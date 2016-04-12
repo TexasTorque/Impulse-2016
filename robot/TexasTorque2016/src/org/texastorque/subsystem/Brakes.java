@@ -9,11 +9,11 @@ public class Brakes extends Subsystem {
 	private boolean braking;
 
 	@Override
-	public void init() {
+	public void initSystem() {
 	}
 
 	@Override
-	public void _run() {
+	public void runSystem() {
 		braking = input.isBraking();
 	}
 

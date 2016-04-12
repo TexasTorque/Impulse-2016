@@ -9,11 +9,11 @@ public class Flashlight extends Subsystem {
 	private boolean on;
 
 	@Override
-	public void init() {
+	public void initSystem() {
 	}
 
 	@Override
-	public void _run() {
+	public void runSystem() {
 		on = input.isFlashlightOn();
 	}
 

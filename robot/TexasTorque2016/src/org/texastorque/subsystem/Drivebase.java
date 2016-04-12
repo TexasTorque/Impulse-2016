@@ -63,7 +63,7 @@ public class Drivebase extends Subsystem {
 	private TorquePID visionPID;
 
 	@Override
-	public void init() {
+	public void initSystem() {
 		driveControlType = DriveControlType.MANUAL;
 
 		// linear
@@ -114,7 +114,7 @@ public class Drivebase extends Subsystem {
 	}
 
 	@Override
-	public void _run() {
+	public void runSystem() {
 		leftPosition = feedback.getLeftDrivePosition();
 		rightPosition = feedback.getRightDrivePosition();
 

@@ -9,11 +9,11 @@ public class Conveyor extends Subsystem {
 	private double conveyorSpeed;
 
 	@Override
-	public void init() {
+	public void initSystem() {
 	}
 
 	@Override
-	public void _run() {
+	public void runSystem() {
 		if (input.isConveyorIntaking() || (feedback.visionShotReady() && input.isVisionLock())) {
 			conveyorSpeed = 1.0;
 		} else if (input.isConveyorOuttaking()) {

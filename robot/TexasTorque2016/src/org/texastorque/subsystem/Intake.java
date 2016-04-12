@@ -9,11 +9,11 @@ public class Intake extends Subsystem {
 	private double intakeSpeed;
 	
 	@Override
-	public void init() {
+	public void initSystem() {
 	}
 
 	@Override
-	public void _run() {
+	public void runSystem() {
 		if (input.isIntaking() || (feedback.visionShotReady()) && input.isVisionLock()) {
 			intakeSpeed = 1.0;
 		} else if (input.isOuttaking()) {

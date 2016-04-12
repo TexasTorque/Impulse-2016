@@ -53,8 +53,7 @@ public class Robot extends TorqueIterative {
 
 		input = autoManager.createAutoMode();
 		feedback.setInput(input);
-		subsystems.forEach((subsystem) -> subsystem.init());
-		subsystems.forEach((subsystem) -> subsystem.setInput(input));
+		subsystems.forEach((subsystem) -> subsystem.init(input));
 		autoManager.runAutoMode();
 	}
 
@@ -74,13 +73,13 @@ public class Robot extends TorqueIterative {
 	public void teleopInit() {
 		Parameters.load();
 		numCycles = 0;
-		subsystems.forEach((subsystem) -> subsystem.init());
+		
 
 		VisionFeedback.init();
 
 		input = HumanInput.getInstance();
 		feedback.setInput(input);
-		subsystems.forEach((subsystem) -> subsystem.setInput(input));
+		subsystems.forEach((subsystem) -> subsystem.init(input));
 	}
 
 	@Override
