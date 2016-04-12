@@ -1,5 +1,7 @@
 package org.texastorque.torquelib.controlLoop;
 
+import edu.wpi.first.wpilibj.Timer;
+
 /**
  * A PID implementation.
  *
@@ -7,14 +9,21 @@ package org.texastorque.torquelib.controlLoop;
  */
 public class TorquePID extends ControlLoop {
 
+	// Settings
 	private double kP;
 	private double kI;
 	private double kD;
 	private double epsilon;
-	private double previousValue;
 	private double errorSum;
-	private boolean firstCycle;
 	private double maxOutput;
+
+	// Variables
+	private boolean firstCycle;
+	private double error;
+	private double prevError;
+	private double output;
+	private double dt;
+	private double lastTime;
 
 	/**
 	 * Create a new PID with all constants 0.0.
@@ -40,7 +49,6 @@ public class TorquePID extends ControlLoop {
 		kD = d;
 		epsilon = 0.0;
 		doneRange = 0.0;
-		previousValue = 0.0;
 		errorSum = 0.0;
 		firstCycle = true;
 		maxOutput = 1.0;
@@ -93,12 +101,7 @@ public class TorquePID extends ControlLoop {
 	 * Reset the PID controller.
 	 */
 	public void reset() {
-		errorSum = 0.0;
 		firstCycle = true;
-	}
-
-	public double getPreviousValue() {
-		return previousValue;
 	}
 
 	/**
@@ -109,49 +112,45 @@ public class TorquePID extends ControlLoop {
 	 * @return Motor ouput to the system.
 	 */
 	public double calculate(double currentValue) {
-		double pVal = 0.0;
-		double iVal = 0.0;
-		double dVal = 0.0;
-
 		if (firstCycle) {
-			previousValue = currentValue;
+			lastTime = Timer.getFPGATimestamp();
+			errorSum = 0.0;
 			firstCycle = false;
 		}
 
-		// ----- P Calculation -----
-		double error = setPoint - currentValue;
+		dt = Timer.getFPGATimestamp() - lastTime;
 
-		pVal = kP * error;
+		// ----- Error -----
+		prevError = error;
+		error = setPoint - currentValue;
+
+		// ----- P Calculation -----
+		output += kP * error;
 
 		// ----- I Calculation -----
 		if (error > epsilon) {
 			if (errorSum < 0.0) {
 				errorSum = 0.0;
 			}
-			errorSum += Math.min(error, 1.0);
+			errorSum += error * dt;
 		} else {
 			errorSum = 0.0;
 		}
 
-		iVal = kI * errorSum;
+		output += kI * errorSum;
 
 		// ----- D Calculation -----
-		double deriv = currentValue - previousValue;
+		output += kD * (error - prevError) * dt;
 
-		dVal = kD * deriv;
-
-		// ---- Combine Calculations -----
-		double output = pVal + iVal - dVal;
-
-		// ---- Limit Output -----
+		// ----- Limit Output ------
 		if (output > maxOutput) {
 			output = maxOutput;
 		} else if (output < -maxOutput) {
 			output = -maxOutput;
 		}
 
-		// ----- Save Value -----
-		previousValue = currentValue;
+		// ----- Save Time -----
+		lastTime = Timer.getFPGATimestamp();
 
 		return output;
 	}
