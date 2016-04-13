@@ -4,9 +4,9 @@ import org.texastorque.constants.Constants;
 import org.texastorque.constants.Ports;
 import org.texastorque.input.Input;
 import org.texastorque.torquelib.component.TorqueEncoder;
+import org.texastorque.torquelib.component.TorqueGyro;
 import org.texastorque.torquelib.util.TorqueMathUtil;
 
-import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -30,7 +30,7 @@ public class Feedback {
 	private TorqueEncoder flywheelEncoder;
 	private TorqueEncoder tiltEncoder;
 
-	private ADXRS450_Gyro gyro;
+	private TorqueGyro gyro;
 
 	private BuiltInAccelerometer accel;
 
@@ -60,17 +60,18 @@ public class Feedback {
 	public Feedback() {
 		vision = VisionFeedback.getInstance();
 
-		leftDriveEncoder = new TorqueEncoder(Ports.DRIVE_LEFT_ENCODER_A, Ports.DRIVE_LEFT_ENCODER_B, true,
+		leftDriveEncoder = new TorqueEncoder(Ports.DRIVE_LEFT_ENCODER_A, Ports.DRIVE_LEFT_ENCODER_B, false,
 				EncodingType.k4X);
 		rightDriveEncoder = new TorqueEncoder(Ports.DRIVE_RIGHT_ENCODER_A, Ports.DRIVE_RIGHT_ENCODER_B, false,
 				EncodingType.k4X);
-		leftArmEncoder = new TorqueEncoder(Ports.ARM_LEFT_ENCODER_A, Ports.ARM_LEFT_ENCODER_B, true, EncodingType.k4X);
-		rightArmEncoder = new TorqueEncoder(Ports.ARM_RIGHT_ENCODER_A, Ports.ARM_RIGHT_ENCODER_B, true,
+		leftArmEncoder = new TorqueEncoder(Ports.ARM_LEFT_ENCODER_A, Ports.ARM_LEFT_ENCODER_B, false, EncodingType.k4X);
+		rightArmEncoder = new TorqueEncoder(Ports.ARM_RIGHT_ENCODER_A, Ports.ARM_RIGHT_ENCODER_B, false,
 				EncodingType.k4X);
-		flywheelEncoder = new TorqueEncoder(Ports.FLYWHEEL_ENCODER_A, Ports.FLYWHEEL_ENCODER_B, true, EncodingType.k4X);
+		flywheelEncoder = new TorqueEncoder(Ports.FLYWHEEL_ENCODER_A, Ports.FLYWHEEL_ENCODER_B, false,
+				EncodingType.k4X);
 		tiltEncoder = new TorqueEncoder(Ports.TILT_ENCODER_A, Ports.TILT_ENCODER_B, false, EncodingType.k4X);
 
-		gyro = new ADXRS450_Gyro();
+		gyro = new TorqueGyro(0, 1);
 
 		accel = new BuiltInAccelerometer();
 	}
@@ -105,7 +106,7 @@ public class Feedback {
 
 		robotPitch = accel.getX() / (accel.getY() * accel.getY() + accel.getZ() + accel.getZ());
 		robotPitch = Math.toDegrees(Math.atan(robotPitch));
-//		tiltAngle += robotPitch;
+		// tiltAngle += robotPitch;
 
 		if (currentInput.isVisionLock() && !visionShotReady()) {
 			vision.calc();
@@ -205,10 +206,12 @@ public class Feedback {
 		}
 		return true;
 	}
-	
+
 	public void pushToDashboard() {
 		SmartDashboard.putNumber("VISION_STATE", getVisionState());
-		SmartDashboard.putBoolean("RPM_READY", getFlywheelVelocity() > SmartDashboard.getNumber("FlywheelSetpointVelocity") && SmartDashboard.getNumber("FlywheelSetpointVelocity") != 0);
+		SmartDashboard.putBoolean("RPM_READY",
+				getFlywheelVelocity() > SmartDashboard.getNumber("FlywheelSetpointVelocity")
+						&& SmartDashboard.getNumber("FlywheelSetpointVelocity") != 0);
 
 		SmartDashboard.putNumber("Turn", vision.getTurn());
 		SmartDashboard.putNumber("Tilt", vision.getTilt());

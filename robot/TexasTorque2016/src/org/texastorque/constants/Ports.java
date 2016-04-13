@@ -14,7 +14,8 @@ public class Ports {
 	public static final int DRIVE_RIGHT_BOOST = 10;
 
 	public static final int TILT = 8;
-	public static final int FLYWHEEL = 4;
+	public static final int FLYWHEEL_LEFT = 4;
+	public static final int FLYWHEEL_RIGHT = CHARLIE ? -1 : 14;
 
 	public static final int INTAKE = CHARLIE ? 3 : 0;
 
