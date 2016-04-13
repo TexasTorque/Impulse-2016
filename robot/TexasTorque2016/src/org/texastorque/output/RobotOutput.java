@@ -36,7 +36,8 @@ public class RobotOutput {
 
 	// shooter
 	private TorqueMotor tiltMotor;
-	private TorqueMotor flywheelMotor;
+	private TorqueMotor flywheelLeftMotor;
+	private TorqueMotor flywheelRightMotor;
 
 	// double arms
 	private TorqueMotor leftArmMotor;
@@ -65,14 +66,15 @@ public class RobotOutput {
 		conveyorMotor = new TorqueMotor(new VictorSP(Ports.CONVEYOR), false);
 
 		tiltMotor = new TorqueMotor(new VictorSP(Ports.TILT), false);
-		flywheelMotor = new TorqueMotor(new VictorSP(Ports.FLYWHEEL), true);
+		flywheelLeftMotor = new TorqueMotor(new VictorSP(Ports.FLYWHEEL_LEFT), true);
+		flywheelRightMotor = new TorqueMotor(new VictorSP(Ports.FLYWHEEL_RIGHT), false);
 
 		leftArmMotor = new TorqueMotor(new VictorSP(Ports.ARM_LEFT), false);
 		rightArmMotor = new TorqueMotor(new VictorSP(Ports.ARM_RIGHT), true);
 
 		brakes = new DoubleSolenoid(Ports.BRAKES_SOLENOID_PORT_A, Ports.BRAKES_SOLENOID_PORT_B);
 		compressionTesting = new DoubleSolenoid(Ports.COMPRESSION_TESTING_A, Ports.COMPRESSION_TESTING_B);
-		
+
 		flashlight = new Relay(3, Relay.Direction.kBoth);
 	}
 
@@ -120,9 +122,11 @@ public class RobotOutput {
 
 	public void setFlywheelSpeed(double speed) {
 		if (OUTPUT_ENABLED) {
-			flywheelMotor.set(speed);
+			flywheelLeftMotor.set(speed);
+			flywheelRightMotor.set(speed);
 		} else {
-			flywheelMotor.set(0.0);
+			flywheelLeftMotor.set(0.0);
+			flywheelRightMotor.set(0.0);
 		}
 	}
 
@@ -152,7 +156,7 @@ public class RobotOutput {
 			compressionTesting.set(DoubleSolenoid.Value.kForward);
 		}
 	}
-	
+
 	public void setFlashlight(boolean on) {
 		if (OUTPUT_ENABLED) {
 			flashlight.set(on ? Value.kOn : Value.kOff);

@@ -119,6 +119,7 @@ public class TorquePID extends ControlLoop {
 		}
 
 		dt = Timer.getFPGATimestamp() - lastTime;
+		output = 0;
 
 		// ----- Error -----
 		prevError = error;

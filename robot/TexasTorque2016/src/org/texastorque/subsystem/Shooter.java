@@ -76,7 +76,6 @@ public class Shooter extends Subsystem {
 		} else {
 			flywheelSpeed = 0.0;
 		}
-
 	}
 
 	@Override
