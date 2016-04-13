@@ -1,5 +1,13 @@
 <xml version="1.0">
 <dashboard>
+	<static-widget class="team1477.sd.graph.XYGraphWidget">
+		<location x="939" y="57"/>
+		<width>940</width>
+		<height>904</height>
+		<property name="X property to pull" value="NumCycles"/>
+		<property name="Y properties to pull (separate by comma)" value="TiltAngle, TiltSetpoint"/>
+		<property name="The minimum x value" value="3.0"/>
+	</static-widget>
 	<widget field="RPM_READY" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="709" y="687"/>
 	</widget>
