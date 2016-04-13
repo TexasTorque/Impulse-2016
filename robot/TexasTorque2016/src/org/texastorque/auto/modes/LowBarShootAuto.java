@@ -11,20 +11,12 @@ public class LowBarShootAuto extends AutoMode {
 		drive(Constants.A_LBS_DRIVE_DISTANCE.getDouble());
 		pause(4.5);
 		turn(60);
-		pause(2.0);
+		pause(3.0);
 		drive(63);
 		pause(2.0);
 		vision();
-
-		// armUp = false;
-		// leftDriveSetpoint = rightDriveSetpoint =
-		// Constants.A_DRIVE_FORWARD_AUTO_DISTANCE.getDouble();
-		// pause(3.0);
-		// leftDriveSetpoint = Constants.A_LBS_LEFT_CURVE_DISTANCE.getDouble();
-		// rightDriveSetpoint =
-		// Constants.A_LBS_RIGHT_CURVE_DISTANCE.getDouble();
-		// pause(5.0);
-		// visionLock = true;
+		pause(5.0);
+		visionLock = false;
 	}
 
 	@Override
