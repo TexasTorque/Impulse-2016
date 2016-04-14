@@ -77,8 +77,8 @@ public class Robot extends TorqueIterative {
 		VisionFeedback.init();
 
 		input = HumanInput.getInstance();
-		feedback.setInput(input);
 		subsystems.forEach((subsystem) -> subsystem.init(input));
+		feedback.setInput(input);
 	}
 
 	@Override
