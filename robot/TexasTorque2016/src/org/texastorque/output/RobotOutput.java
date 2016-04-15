@@ -75,7 +75,7 @@ public class RobotOutput {
 		brakes = new DoubleSolenoid(Ports.BRAKES_SOLENOID_PORT_A, Ports.BRAKES_SOLENOID_PORT_B);
 		compressionTesting = new DoubleSolenoid(Ports.COMPRESSION_TESTING_A, Ports.COMPRESSION_TESTING_B);
 
-		flashlight = new Relay(3, Relay.Direction.kBoth);
+		flashlight = new Relay(Ports.FLASHLIGHT, Relay.Direction.kBoth);
 	}
 
 	public void setDriveSpeeds(double left, double right) {
