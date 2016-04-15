@@ -1,5 +1,7 @@
 package org.texastorque.auto;
 
+import org.texastorque.auto.AutoModes.DefensePosition;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class AutoManager {
@@ -12,20 +14,26 @@ public class AutoManager {
 		if (currentMode != null) {
 			currentMode.stop();
 		}
+		AutoMode.currentDefense = DefensePosition.ZERO;
 		SmartDashboard.putNumber("AutoMode", 0);
+		SmartDashboard.putNumber("AutoDefensePosition", 0);
 		SmartDashboard.putString("RunningAutoMode", "N/A");
+		SmartDashboard.putNumber("RunningDefensePosition", 0);
 	}
 
 	public void updateDashboard() {
 		int dashboardMode = (int) SmartDashboard.getNumber("AutoMode");
+		int defensePosition = (int) SmartDashboard.getNumber("AutoDefensePosition");
 
-		SmartDashboard.putString("WillRunAutoMode", AutoModes.convert(dashboardMode).call.getSimpleName());
+		SmartDashboard.putString("WillRunAutoMode", AutoModes.autoModeToString(dashboardMode));
+		SmartDashboard.putString("WillRunDefensePosition", AutoModes.defenseToString(defensePosition));
 	}
 
 	public AutoMode createAutoMode() {
 		int dashboardMode = (int) SmartDashboard.getNumber("AutoMode");
+		int defensePosition = (int) SmartDashboard.getNumber("AutoDefensePosition");
 
-		return currentMode = AutoModes.convert(dashboardMode).create();
+		return currentMode = AutoModes.create(dashboardMode, defensePosition);
 	}
 
 	public void runAutoMode() {

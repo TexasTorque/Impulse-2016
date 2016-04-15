@@ -8,6 +8,8 @@ public class RampartsAuto extends AutoMode {
 	@Override
 	protected void run() {
 		drive(Constants.A_DRIVE_FORWARD_AUTO_DISTANCE.getDouble());
+		pause(2.0);
+		postDefenseVision();
 	}
 
 	@Override

@@ -1,5 +1,7 @@
 package org.texastorque.auto;
 
+import org.texastorque.auto.AutoModes.DefensePosition;
+import org.texastorque.feedback.Feedback;
 import org.texastorque.input.DriveControlType;
 import org.texastorque.input.Input;
 
@@ -8,10 +10,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public abstract class AutoMode extends Input {
 
+	public static DefensePosition currentDefense;
+
 	private Thread thread;
 
 	public final void start() {
 		SmartDashboard.putString("RunningAutoMode", getClass().getSimpleName());
+		SmartDashboard.putString("RunningDefensePosition", currentDefense.toString());
 		thread = new Thread(() -> run());
 		thread.start();
 	}
@@ -65,5 +70,40 @@ public abstract class AutoMode extends Input {
 	protected final void vision() {
 		driveControlType = DriveControlType.VISION;
 		visionLock = true;
+		pause(5.0);
+		visionLock = false;
+	}
+
+	protected final void postDefenseVision() {
+		turn(-Feedback.getInstance().getAngle());
+		pause(1.0);
+		drive(84);
+		pause(3.0);
+		switch (currentDefense) {
+		case ZERO:
+			// do nothing just cross
+			break;
+		case ONE:
+			turn(60);
+			pause(3.0);
+			drive(63);
+			pause(2.0);
+			break;
+		case TWO:
+			turn(90);
+			pause(3.0);
+			drive(72);
+			pause(2.0);
+			turn(-90);
+			pause(3.0);
+			break;
+		case THREE:
+			break;
+		case FOUR:
+			break;
+		case FIVE:
+			break;
+		}
+		vision();
 	}
 }

@@ -9,6 +9,8 @@ public class LowBarAuto extends AutoMode {
 	protected void run() {
 		armUp = false;
 		drive(Constants.A_DRIVE_FORWARD_AUTO_DISTANCE.getDouble());
+		pause(2.0);
+		postDefenseVision();
 	}
 
 	@Override
