@@ -46,4 +46,7 @@ public class Ports {
 	public static final int ARM_LEFT_ENCODER_B = 9;
 	public static final int ARM_RIGHT_ENCODER_A = 2;
 	public static final int ARM_RIGHT_ENCODER_B = 3;
+
+	// relay
+	public static final int FLASHLIGHT = 3;
 }

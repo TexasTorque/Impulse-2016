@@ -20,8 +20,8 @@ public abstract class Subsystem {
 	}
 
 	public final void init(Input _input) {
-		initSystem();
 		input = _input;
+		initSystem();
 	}
 
 	protected abstract void initSystem();
