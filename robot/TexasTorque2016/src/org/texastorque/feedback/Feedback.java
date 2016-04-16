@@ -191,10 +191,6 @@ public class Feedback {
 		return vision.getDistance();
 	}
 
-	public int getVisionState() {
-		return vision.getVisionState();
-	}
-
 	public boolean visionShotReady() {
 		if (!TorqueMathUtil.near(getRequiredTurn(), 0, 1.0)) {
 			return false;
@@ -212,7 +208,6 @@ public class Feedback {
 	}
 
 	public void pushToDashboard() {
-		SmartDashboard.putNumber("VISION_STATE", getVisionState());
 		SmartDashboard.putNumber("Turn", vision.getTurn());
 		SmartDashboard.putNumber("Tilt", vision.getTilt());
 		SmartDashboard.putNumber("Distance", vision.getDistance());

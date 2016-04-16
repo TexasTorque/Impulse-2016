@@ -39,11 +39,8 @@ public class VisionFeedback {
 	
 	private double distance;
 	
-	private int visionState;
-
 	public VisionFeedback() {
 		visionTable = NetworkTable.getTable("GRIP").getSubTable("visionReport");
-		visionState = 0;
 	}
 
 	private double calcTilt() {
@@ -76,8 +73,7 @@ public class VisionFeedback {
 		}
 
 		// neither tilt is possible
-		visionState = 3;
-		return -6.0;
+		return Constants.S_DOWN_SETPOINT.getDouble();
 	}
 
 	public void calc() {
@@ -93,10 +89,7 @@ public class VisionFeedback {
 		if (goalCenterX == -1.0 || goalCenterY == -1.0) {
 			turn = 0.0;
 			tilt = Constants.S_DOWN_SETPOINT.getDouble();
-			visionState = 3;// failed - could not find goal
 			return;
-		} else {
-			visionState = 1;// loading - waiting for setpoints to be met
 		}
 
 		// calculated turn angle for real turn
@@ -113,10 +106,6 @@ public class VisionFeedback {
 
 		// real turn
 		turn = toDegrees(atan(tan(toRadians(turn)) - (X_CAM_ROBOT / (distance * cos(toRadians(turn))))));
-
-		if (visionState != 3 && Feedback.getInstance().visionShotReady()) {
-			visionState = 2;// success
-		}
 	}
 
 	public double getTurn() {
@@ -139,10 +128,6 @@ public class VisionFeedback {
 		return _tilt2;
 	}
 
-	public int getVisionState() {
-		return visionState;
-	}
-	
 	// singleton
 	public static VisionFeedback getInstance() {
 		return instance == null ? instance = new VisionFeedback() : instance;
