@@ -1,8 +1,5 @@
 <xml version="1.0">
 <dashboard>
-	<widget field="DrivebaseLeftTargetAcceleration" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="0" y="297"/>
-	</widget>
 	<widget field="WillRunDefensePosition" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="184" y="415"/>
 	</widget>
@@ -13,12 +10,12 @@
 		<location x="195" y="393"/>
 	</widget>
 	<static-widget class="team1477.sd.graph.XYGraphWidget">
-		<location x="939" y="57"/>
+		<location x="939" y="69"/>
 		<width>940</width>
-		<height>847</height>
+		<height>835</height>
 		<property name="X property to pull" value="NumCycles"/>
-		<property name="Y properties to pull (separate by comma)" value="DrivebaseRightPosition, DrivebaseLeftPosition, DrivebaseTargetPosition"/>
-		<property name="The minimum x value" value="3.0"/>
+		<property name="Y properties to pull (separate by comma)" value="DrivebsaeLeftVelocity, DrivebaseRightVelocity"/>
+		<property name="The minimum x value" value="100.0"/>
 	</static-widget>
 	<widget field="RPM_READY" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="709" y="687"/>
@@ -113,9 +110,6 @@
 	<widget field="DrivebsaeLeftVelocity" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="38" y="249"/>
 	</widget>
-	<widget field="RobotTurn" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="765" y="600"/>
-	</widget>
 	<widget field="Tilt1" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="320" y="802"/>
 	</widget>
@@ -176,14 +170,16 @@
 	<widget field="DrivebaseRightAcceleration" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="467" y="273"/>
 	</widget>
+	<static-widget class="team1477.sd.graph.XYGraphWidget">
+		<location x="939" y="69"/>
+		<width>940</width>
+		<height>835</height>
+		<property name="X property to pull" value="NumCycles"/>
+		<property name="Y properties to pull (separate by comma)" value="DrivebsaeLeftVelocity, DrivebaseRightVelocity"/>
+		<property name="The minimum x value" value="100.0"/>
+	</static-widget>
 </dashboard>
 <live-window>
 </live-window>
-	<hidden field="DrivebaseLeftTargetVelocity"/>
-	<hidden field="DrivebaseLeftTargetPosition"/>
-	<hidden field="DrivebaseRightTargetPosition"/>
-	<hidden field="DrivebaseRightTargetAcceleration"/>
-	<hidden field="DrivebaseRightTargetVelocity"/>
-	<hidden field="RightDriveSetpoint"/>
-	<hidden field="LeftDriveSetpoint"/>
+	<hidden field="DriveDeriv"/>
 </xml>
