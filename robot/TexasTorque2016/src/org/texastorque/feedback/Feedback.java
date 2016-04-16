@@ -174,6 +174,10 @@ public class Feedback {
 	public double getRightArmAngle() {
 		return rightArmAngle;
 	}
+	
+	public double getRobotPitch() {
+		return robotPitch;
+	}
 
 	public double getRequiredTurn() {
 		return vision.getTurn();
