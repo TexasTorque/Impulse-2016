@@ -213,6 +213,7 @@ public class Feedback {
 		SmartDashboard.putNumber("Distance", vision.getDistance());
 		SmartDashboard.putNumber("Tilt1", vision.getTilt1());
 		SmartDashboard.putNumber("Tilt2", vision.getTilt2());
+		SmartDashboard.putNumber("JetsonHeartbeat", vision.getJetsonHeartbeat());
 		SmartDashboard.putBoolean("VisionShotReady", visionShotReady());
 
 		SmartDashboard.putNumber("RobotPitch", robotPitch);

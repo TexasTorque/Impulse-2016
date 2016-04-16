@@ -9,7 +9,6 @@ import static java.lang.Math.toRadians;
 
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
-import java.net.InetAddress;
 
 import org.texastorque.constants.Constants;
 
@@ -29,9 +28,6 @@ public class VisionFeedback {
 	private byte[] jetsonBuffer;
 	private String[] jetsonValues;
 
-	private double jetsonTilt;
-	private double jetsonTurn;
-	private double jetsonDistance;
 	private int jetsonHeartbeat;
 
 	// off board processing
@@ -99,9 +95,9 @@ public class VisionFeedback {
 			try {
 				jetson.receive(jetsonPacket);
 				jetsonValues = new String(jetsonBuffer, 0, jetsonPacket.getLength()).split(",");
-				jetsonTurn = Double.parseDouble(jetsonValues[0]);
-				jetsonTilt = Double.parseDouble(jetsonValues[1]);
-				jetsonDistance = Double.parseDouble(jetsonValues[2]);
+				turn = Double.parseDouble(jetsonValues[0]);
+				tilt = Double.parseDouble(jetsonValues[1]);
+				distance = Double.parseDouble(jetsonValues[2]);
 				jetsonHeartbeat = Integer.parseInt(jetsonValues[3]);
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -169,6 +165,7 @@ public class VisionFeedback {
 			networkInit = false;
 
 			try {
+				jetson = new DatagramSocket(1477);
 				jetsonBuffer = new byte[2048];
 				jetsonPacket = new DatagramPacket(jetsonBuffer, jetsonBuffer.length);
 			} catch (Exception e) {
@@ -206,7 +203,7 @@ public class VisionFeedback {
 	public static VisionFeedback getInstance() {
 		return instance == null ? instance = new VisionFeedback() : instance;
 	}
-	
+
 	public static void init() {
 		getInstance().visionInit();
 	}
