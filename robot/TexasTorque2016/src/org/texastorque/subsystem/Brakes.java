@@ -9,7 +9,7 @@ public class Brakes extends Subsystem {
 	private boolean braking;
 
 	@Override
-	public void initSystem() {
+	public void init() {
 	}
 
 	@Override

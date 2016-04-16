@@ -19,12 +19,11 @@ public abstract class Subsystem {
 		driverStation = DriverStation.getInstance();
 	}
 
-	public final void init(Input _input) {
+	public final void setInput(Input _input) {
 		input = _input;
-		initSystem();
 	}
 
-	protected abstract void initSystem();
+	public abstract void init();
 
 	public final void run() {
 		runSystem();

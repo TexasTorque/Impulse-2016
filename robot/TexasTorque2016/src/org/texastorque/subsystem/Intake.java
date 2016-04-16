@@ -9,7 +9,7 @@ public class Intake extends Subsystem {
 	private double intakeSpeed;
 	
 	@Override
-	public void initSystem() {
+	public void init() {
 	}
 
 	@Override

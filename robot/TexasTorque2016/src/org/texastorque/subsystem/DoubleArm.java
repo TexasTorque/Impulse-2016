@@ -23,7 +23,7 @@ public class DoubleArm extends Subsystem {
 	private TorquePID rightArmPID;
 
 	@Override
-	public void initSystem() {
+	public void init() {
 		leftArmPID = new TorquePID();
 		leftArmPID.setPIDGains(Constants.ARM_P.getDouble(), Constants.ARM_I.getDouble(), Constants.ARM_D.getDouble());
 		leftArmPID.setMaxOutput(.6);

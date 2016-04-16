@@ -63,7 +63,7 @@ public class Drivebase extends Subsystem {
 	private TorquePID visionPID;
 
 	@Override
-	public void initSystem() {
+	public void init() {
 		driveControlType = DriveControlType.MANUAL;
 
 		// linear

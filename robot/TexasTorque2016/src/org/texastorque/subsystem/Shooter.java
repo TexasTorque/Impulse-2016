@@ -27,7 +27,7 @@ public class Shooter extends Subsystem {
 	private double tiltSetpoint;
 
 	@Override
-	public void initSystem() {
+	public void init() {
 		flywheelControl = new BangBang(0.5, .75);
 
 		tiltPID = new TorquePID(Constants.S_TILT_P.getDouble(), Constants.S_TILT_I.getDouble(),

@@ -9,7 +9,7 @@ public class Flashlight extends Subsystem {
 	private boolean on;
 
 	@Override
-	public void initSystem() {
+	public void init() {
 	}
 
 	@Override
