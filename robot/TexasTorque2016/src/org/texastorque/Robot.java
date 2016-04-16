@@ -3,7 +3,6 @@ package org.texastorque;
 import java.util.ArrayList;
 
 import org.texastorque.auto.AutoManager;
-import org.texastorque.auto.modes.DoNothingAuto;
 import org.texastorque.feedback.Feedback;
 import org.texastorque.feedback.VisionFeedback;
 import org.texastorque.input.HumanInput;
@@ -46,6 +45,8 @@ public class Robot extends TorqueIterative {
 
 		autoManager = AutoManager.getInstance();
 		feedback = Feedback.getInstance();
+
+		VisionFeedback.init();
 
 		autoManager.reset();
 

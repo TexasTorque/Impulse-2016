@@ -7,6 +7,10 @@ import static java.lang.Math.tan;
 import static java.lang.Math.toDegrees;
 import static java.lang.Math.toRadians;
 
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+
 import org.texastorque.constants.Constants;
 
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
@@ -16,16 +20,30 @@ public class VisionFeedback {
 
 	private static VisionFeedback instance;
 
-	private static double CAM_WIDTH;
-	private static double CAM_HEIGHT;
-	private static double CAM_FOV;
-	private static double H_DIFF;
-	private static double X_CAM_ROBOT;
-	private static double THETA_PLUS;
-	private static double Vsq;
-	private static double G;
+	// jetson network processing
+	private boolean networkInit;
+	private boolean useNetwork = false;
 
-	private static double k1;
+	private DatagramSocket jetson;
+	private DatagramPacket jetsonPacket;
+	private byte[] jetsonBuffer;
+	private String[] jetsonValues;
+
+	private double jetsonTilt;
+	private double jetsonTurn;
+	private double jetsonDistance;
+	private int jetsonHeartbeat;
+
+	// off board processing
+	private double CAM_WIDTH;
+	private double CAM_HEIGHT;
+	private double CAM_FOV;
+	private double H_DIFF;
+	private double X_CAM_ROBOT;
+	private double THETA_PLUS;
+	private double Vsq;
+	private double G;
+	private double k1;
 
 	private ITable visionTable;
 	private double goalCenterX;
@@ -36,9 +54,9 @@ public class VisionFeedback {
 	private boolean t1valid;
 	private double _tilt2;
 	private boolean t2valid;
-	
+
 	private double distance;
-	
+
 	public VisionFeedback() {
 		visionTable = NetworkTable.getTable("GRIP").getSubTable("visionReport");
 	}
@@ -77,6 +95,20 @@ public class VisionFeedback {
 	}
 
 	public void calc() {
+		if (useNetwork) {
+			try {
+				jetson.receive(jetsonPacket);
+				jetsonValues = new String(jetsonBuffer, 0, jetsonPacket.getLength()).split(",");
+				jetsonTurn = Double.parseDouble(jetsonValues[0]);
+				jetsonTilt = Double.parseDouble(jetsonValues[1]);
+				jetsonDistance = Double.parseDouble(jetsonValues[2]);
+				jetsonHeartbeat = Integer.parseInt(jetsonValues[3]);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return;
+		}
+
 		// grab values
 		try {
 			goalCenterX = visionTable.getNumberArray("centerX", new double[] { -1.0 })[0];
@@ -128,12 +160,22 @@ public class VisionFeedback {
 		return _tilt2;
 	}
 
-	// singleton
-	public static VisionFeedback getInstance() {
-		return instance == null ? instance = new VisionFeedback() : instance;
+	public int getJetsonHeartbeat() {
+		return jetsonHeartbeat;
 	}
 
-	public static void init() {
+	public void visionInit() {
+		if (!networkInit) {
+			networkInit = false;
+
+			try {
+				jetsonBuffer = new byte[2048];
+				jetsonPacket = new DatagramPacket(jetsonBuffer, jetsonBuffer.length);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
 		CAM_WIDTH = Constants.V_CAMERA_WIDTH.getDouble();
 		CAM_HEIGHT = Constants.V_CAMERA_HEIGHT.getDouble();
 		CAM_FOV = Constants.V_CAMERA_FOV.getDouble();
@@ -147,5 +189,25 @@ public class VisionFeedback {
 		Vsq *= Vsq;
 
 		k1 = 2 * H_DIFF * Vsq;
+	}
+
+	public void stop() {
+		try {
+			jetson.disconnect();
+			jetson.close();
+		} catch (Exception e) {
+			if (!(e instanceof NullPointerException)) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	// singleton
+	public static VisionFeedback getInstance() {
+		return instance == null ? instance = new VisionFeedback() : instance;
+	}
+	
+	public static void init() {
+		getInstance().visionInit();
 	}
 }
