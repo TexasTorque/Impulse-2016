@@ -42,7 +42,6 @@ public enum AutoModes {
 			}
 		} catch (Exception e) {
 		}
-		System.out.println("hi");
 		return new DoNothingAuto();
 	}
 
