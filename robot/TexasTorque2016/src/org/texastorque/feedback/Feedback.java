@@ -174,7 +174,7 @@ public class Feedback {
 	public double getRightArmAngle() {
 		return rightArmAngle;
 	}
-	
+
 	public double getRobotPitch() {
 		return robotPitch;
 	}
@@ -213,10 +213,6 @@ public class Feedback {
 
 	public void pushToDashboard() {
 		SmartDashboard.putNumber("VISION_STATE", getVisionState());
-		SmartDashboard.putBoolean("RPM_READY",
-				getFlywheelVelocity() > SmartDashboard.getNumber("FlywheelSetpointVelocity")
-						&& SmartDashboard.getNumber("FlywheelSetpointVelocity") != 0);
-
 		SmartDashboard.putNumber("Turn", vision.getTurn());
 		SmartDashboard.putNumber("Tilt", vision.getTilt());
 		SmartDashboard.putNumber("Distance", vision.getDistance());
