@@ -1,7 +1,6 @@
 package org.texastorque.input;
 
 import org.texastorque.torquelib.util.GenericController;
-import org.texastorque.torquelib.util.TorqueMathUtil;
 import org.texastorque.torquelib.util.TorqueToggle;
 
 public class HumanInput extends Input {
@@ -14,9 +13,6 @@ public class HumanInput extends Input {
 
 	private TorqueToggle brakesToggle;
 	private TorqueToggle flashlightToggle;
-
-	private double y;
-	private double prevY;
 
 	private boolean prevHoodOverride;
 
@@ -32,15 +28,10 @@ public class HumanInput extends Input {
 		hoodOverrideReset = false;
 
 		// driver
-		prevY = y;
-		y = driver.getLeftYAxis();
+		flipWarning = driver.getLeftYAxis() < -.25;
 
-		if (Math.abs(prevY - y) > .5 && !TorqueMathUtil.near(Math.abs(y), 0, .1)) {
-			y = 0.0;
-		}
-
-		leftDriveSpeed = -y + driver.getRightXAxis();
-		rightDriveSpeed = -y - driver.getRightXAxis();
+		leftDriveSpeed = -driver.getLeftYAxis() + driver.getRightXAxis();
+		rightDriveSpeed = -driver.getLeftYAxis() - driver.getRightXAxis();
 
 		brakesToggle.calc(driver.getAButton());
 		braking = brakesToggle.get();
