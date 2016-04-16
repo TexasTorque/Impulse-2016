@@ -63,7 +63,7 @@ public class Drivebase extends Subsystem {
 	private TorquePID visionPID;
 
 	@Override
-	public void initSystem() { 	
+	public void initSystem() {
 		driveControlType = DriveControlType.MANUAL;
 
 		// linear
@@ -132,8 +132,9 @@ public class Drivebase extends Subsystem {
 		if (driveControlType == DriveControlType.MANUAL || input.isOverride()) {
 			leftSpeed = input.getLeftDriveSpeed();
 			rightSpeed = input.getRightDriveSpeed();
-			
-			if (feedback.getLeftDriveVelocity() < -10 && feedback.getRightDriveVelocity() < -10 && input.isFlipWarning()) {
+
+			if (feedback.getLeftDriveVelocity() < -10 && feedback.getRightDriveVelocity() < -10
+					&& input.isFlipCheck()) {
 				leftSpeed = rightSpeed = 0.0;
 			}
 		} else if (driveControlType == DriveControlType.VISION) {

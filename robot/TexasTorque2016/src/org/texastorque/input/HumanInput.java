@@ -28,7 +28,7 @@ public class HumanInput extends Input {
 		hoodOverrideReset = false;
 
 		// driver
-		flipWarning = driver.getLeftYAxis() < -.25;
+		flipCheck = -driver.getLeftYAxis() > .25;
 
 		leftDriveSpeed = -driver.getLeftYAxis() + driver.getRightXAxis();
 		rightDriveSpeed = -driver.getLeftYAxis() - driver.getRightXAxis();

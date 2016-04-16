@@ -14,7 +14,7 @@ public abstract class Input {
 	protected double turnSetpoint = 0.0;
 	protected double tiltSetpoint = Constants.S_DOWN_SETPOINT.getDouble();
 	
-	protected boolean flipWarning = false;
+	protected boolean flipCheck = false;
 
 	// braking
 	protected boolean braking = false;
@@ -118,8 +118,8 @@ public abstract class Input {
 		return armSpeed;
 	}
 	
-	public boolean isFlipWarning() {
-		return flipWarning;
+	public boolean isFlipCheck() {
+		return flipCheck;
 	}
 
 	public boolean isBraking() {
