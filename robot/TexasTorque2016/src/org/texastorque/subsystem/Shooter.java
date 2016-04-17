@@ -1,7 +1,6 @@
 package org.texastorque.subsystem;
 
 import org.texastorque.constants.Constants;
-import org.texastorque.torquelib.controlLoop.BangBang;
 import org.texastorque.torquelib.controlLoop.TorquePID;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -18,7 +17,8 @@ public class Shooter extends Subsystem {
 	private double flywheelVelocity;
 
 	// flywheel profiling
-	private BangBang flywheelControl;
+	// private BangBang flywheelControl;
+	private TorquePID flywheelControl;
 	private double flywheelSetpoint;
 
 	// tilt profiling
@@ -28,7 +28,10 @@ public class Shooter extends Subsystem {
 
 	@Override
 	public void init() {
-		flywheelControl = new BangBang(0.5, .85);
+		// flywheelControl = new BangBang(0.5, .85);
+		flywheelControl = new TorquePID(0, 0, 0);
+		flywheelControl.setControllingSpeed(true);
+		flywheelControl.setEpsilon(100);
 
 		tiltPID = new TorquePID(Constants.S_TILT_P.getDouble(), Constants.S_TILT_I.getDouble(),
 				Constants.S_TILT_D.getDouble());
