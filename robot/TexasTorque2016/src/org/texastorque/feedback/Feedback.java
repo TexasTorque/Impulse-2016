@@ -124,6 +124,11 @@ public class Feedback {
 		tiltEncoder.reset();
 	}
 
+	public void resetArmEncoders() {
+		leftArmEncoder.reset();
+		rightArmEncoder.reset();
+	}
+
 	// getters
 	public double getLeftDrivePosition() {
 		return leftDrivePosition;

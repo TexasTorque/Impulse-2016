@@ -45,6 +45,10 @@ public class DoubleArm extends Subsystem {
 			armSetpoint = Constants.ARM_DOWN_SETPOINT.getDouble();
 		}
 
+		if (input.isArmOverride()) {
+			feedback.resetArmEncoders();
+		}
+
 		if (input.isOverride()) {
 			leftArmSpeed = rightArmSpeed = input.getArmOverrideSpeed();
 		} else {

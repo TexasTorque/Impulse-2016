@@ -14,8 +14,6 @@ public class HumanInput extends Input {
 	private TorqueToggle brakesToggle;
 	private TorqueToggle flashlightToggle;
 
-	private boolean prevHoodOverride;
-
 	private HumanInput() {
 		driver = new GenericController(0, .1);
 		operator = new GenericController(1, .1);
@@ -25,8 +23,6 @@ public class HumanInput extends Input {
 	}
 
 	public void update() {
-		hoodOverrideReset = false;
-
 		// driver
 		flipCheck = -driver.getLeftYAxis() > .25;
 
@@ -65,18 +61,13 @@ public class HumanInput extends Input {
 		} else if (operator.getDPADDown()) {
 			armUp = false;
 		}
-		armSpeed = operator.getRightYAxis() / 4.0;
+		armOverrideSpeed = operator.getRightYAxis() / 4.0;
+		armOverride = operator.getRightStickClick();
 
-		tiltMotorSpeed = -operator.getLeftYAxis() / 3.0;
-
-		prevHoodOverride = hoodOverride;
-		hoodOverride = operator.getLeftStickClick();
+		tiltOverrideSpeed = -operator.getLeftYAxis() / 3.0;
+		tiltOverride = operator.getLeftStickClick();
 
 		// post operations
-		if (prevHoodOverride != hoodOverride && !hoodOverride) {
-			hoodOverrideReset = true;
-		}
-
 		if (visionLock) {
 			driveControlType = DriveControlType.VISION;
 		} else {

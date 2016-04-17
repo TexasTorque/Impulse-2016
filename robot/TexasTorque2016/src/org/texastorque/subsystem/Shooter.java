@@ -57,11 +57,11 @@ public class Shooter extends Subsystem {
 			flywheelSetpoint = 0;
 		}
 
-		if (input.isHoodOverrideReset()) {
+		if (input.isTiltOverride()) {
 			feedback.resetTiltEncoder();
 		}
 
-		if (input.isOverride() || input.isHoodOverride()) {
+		if (input.isOverride() || input.isTiltOverride()) {
 			tiltSpeed = input.getTiltOverrideSpeed();
 		} else {
 			tiltPID.setSetpoint(tiltSetpoint);
