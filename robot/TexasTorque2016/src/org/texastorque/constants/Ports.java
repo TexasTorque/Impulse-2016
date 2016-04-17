@@ -2,7 +2,7 @@ package org.texastorque.constants;
 
 public class Ports {
 
-	private static boolean CHARLIE = false;
+	private static final boolean CHARLIE = false;
 
 	// motors
 	public static final int DRIVE_LEFT_TOP = 6;
