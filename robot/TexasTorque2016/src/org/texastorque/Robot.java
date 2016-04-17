@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import org.texastorque.auto.AutoManager;
 import org.texastorque.feedback.Feedback;
-import org.texastorque.feedback.VisionFeedback;
 import org.texastorque.input.HumanInput;
 import org.texastorque.input.Input;
 import org.texastorque.subsystem.Brakes;
