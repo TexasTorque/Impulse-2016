@@ -16,21 +16,23 @@ public class TorquePID {
 	private double epsilon;
 	private double errorSum;
 	private double maxOutput;
+	private boolean speedController;
 
 	// Variables
-	private double setpoint;
 	private boolean firstCycle;
+	private double setpoint;
 	private double error;
 	private double prevError;
 	private double output;
+	private double prevOutput;
 	private double dt;
 	private double lastTime;
 
 	/**
-	 * Create a new PID with all constants 0.0.
+	 * Create a new PID with all constants 0.
 	 */
 	public TorquePID() {
-		this(0.0, 0.0, 0.0);
+		this(0, 0, 0);
 	}
 
 	/**
@@ -70,6 +72,19 @@ public class TorquePID {
 		kD = d;
 	}
 
+	/*
+	 * Change this controller to a speed control, which integrates output and
+	 * never goes negative.
+	 * 
+	 * @param speed True for speed/velocity control, false for position control.
+	 */
+	public void setControllingSpeed(boolean speedControl) {
+		speedController = speedControl;
+	}
+
+	/*
+	 * Set the setpoint of the PID loop.
+	 */
 	public void setSetpoint(double set) {
 		setpoint = set;
 	}
@@ -122,6 +137,7 @@ public class TorquePID {
 		}
 
 		dt = Timer.getFPGATimestamp() - lastTime;
+		prevOutput = output;
 		output = 0;
 
 		// ----- Error -----
@@ -147,10 +163,16 @@ public class TorquePID {
 		output += kD * (error - prevError) * dt;
 
 		// ----- Limit Output ------
+		if (speedController) {
+			output += prevOutput;
+		}
 		if (output > maxOutput) {
 			output = maxOutput;
 		} else if (output < -maxOutput) {
 			output = -maxOutput;
+		}
+		if (speedController && output < 0) {
+			output = 0;
 		}
 
 		// ----- Save Time -----
