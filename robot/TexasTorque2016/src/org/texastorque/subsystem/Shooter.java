@@ -32,7 +32,6 @@ public class Shooter extends Subsystem {
 
 		tiltPID = new TorquePID(Constants.S_TILT_P.getDouble(), Constants.S_TILT_I.getDouble(),
 				Constants.S_TILT_D.getDouble());
-		tiltPID.setTunedVoltage(Constants.TUNED_VOLTAGE.getDouble());
 		tiltPID.setMaxOutput(.4);
 	}
 

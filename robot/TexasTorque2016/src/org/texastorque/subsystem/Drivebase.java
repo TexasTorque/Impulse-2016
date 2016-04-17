@@ -105,7 +105,6 @@ public class Drivebase extends Subsystem {
 		visionPID = new TorquePID();
 		visionPID.setPIDGains(Constants.D_VISION_P.getDouble(), Constants.D_VISION_I.getDouble(),
 				Constants.D_VISION_D.getDouble());
-		visionPID.setTunedVoltage(Constants.TUNED_VOLTAGE.getDouble());
 		visionPID.setMaxOutput(0.4);
 		visionPID.setSetpoint(0.0);
 

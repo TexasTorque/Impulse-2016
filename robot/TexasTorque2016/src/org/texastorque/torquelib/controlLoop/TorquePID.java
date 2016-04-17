@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.Timer;
  *
  * @author TexasTorque
  */
-public class TorquePID extends ControlLoop {
+public class TorquePID {
 
 	// Settings
 	private double kP;
@@ -18,6 +18,7 @@ public class TorquePID extends ControlLoop {
 	private double maxOutput;
 
 	// Variables
+	private double setpoint;
 	private boolean firstCycle;
 	private double error;
 	private double prevError;
@@ -48,11 +49,9 @@ public class TorquePID extends ControlLoop {
 		kI = i;
 		kD = d;
 		epsilon = 0.0;
-		doneRange = 0.0;
 		errorSum = 0.0;
 		firstCycle = true;
 		maxOutput = 1.0;
-		minDoneCycles = 10;
 	}
 
 	/**
@@ -69,6 +68,10 @@ public class TorquePID extends ControlLoop {
 		kP = p;
 		kI = i;
 		kD = d;
+	}
+
+	public void setSetpoint(double set) {
+		setpoint = set;
 	}
 
 	/**
@@ -123,7 +126,7 @@ public class TorquePID extends ControlLoop {
 
 		// ----- Error -----
 		prevError = error;
-		error = setPoint - currentValue;
+		error = setpoint - currentValue;
 
 		// ----- P Calculation -----
 		output += kP * error;
