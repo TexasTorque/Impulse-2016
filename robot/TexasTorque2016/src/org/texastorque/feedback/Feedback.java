@@ -108,9 +108,7 @@ public class Feedback {
 		robotPitch = Math.toDegrees(Math.atan(robotPitch));
 		// tiltAngle += robotPitch;
 
-		if (currentInput.isVisionLock() && !visionShotReady()) {
-			vision.calc();
-		}
+		vision.setNetworking(currentInput.isVisionLock() && !visionShotReady());
 	}
 
 	public void resetDriveEncoders() {
@@ -211,8 +209,6 @@ public class Feedback {
 		SmartDashboard.putNumber("Turn", vision.getTurn());
 		SmartDashboard.putNumber("Tilt", vision.getTilt());
 		SmartDashboard.putNumber("Distance", vision.getDistance());
-		SmartDashboard.putNumber("Tilt1", vision.getTilt1());
-		SmartDashboard.putNumber("Tilt2", vision.getTilt2());
 		SmartDashboard.putNumber("JetsonHeartbeat", vision.getJetsonHeartbeat());
 		SmartDashboard.putBoolean("VisionShotReady", visionShotReady());
 

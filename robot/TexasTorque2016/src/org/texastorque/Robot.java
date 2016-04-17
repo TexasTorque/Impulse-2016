@@ -46,8 +46,6 @@ public class Robot extends TorqueIterative {
 		autoManager = AutoManager.getInstance();
 		feedback = Feedback.getInstance();
 
-		VisionFeedback.init();
-
 		autoManager.reset();
 
 		Feedback.getInstance().resetTiltEncoder();
@@ -57,8 +55,6 @@ public class Robot extends TorqueIterative {
 	public void autonomousInit() {
 		Parameters.load();
 		numCycles = 0;
-
-		VisionFeedback.init();
 
 		input = autoManager.createAutoMode();
 		feedback.setInput(input);
@@ -84,8 +80,6 @@ public class Robot extends TorqueIterative {
 		Parameters.load();
 		numCycles = 0;
 		subsystems.forEach((subsystem) -> subsystem.init());
-
-		VisionFeedback.init();
 
 		input = HumanInput.getInstance();
 		feedback.setInput(input);
