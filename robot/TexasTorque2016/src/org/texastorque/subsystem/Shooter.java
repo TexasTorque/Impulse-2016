@@ -28,7 +28,7 @@ public class Shooter extends Subsystem {
 
 	@Override
 	public void init() {
-		flywheelControl = new BangBang(0.5, .75);
+		flywheelControl = new BangBang(0.5, .85);
 
 		tiltPID = new TorquePID(Constants.S_TILT_P.getDouble(), Constants.S_TILT_I.getDouble(),
 				Constants.S_TILT_D.getDouble());
@@ -73,6 +73,7 @@ public class Shooter extends Subsystem {
 			flywheelControl.setSetpoint(flywheelSetpoint);
 			flywheelSpeed = flywheelControl.calculate(flywheelVelocity);
 		} else {
+			flywheelControl.reset();
 			flywheelSpeed = 0.0;
 		}
 	}

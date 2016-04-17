@@ -13,17 +13,31 @@ public class BangBang extends ControlLoop {
 	private final boolean limited;
 	private final double resetTime;
 	private final double firstOutput;
+	private final double overshoot;
 
 	private boolean reset;
 	private double lastTime;
 
 	/**
-	 * Create a new BangBang controller.
+	 * Create a new BangBang controller (will always run when below setpoint,
+	 * and will not run when above setpoint).
 	 */
 	public BangBang() {
-		limited = false;
-		resetTime = 0.0;
-		firstOutput = 0.0;
+		this(0.0, 1.0);
+	}
+
+	/**
+	 * Create a new BangBang controller with a limited output for a specific
+	 * time interval. <code>firstOut</code> will run for <code>time</code>
+	 * seconds, then full output will be returned until controller is reset.
+	 * 
+	 * @param time
+	 *            The time the controller should wait until full output is sent.
+	 * @param firstOut
+	 *            The output sent until the time interval has ended.
+	 */
+	public BangBang(double time, double firstOut) {
+		this(time, firstOut, 0.0);
 	}
 
 	/**
@@ -34,11 +48,16 @@ public class BangBang extends ControlLoop {
 	 *            The time the controller should wait until full output is sent.
 	 * @param firstOut
 	 *            The output sent until the time interval has ended.
+	 * @param over
+	 *            How far past the setpoint BangBang will overshoot. This is
+	 *            usually half the amplitude of the oscillation, or how far the
+	 *            value drops before BangBang kicks in again.
 	 */
-	public BangBang(double time, double firstOut) {
+	public BangBang(double time, double firstOut, double over) {
 		limited = true;
 		resetTime = time;
 		firstOutput = firstOut;
+		overshoot = over;
 	}
 
 	/**
