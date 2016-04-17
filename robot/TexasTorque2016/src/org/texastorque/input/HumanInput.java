@@ -37,6 +37,12 @@ public class HumanInput extends Input {
 
 		visionLock = driver.getXButton();
 
+		if (driver.getDPADUp()) {
+			armUp = true;
+		} else if (driver.getDPADDown()) {
+			armUp = false;
+		}
+
 		// operator
 		if (operator.getLeftCenterButton()) {
 			override = true;
@@ -53,14 +59,14 @@ public class HumanInput extends Input {
 		longShot = operator.getYButton();
 		batterShot = operator.getBButton();
 		layupShot = operator.getAButton();
+		if (driver.getDPADUp()) {
+			hoodReady = true;
+		} else if (driver.getDPADDown()) {
+			hoodReady = false;
+		}
 
 		visionLock = visionLock || operator.getXButton();
 
-		if (operator.getDPADUp()) {
-			armUp = true;
-		} else if (operator.getDPADDown()) {
-			armUp = false;
-		}
 		armOverrideSpeed = operator.getRightYAxis() / 4.0;
 		armOverride = operator.getRightStickClick();
 
@@ -70,6 +76,7 @@ public class HumanInput extends Input {
 		// post operations
 		if (visionLock) {
 			driveControlType = DriveControlType.VISION;
+			hoodReady = true;
 		} else {
 			driveControlType = DriveControlType.MANUAL;
 		}

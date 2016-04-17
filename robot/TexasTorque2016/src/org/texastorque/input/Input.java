@@ -38,6 +38,8 @@ public abstract class Input {
 	protected boolean layupShot = false;
 	protected boolean batterShot = false;
 	protected boolean longShot = false;
+	
+	protected boolean hoodReady = false;
 
 	protected double tiltOverrideSpeed = 0.0;
 
@@ -136,6 +138,10 @@ public abstract class Input {
 
 	public boolean isConveyorIntaking() {
 		return conveyorIntaking;
+	}
+	
+	public boolean isHoodReady() {
+		return hoodReady;
 	}
 
 	public boolean isConveyorOuttaking() {
