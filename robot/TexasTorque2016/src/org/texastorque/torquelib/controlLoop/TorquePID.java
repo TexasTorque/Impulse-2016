@@ -1,5 +1,7 @@
 package org.texastorque.torquelib.controlLoop;
 
+import org.texastorque.torquelib.util.TorqueMathUtil;
+
 import edu.wpi.first.wpilibj.Timer;
 
 /**
@@ -32,6 +34,8 @@ public class TorquePID {
 	private double dt;
 	private double lastTime;
 
+	private double lastLimitedTime;
+
 	/**
 	 * Create a new PID with all constants 0.
 	 */
@@ -58,6 +62,8 @@ public class TorquePID {
 		errorSum = 0.0;
 		firstCycle = true;
 		maxOutput = 1.0;
+
+		initialLimited = false;
 	}
 
 	/**
@@ -83,6 +89,10 @@ public class TorquePID {
 		errorSum = 0.0;
 		firstCycle = true;
 		maxOutput = 1.0;
+
+		initialLimited = true;
+		initialLimitedTime = limitedTime;
+		initialLimitedOutput = limitedOutput;
 	}
 
 	/**
@@ -156,11 +166,12 @@ public class TorquePID {
 	 *
 	 * @param currentValue
 	 *            the current sensor feedback.
-	 * @return Motor ouput to the system.
+	 * @return Motor output to the system.
 	 */
 	public double calculate(double currentValue) {
 		if (firstCycle) {
 			lastTime = Timer.getFPGATimestamp();
+			lastLimitedTime = Timer.getFPGATimestamp();
 			errorSum = 0.0;
 			firstCycle = false;
 		}
@@ -202,6 +213,10 @@ public class TorquePID {
 		}
 		if (speedController && output < 0) {
 			output = 0;
+		}
+
+		if (initialLimited && Timer.getFPGATimestamp() - lastLimitedTime < initialLimitedTime) {
+			output = TorqueMathUtil.constrain(output, initialLimitedOutput);
 		}
 
 		// ----- Save Time -----
