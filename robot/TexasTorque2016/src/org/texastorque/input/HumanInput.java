@@ -13,6 +13,7 @@ public class HumanInput extends Input {
 
 	private TorqueToggle brakesToggle;
 	private TorqueToggle flashlightToggle;
+	private TorqueToggle armToggle;
 
 	private HumanInput() {
 		driver = new GenericController(0, .1);
@@ -20,6 +21,8 @@ public class HumanInput extends Input {
 
 		brakesToggle = new TorqueToggle();
 		flashlightToggle = new TorqueToggle();
+		
+		armToggle = new TorqueToggle(true);
 	}
 
 	public void update() {
@@ -37,11 +40,8 @@ public class HumanInput extends Input {
 
 		visionLock = driver.getXButton();
 
-		if (driver.getDPADUp()) {
-			armUp = true;
-		} else if (driver.getDPADDown()) {
-			armUp = false;
-		}
+		armToggle.calc(driver.getBButton());
+		armUp = armToggle.get();
 
 		// operator
 		if (operator.getLeftCenterButton()) {
@@ -59,11 +59,8 @@ public class HumanInput extends Input {
 		longShot = operator.getYButton();
 		batterShot = operator.getBButton();
 		layupShot = operator.getAButton();
-		if (driver.getDPADUp()) {
-			hoodReady = true;
-		} else if (driver.getDPADDown()) {
-			hoodReady = false;
-		}
+
+		hoodReady = operator.getDPADUp();
 
 		visionLock = visionLock || operator.getXButton();
 

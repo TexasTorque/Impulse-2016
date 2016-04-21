@@ -2,7 +2,7 @@ package org.texastorque.input;
 
 import org.texastorque.constants.Constants;
 
-public abstract class Input {
+public class Input {
 
 	// drivebase
 	protected double leftDriveSpeed = 0.0;
@@ -38,7 +38,7 @@ public abstract class Input {
 	protected boolean layupShot = false;
 	protected boolean batterShot = false;
 	protected boolean longShot = false;
-	
+
 	protected boolean hoodReady = false;
 
 	protected double tiltOverrideSpeed = 0.0;
@@ -54,7 +54,9 @@ public abstract class Input {
 	// flashlight
 	protected boolean flashlight = false;
 
-	public abstract void update();
+	public void update() {
+		// must be overridden
+	}
 
 	public boolean getCompressionTesting() {
 		return compressionTesting;
@@ -139,7 +141,7 @@ public abstract class Input {
 	public boolean isConveyorIntaking() {
 		return conveyorIntaking;
 	}
-	
+
 	public boolean isHoodReady() {
 		return hoodReady;
 	}
