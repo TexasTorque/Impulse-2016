@@ -18,6 +18,10 @@ public class TorquePID {
 	private double maxOutput;
 	private boolean speedController;
 
+	private boolean initialLimited;
+	private double initialLimitedTime;
+	private double initialLimitedOutput;
+
 	// Variables
 	private boolean firstCycle;
 	private double setpoint;
@@ -46,6 +50,31 @@ public class TorquePID {
 	 *            The derivative constant.
 	 */
 	public TorquePID(double p, double i, double d) {
+		super();
+		kP = p;
+		kI = i;
+		kD = d;
+		epsilon = 0.0;
+		errorSum = 0.0;
+		firstCycle = true;
+		maxOutput = 1.0;
+	}
+
+	/**
+	 * Create a new PID.
+	 *
+	 * @param p
+	 *            The proportionality constant.
+	 * @param i
+	 *            The integral constant.
+	 * @param d
+	 *            The derivative constant.
+	 * @param limitedTime
+	 *            How long PID should output the limitedOutput.
+	 * @param limitedOutput
+	 *            The output PID will send for a limited time;
+	 */
+	public TorquePID(double p, double i, double d, double limitedTime, double limitedOutput) {
 		super();
 		kP = p;
 		kI = i;

@@ -9,6 +9,10 @@ public class TorqueToggle {
 		toggle = false;
 		lastCheck = false;
 	}
+	
+	public TorqueToggle(boolean override) {
+		toggle = override;
+	}
 
 	public void calc(boolean current) {
 		// Checks for an edge in boolean state. We only want to perform an
