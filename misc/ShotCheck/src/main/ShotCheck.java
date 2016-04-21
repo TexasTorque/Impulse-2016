@@ -17,8 +17,8 @@ public class ShotCheck extends JFrame {
 	private static ITable dashboard;
 
 	public static void main(String[] args) {
-		NetworkTable.setClientMode();
 		NetworkTable.setIPAddress("10.14.77.12");
+		NetworkTable.setClientMode();
 		dashboard = NetworkTable.getTable("SmartDashboard");
 		JDialog dialog = new JOptionPane("Opening...", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE,
 				null, new Object[] {}).createDialog("");
@@ -38,20 +38,26 @@ public class ShotCheck extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
 
-		new Thread(() -> {
-			while (true) {
-				if (dashboard.getBoolean("RPM_READY")) {
-					getContentPane().setBackground(Color.white);
-				} else {
-					try {
-						int percent = (int) (255 * dashboard.getNumber("FlywheelVelocity") / dashboard.getNumber("FlywheelVelocitySetpoint"));
-						getContentPane().setBackground(new Color(255 - percent, percent, 0));
-					} catch (Exception e) {
-						getContentPane().setBackground(Color.red);
-					}
-				}
-			}
-		}).start();
+		double vel;
+		double setpoint;
+		while (true) {
+			try {
+				vel = dashboard.getNumber("FlywheelVelocity", 0.0);
+				setpoint = dashboard.getNumber("FlywheelSetpointVelocity", 0.0);
 
+				if (setpoint == 0) {
+					getContentPane().setBackground(Color.red);
+				} else if (vel < setpoint && vel > setpoint / 2.0) {
+					getContentPane().setBackground(Color.orange);
+				} else if (vel > setpoint) {
+					getContentPane().setBackground(Color.green);
+				} else {
+					getContentPane().setBackground(Color.red);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				getContentPane().setBackground(Color.red);
+			}
+		}
 	}
 }
