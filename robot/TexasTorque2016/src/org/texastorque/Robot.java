@@ -4,16 +4,10 @@ import java.util.ArrayList;
 
 import org.texastorque.auto.AutoManager;
 import org.texastorque.feedback.Feedback;
+import org.texastorque.feedback.VisionFeedback;
 import org.texastorque.input.HumanInput;
 import org.texastorque.input.Input;
-import org.texastorque.subsystem.Brakes;
-import org.texastorque.subsystem.Conveyor;
-import org.texastorque.subsystem.DoubleArm;
-import org.texastorque.subsystem.Drivebase;
-import org.texastorque.subsystem.Flashlight;
-import org.texastorque.subsystem.Intake;
-import org.texastorque.subsystem.Shooter;
-import org.texastorque.subsystem.Subsystem;
+import org.texastorque.subsystem.*;
 import org.texastorque.torquelib.base.TorqueIterative;
 import org.texastorque.torquelib.util.Parameters;
 
@@ -44,10 +38,9 @@ public class Robot extends TorqueIterative {
 
 		autoManager = AutoManager.getInstance();
 		feedback = Feedback.getInstance();
+		input = new Input();
 
 		autoManager.reset();
-
-		Feedback.getInstance().resetTiltEncoder();
 	}
 
 	@Override
@@ -56,9 +49,7 @@ public class Robot extends TorqueIterative {
 		numCycles = 0;
 
 		input = autoManager.createAutoMode();
-		feedback.setInput(input);
-		subsystems.forEach((subsystem) -> subsystem.init());
-		subsystems.forEach((subsystem) -> subsystem.setInput(input));
+		subsystems.forEach((subsystem) -> subsystem.init(input));
 		autoManager.runAutoMode();
 	}
 
@@ -78,11 +69,9 @@ public class Robot extends TorqueIterative {
 	public void teleopInit() {
 		Parameters.load();
 		numCycles = 0;
-		subsystems.forEach((subsystem) -> subsystem.init());
 
 		input = HumanInput.getInstance();
-		feedback.setInput(input);
-		subsystems.forEach((subsystem) -> subsystem.setInput(input));
+		subsystems.forEach((subsystem) -> subsystem.init(input));
 	}
 
 	@Override
@@ -104,7 +93,7 @@ public class Robot extends TorqueIterative {
 	}
 
 	@Override
-	public void disabledContinuous() {
+	public void disabledPeriodic() {
 		autoManager.updateDashboard();
 	}
 
