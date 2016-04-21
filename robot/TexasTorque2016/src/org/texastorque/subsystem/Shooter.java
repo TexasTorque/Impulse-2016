@@ -15,9 +15,9 @@ public class Shooter extends Subsystem {
 	// sensor
 	private double tiltAngle;
 	private double flywheelVelocity;
+	private boolean hoodReady;
 
 	// flywheel profiling
-	// private BangBang flywheelControl;
 	private TorquePID flywheelControl;
 	private double flywheelSetpoint;
 
@@ -27,11 +27,10 @@ public class Shooter extends Subsystem {
 	private double tiltSetpoint;
 
 	@Override
-	public void init() {
-		// flywheelControl = new BangBang(0.5, .85);
-		flywheelControl = new TorquePID(0, 0, 0);
+	public void initSystem() {
+		flywheelControl = new TorquePID(0.6, 0.05, 0);
 		flywheelControl.setControllingSpeed(true);
-		flywheelControl.setEpsilon(100);
+		flywheelControl.setEpsilon(250);
 
 		tiltPID = new TorquePID(Constants.S_TILT_P.getDouble(), Constants.S_TILT_I.getDouble(),
 				Constants.S_TILT_D.getDouble());
@@ -42,6 +41,8 @@ public class Shooter extends Subsystem {
 	public void runSystem() {
 		tiltAngle = feedback.getTiltAngle();
 		flywheelVelocity = feedback.getFlywheelVelocity();
+
+		hoodReady = input.isHoodReady();
 
 		if (input.isVisionLock()) {
 			tiltSetpoint = feedback.getRequiredTilt();
@@ -60,7 +61,7 @@ public class Shooter extends Subsystem {
 			flywheelSetpoint = 0;
 		}
 
-		flywheelSetpoint = input.isHoodReady() ? flywheelSetpoint : Constants.S_DOWN_SETPOINT.getDouble();
+		tiltSetpoint = hoodReady ? tiltSetpoint : Constants.S_DOWN_SETPOINT.getDouble();
 
 		if (input.isOverride() || input.isTiltOverride()) {
 			tiltSpeed = input.getTiltOverrideSpeed();
@@ -94,6 +95,7 @@ public class Shooter extends Subsystem {
 		SmartDashboard.putNumber("TiltSpeed", tiltSpeed);
 		SmartDashboard.putNumber("TiltAngle", tiltAngle);
 		SmartDashboard.putNumber("TiltSetpoint", tiltSetpoint);
+		SmartDashboard.putBoolean("HoodReady", hoodReady);
 
 		SmartDashboard.putNumber("FlywheelSetpointVelocity", flywheelSetpoint);
 		SmartDashboard.putNumber("FlywheelMotorSpeed", flywheelSpeed);

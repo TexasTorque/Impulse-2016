@@ -9,7 +9,7 @@ public class Conveyor extends Subsystem {
 	private double conveyorSpeed;
 
 	@Override
-	public void init() {
+	public void initSystem() {
 	}
 
 	@Override

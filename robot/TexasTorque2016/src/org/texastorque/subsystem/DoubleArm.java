@@ -23,7 +23,7 @@ public class DoubleArm extends Subsystem {
 	private TorquePID rightArmPID;
 
 	@Override
-	public void init() {
+	public void initSystem() {
 		leftArmPID = new TorquePID();
 		leftArmPID.setPIDGains(Constants.ARM_P.getDouble(), Constants.ARM_I.getDouble(), Constants.ARM_D.getDouble());
 		leftArmPID.setMaxOutput(.6);
@@ -48,9 +48,9 @@ public class DoubleArm extends Subsystem {
 		if (input.isOverride() || input.isArmOverride()) {
 			leftArmSpeed = rightArmSpeed = input.getArmOverrideSpeed();
 
-			if (input.isArmOverride()) {
-				feedback.resetArmEncoders();
-			}
+//			if (input.isArmOverride()) {
+//				feedback.resetArmEncoders();
+//			}
 		} else {
 			leftArmPID.setSetpoint(armSetpoint);
 			rightArmPID.setSetpoint(armSetpoint);
