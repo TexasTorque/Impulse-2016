@@ -2,7 +2,6 @@ package org.texastorque.feedback;
 
 import org.texastorque.constants.Constants;
 import org.texastorque.constants.Ports;
-import org.texastorque.input.Input;
 import org.texastorque.torquelib.component.TorqueEncoder;
 import org.texastorque.torquelib.component.TorqueGyro;
 import org.texastorque.torquelib.util.TorqueMathUtil;
@@ -17,8 +16,6 @@ public class Feedback {
 
 	private static final double DRIVEBASE_DISTANCE_CONVERSION = 0.084883;
 	private static final double FLYWHEEL_VELOCITY_CONVERSION = .24;
-
-	private Input currentInput;
 
 	// sensors
 	private VisionFeedback vision;
@@ -76,10 +73,6 @@ public class Feedback {
 		accel = new BuiltInAccelerometer();
 	}
 
-	public void setInput(Input input) {
-		currentInput = input;
-	}
-
 	public void update() {
 		leftDriveEncoder.calc();
 		rightDriveEncoder.calc();
@@ -107,8 +100,6 @@ public class Feedback {
 		robotPitch = accel.getX() / (accel.getY() * accel.getY() + accel.getZ() + accel.getZ());
 		robotPitch = Math.toDegrees(Math.atan(robotPitch));
 		// tiltAngle += robotPitch;
-
-		vision.setNetworking(currentInput.isVisionLock() && !visionShotReady());
 	}
 
 	public void resetDriveEncoders() {
@@ -122,11 +113,6 @@ public class Feedback {
 
 	public void resetTiltEncoder() {
 		tiltEncoder.reset();
-	}
-
-	public void resetArmEncoders() {
-		leftArmEncoder.reset();
-		rightArmEncoder.reset();
 	}
 
 	// getters

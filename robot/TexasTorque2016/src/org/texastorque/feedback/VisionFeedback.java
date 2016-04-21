@@ -4,12 +4,14 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.SocketTimeoutException;
 
+import org.texastorque.constants.Constants;
+
 public class VisionFeedback {
 
 	private static VisionFeedback instance;
-	private static boolean networking = false;
 
 	private Thread networkThread;
+	private boolean halt;
 
 	private DatagramSocket jetson;
 	private DatagramPacket jetsonPacket;
@@ -25,9 +27,8 @@ public class VisionFeedback {
 		if (jetson == null) {
 			try {
 				jetson = new DatagramSocket(5805);
-				jetson.setSoTimeout(1);
-				jetsonBuffer = new byte[256];
-				jetsonPacket = new DatagramPacket(jetsonBuffer, jetsonBuffer.length);
+				jetson.setSoTimeout(100);
+				jetsonBuffer = new byte[1028];
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -35,22 +36,30 @@ public class VisionFeedback {
 
 		networkThread = new Thread(() -> {
 			while (true) {
-				if (networking) {
-					run();
+				run();
+				if (halt) {
+					break;
 				}
 			}
 		});
+		networkThread.start();
 	}
 
 	public void run() {
 		try {
+			jetsonPacket = new DatagramPacket(jetsonBuffer, jetsonBuffer.length);
 			jetson.receive(jetsonPacket);
 			jetsonValues = new String(jetsonBuffer, 0, jetsonPacket.getLength()).split(",");
 
 			turn = Double.parseDouble(jetsonValues[0]);
 			tilt = Double.parseDouble(jetsonValues[1]);
 			distance = Double.parseDouble(jetsonValues[2]);
-			jetsonHeartbeat = Integer.parseInt(jetsonValues[3]);
+			jetsonHeartbeat = (int) Double.parseDouble(jetsonValues[3]);
+
+			if (distance < 0) {// tower not found
+				turn = 0.0;
+				tilt = Constants.S_DOWN_SETPOINT.getDouble();
+			}
 		} catch (Exception e) {
 			if (!(e instanceof SocketTimeoutException)) {
 				e.printStackTrace();
@@ -74,15 +83,14 @@ public class VisionFeedback {
 		return jetsonHeartbeat;
 	}
 
-	public void setNetworking(boolean _networking) {
-		networking = _networking;
-		if (networking && networkThread.getState() == Thread.State.NEW) {
-			networkThread.start();
-		}
-	}
-
 	// never called, needs to be called at some point
 	public void stopNetwork() {
+		halt = true;
+		try {
+			networkThread.join(100);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		jetson.disconnect();
 		jetson.close();
 	}
