@@ -39,8 +39,8 @@ public class Ports {
 	public static final int FLYWHEEL_ENCODER_A = 6;
 	public static final int FLYWHEEL_ENCODER_B = 7;
 
-	public static final int TILT_ENCODER_A = CHARLIE ? 12 : 13;
-	public static final int TILT_ENCODER_B = CHARLIE ? 13 : 14;
+	public static final int TILT_ENCODER_A = CHARLIE ? 12 : 15;
+	public static final int TILT_ENCODER_B = CHARLIE ? 13 : 16;
 
 	public static final int ARM_LEFT_ENCODER_A = 8;
 	public static final int ARM_LEFT_ENCODER_B = 9;
