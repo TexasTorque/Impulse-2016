@@ -4,10 +4,16 @@ import java.util.ArrayList;
 
 import org.texastorque.auto.AutoManager;
 import org.texastorque.feedback.Feedback;
-import org.texastorque.feedback.VisionFeedback;
 import org.texastorque.input.HumanInput;
 import org.texastorque.input.Input;
-import org.texastorque.subsystem.*;
+import org.texastorque.subsystem.Brakes;
+import org.texastorque.subsystem.Conveyor;
+import org.texastorque.subsystem.DoubleArm;
+import org.texastorque.subsystem.Drivebase;
+import org.texastorque.subsystem.Flashlight;
+import org.texastorque.subsystem.Intake;
+import org.texastorque.subsystem.Shooter;
+import org.texastorque.subsystem.Subsystem;
 import org.texastorque.torquelib.base.TorqueIterative;
 import org.texastorque.torquelib.util.Parameters;
 

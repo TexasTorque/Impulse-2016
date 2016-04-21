@@ -28,7 +28,7 @@ public class Shooter extends Subsystem {
 
 	@Override
 	public void initSystem() {
-		flywheelControl = new TorquePID(0.6, 0.05, 0);
+		flywheelControl = new TorquePID(0.6, 0.05, 0, 0.75, 0.75);
 		flywheelControl.setControllingSpeed(true);
 		flywheelControl.setEpsilon(250);
 

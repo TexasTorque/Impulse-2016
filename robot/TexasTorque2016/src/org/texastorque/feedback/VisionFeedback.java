@@ -27,7 +27,7 @@ public class VisionFeedback {
 		if (jetson == null) {
 			try {
 				jetson = new DatagramSocket(5805);
-				jetson.setSoTimeout(100);
+				jetson.setSoTimeout(1);
 				jetsonBuffer = new byte[1028];
 			} catch (Exception e) {
 				e.printStackTrace();
