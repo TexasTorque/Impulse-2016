@@ -57,7 +57,7 @@ public class Feedback {
 	public Feedback() {
 		vision = VisionFeedback.getInstance();
 
-		leftDriveEncoder = new TorqueEncoder(Ports.DRIVE_LEFT_ENCODER_A, Ports.DRIVE_LEFT_ENCODER_B, false,
+		leftDriveEncoder = new TorqueEncoder(Ports.DRIVE_LEFT_ENCODER_A, Ports.DRIVE_LEFT_ENCODER_B, true,
 				EncodingType.k4X);
 		rightDriveEncoder = new TorqueEncoder(Ports.DRIVE_RIGHT_ENCODER_A, Ports.DRIVE_RIGHT_ENCODER_B, true,
 				EncodingType.k4X);

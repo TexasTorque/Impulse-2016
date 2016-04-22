@@ -14,7 +14,8 @@ public enum AutoModes {
 	LOW_BAR_BACK_AUTO(8, LowBarBackAuto.class),
 	PORT_DE_CULLIS_AUTO(9, PortDeCullisAuto.class),
 	ONLY_VISION_AUTO(10, OnlyVisionAuto.class),
-	CDF_AUTO(11, CDFAuto.class);
+	CDF_AUTO(11, CDFAuto.class),
+	MOAT_AUTO(12, MoatAuto.class);
 
 	enum DefensePosition {
 		ZERO, ONE, TWO, THREE, FOUR, FIVE;
@@ -31,12 +32,11 @@ public enum AutoModes {
 	}
 
 	public static AutoMode create(int pass, int defense) {
-		DefensePosition pos = convertDefense(defense);
+		AutoMode.currentDefense = convertDefense(defense);
 
 		try {
 			for (AutoModes m : AutoModes.values()) {
 				if (pass == m.pass) {
-					AutoMode.currentDefense = pos;
 					return (AutoMode) m.call.newInstance();
 				}
 			}
@@ -46,7 +46,7 @@ public enum AutoModes {
 	}
 
 	public static DefensePosition convertDefense(int pass) {
-		for (int i = 0; i <= 4; i++) {
+		for (int i = 0; i <= 5; i++) {
 			if (i == pass) {
 				return DefensePosition.values()[i];
 			}

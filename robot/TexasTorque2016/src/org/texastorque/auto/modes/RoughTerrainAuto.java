@@ -1,17 +1,18 @@
 package org.texastorque.auto.modes;
 
 import org.texastorque.auto.AutoMode;
-import org.texastorque.constants.Constants;
 
 public class RoughTerrainAuto extends AutoMode {
 
 	@Override
 	protected void run() {
-		drive(Constants.A_DRIVE_FORWARD_AUTO_DISTANCE.getDouble());
+		drive(120);
+		pause(3.0);
+		postDefenseVision();
 	}
 
 	@Override
 	protected double getLinearMaxSpeed() {
-		return 70.0;// TODO
+		return 50.0;// TODO
 	}
 }

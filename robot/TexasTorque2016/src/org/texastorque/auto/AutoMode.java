@@ -24,6 +24,7 @@ public abstract class AutoMode extends Input {
 	public final void stop() {
 		try {
 			thread.join(500);
+			thread.interrupt();
 		} catch (Exception e) {
 		}
 	}
@@ -77,31 +78,53 @@ public abstract class AutoMode extends Input {
 	protected final void postDefenseVision() {
 		turn(-Feedback.getInstance().getAngle());
 		pause(1.0);
-		drive(84);
-		pause(3.0);
 		switch (currentDefense) {
 		case ZERO:
 			// do nothing just cross
 			break;
 		case ONE:
+			drive(84);
+			pause(3.0);
 			turn(60);
 			pause(3.0);
 			drive(63);
 			pause(2.0);
 			break;
 		case TWO:
+			drive(84);
+			pause(3.0);
 			turn(90);
 			pause(3.0);
-			drive(72);
+			drive(96);
 			pause(2.0);
 			turn(-90);
 			pause(3.0);
 			break;
 		case THREE:
+			drive(84);
+			pause(3.0);
+			turn(90);
+			pause(3.0);
+			drive(54);
+			pause(2.0);
+			turn(-90);
+			pause(3.0);
 			break;
 		case FOUR:
+			turn(5.0);
+			pause(0.5);
+			drive(78);
+			pause(3.0);
 			break;
 		case FIVE:
+			drive(84);
+			pause(3.0);
+			turn(-90);
+			pause(3.0);
+			drive(54);
+			pause(2.0);
+			turn(90);
+			pause(3.0);
 			break;
 		}
 		vision();
