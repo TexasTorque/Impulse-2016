@@ -14,6 +14,7 @@ import org.texastorque.subsystem.Flashlight;
 import org.texastorque.subsystem.Intake;
 import org.texastorque.subsystem.Shooter;
 import org.texastorque.subsystem.Subsystem;
+import org.texastorque.subsystem.etc.Lights;
 import org.texastorque.torquelib.base.TorqueIterative;
 import org.texastorque.torquelib.util.Parameters;
 
@@ -90,17 +91,20 @@ public class Robot extends TorqueIterative {
 	@Override
 	public void teleopPeriodic() {
 		updateDashboard();
+		Lights.getInstance().pushToDashboard();
 	}
 
 	@Override
 	public void disabledInit() {
 		numCycles = 0;
 		autoManager.reset();
+		Lights.getInstance().disable();
 	}
 
 	@Override
 	public void disabledPeriodic() {
 		autoManager.updateDashboard();
+		Lights.getInstance().pushToDashboard();
 	}
 
 	private void updateDashboard() {

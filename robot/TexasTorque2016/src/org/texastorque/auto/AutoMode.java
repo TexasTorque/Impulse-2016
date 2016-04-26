@@ -76,7 +76,7 @@ public abstract class AutoMode extends Input {
 	}
 
 	protected final void postDefenseVision() {
-		turn(-Feedback.getInstance().getAngle());
+		turn(-Feedback.getInstance().getAngle() * 1.2);
 		pause(1.0);
 		switch (currentDefense) {
 		case ZERO:
@@ -113,7 +113,7 @@ public abstract class AutoMode extends Input {
 		case FOUR:
 			turn(5.0);
 			pause(0.5);
-			drive(78);
+			drive(85);
 			pause(3.0);
 			break;
 		case FIVE:

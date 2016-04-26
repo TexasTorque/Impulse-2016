@@ -7,6 +7,7 @@ import org.texastorque.torquelib.component.TorqueGyro;
 import org.texastorque.torquelib.util.TorqueMathUtil;
 
 import edu.wpi.first.wpilibj.BuiltInAccelerometer;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -54,6 +55,10 @@ public class Feedback {
 	private double leftArmAngle;
 	private double rightArmAngle;
 
+	// misc
+	private double prevTime;
+	private double prevVisionDistance;
+
 	public Feedback() {
 		vision = VisionFeedback.getInstance();
 
@@ -71,6 +76,8 @@ public class Feedback {
 		gyro = new TorqueGyro(0, 1);
 
 		accel = new BuiltInAccelerometer();
+
+		prevTime = Timer.getFPGATimestamp();
 	}
 
 	public void update() {
@@ -178,6 +185,13 @@ public class Feedback {
 
 	public double getVisionDistance() {
 		return vision.getDistance();
+	}
+
+	public double getVisionDistanceRate() {
+		double ret = (getVisionDistance() - prevVisionDistance) / (Timer.getFPGATimestamp() - prevTime);
+		prevTime = Timer.getFPGATimestamp();
+		prevVisionDistance = getVisionDistance();
+		return ret;
 	}
 
 	public boolean visionShotReady() {

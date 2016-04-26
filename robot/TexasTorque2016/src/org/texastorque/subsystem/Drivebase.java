@@ -110,7 +110,7 @@ public class Drivebase extends Subsystem {
 
 		// time
 		prevTime = Timer.getFPGATimestamp();
-		
+
 		feedback.resetDriveEncoders();
 	}
 
@@ -134,18 +134,9 @@ public class Drivebase extends Subsystem {
 			leftSpeed = input.getLeftDriveSpeed();
 			rightSpeed = input.getRightDriveSpeed();
 
-			if (feedback.getLeftDriveVelocity() < -10 && feedback.getRightDriveVelocity() < -10
+			if (feedback.getLeftDriveVelocity() < -20 && feedback.getRightDriveVelocity() < -20
 					&& input.isFlipCheck()) {
 				leftSpeed = rightSpeed = 0.0;
-			}
-		} else if (driveControlType == DriveControlType.VISION) {
-			turnSetpoint = feedback.getRequiredTurn();
-
-			rightSpeed = visionPID.calculate(turnSetpoint);
-			leftSpeed = -rightSpeed;
-
-			if (feedback.visionShotReady()) {
-				rightSpeed = leftSpeed = 0.0;
 			}
 		} else if (driveControlType == DriveControlType.LINEAR) {
 			setpoint = input.getDriveSetpoint();
@@ -160,9 +151,7 @@ public class Drivebase extends Subsystem {
 			profile.calculateNextSituation(dt);
 
 			targetPosition = profile.getCurrentPosition();
-
 			targetVelocity = profile.getCurrentVelocity();
-
 			targetAcceleration = profile.getCurrentAcceleration();
 
 			leftSpeed = leftPV.calculate(profile, leftPosition, leftVelocity);

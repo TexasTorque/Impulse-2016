@@ -6,11 +6,13 @@ public class RockWallAuto extends AutoMode {
 
 	@Override
 	protected void run() {
-		drive(100);
+		drive(115);
+		pause(3.0);
+		postDefenseVision();
 	}
 
 	@Override
 	protected double getLinearMaxSpeed() {
-		return 50.0;// TODO
+		return 65.0;
 	}
 }

@@ -14,6 +14,6 @@ public class LowBarAuto extends AutoMode {
 
 	@Override
 	protected double getLinearMaxSpeed() {
-		return 50.0;// TODO
+		return 50.0;
 	}
 }

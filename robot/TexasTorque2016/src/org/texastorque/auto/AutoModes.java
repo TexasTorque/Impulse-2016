@@ -13,9 +13,8 @@ public enum AutoModes {
 	ROUGH_TERRAIN_AUTO(7, RoughTerrainAuto.class),
 	LOW_BAR_BACK_AUTO(8, LowBarBackAuto.class),
 	PORT_DE_CULLIS_AUTO(9, PortDeCullisAuto.class),
-	ONLY_VISION_AUTO(10, OnlyVisionAuto.class),
-	CDF_AUTO(11, CDFAuto.class),
-	MOAT_AUTO(12, MoatAuto.class);
+	CDF_AUTO(10, CDFAuto.class),
+	MOAT_AUTO(11, MoatAuto.class);
 
 	enum DefensePosition {
 		ZERO, ONE, TWO, THREE, FOUR, FIVE;

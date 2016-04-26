@@ -1,6 +1,7 @@
 package org.texastorque.output;
 
 import org.texastorque.constants.Ports;
+import org.texastorque.subsystem.etc.Lights;
 import org.texastorque.torquelib.component.TorqueMotor;
 
 import edu.wpi.first.wpilibj.Compressor;
@@ -46,8 +47,11 @@ public class RobotOutput {
 	// compression testing
 	private DoubleSolenoid compressionTesting;
 
-	// misc
+	// flashlight
 	private Relay flashlight;
+
+	// lights
+	private Lights lights;
 
 	public RobotOutput() {
 		compressor = new Compressor();
@@ -76,6 +80,8 @@ public class RobotOutput {
 		compressionTesting = new DoubleSolenoid(Ports.COMPRESSION_TESTING_A, Ports.COMPRESSION_TESTING_B);
 
 		flashlight = new Relay(Ports.FLASHLIGHT, Relay.Direction.kBoth);
+
+		lights = new Lights();
 	}
 
 	public void setDriveSpeeds(double left, double right) {
@@ -162,6 +168,14 @@ public class RobotOutput {
 			flashlight.set(on ? Value.kOn : Value.kOff);
 		} else {
 			flashlight.set(Value.kOff);
+		}
+	}
+
+	public void setLightState(double value, double setpoint) {
+		if (OUTPUT_ENABLED) {
+			lights.set(value, setpoint);
+		} else {
+			lights.off();
 		}
 	}
 

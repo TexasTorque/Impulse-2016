@@ -13,6 +13,6 @@ public class RampartsAuto extends AutoMode {
 
 	@Override
 	protected double getLinearMaxSpeed() {
-		return 85.0;// TODO
+		return 85.0;
 	}
 }
