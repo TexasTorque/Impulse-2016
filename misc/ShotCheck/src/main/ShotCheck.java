@@ -17,8 +17,6 @@ public class ShotCheck extends JFrame {
 	private static ITable dashboard;
 
 	public static void main(String[] args) {
-		NetworkTable.setIPAddress("10.14.77.12");
-		NetworkTable.setClientMode();
 		dashboard = NetworkTable.getTable("SmartDashboard");
 		JDialog dialog = new JOptionPane("Opening...", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE,
 				null, new Object[] {}).createDialog("");
