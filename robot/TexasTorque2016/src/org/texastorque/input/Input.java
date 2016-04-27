@@ -1,6 +1,7 @@
 package org.texastorque.input;
 
 import org.texastorque.constants.Constants;
+import org.texastorque.subsystem.Drivebase.DriveControlType;
 
 public class Input {
 

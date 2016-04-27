@@ -2,7 +2,6 @@ package org.texastorque.subsystem;
 
 import org.texastorque.auto.AutoManager;
 import org.texastorque.constants.Constants;
-import org.texastorque.input.DriveControlType;
 import org.texastorque.torquelib.controlLoop.TorquePID;
 import org.texastorque.torquelib.controlLoop.TorquePV;
 import org.texastorque.torquelib.controlLoop.TorqueTMP;
@@ -14,6 +13,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Drivebase extends Subsystem {
 
 	private static Drivebase instance;
+
+	public enum DriveControlType {
+		MANUAL, LINEAR, TURN, VISION;
+	}
 
 	private double leftSpeed;
 	private double rightSpeed;
@@ -130,7 +133,7 @@ public class Drivebase extends Subsystem {
 
 		driveControlType = input.getDriveControlType();
 
-		if (driveControlType == DriveControlType.MANUAL || input.isOverride()) {
+		if (driveControlType == DriveControlType.MANUAL) {
 			leftSpeed = input.getLeftDriveSpeed();
 			rightSpeed = input.getRightDriveSpeed();
 
@@ -200,7 +203,7 @@ public class Drivebase extends Subsystem {
 		SmartDashboard.putNumber("DrivebaseTargetAngularVelocity", targetAngularVelocity);
 
 		// values
-		SmartDashboard.putString("DriveControlType", driveControlType.getName());
+		SmartDashboard.putString("DriveControlType", driveControlType.toString());
 
 		SmartDashboard.putNumber("DrivebaseLeftPosition", leftPosition);
 		SmartDashboard.putNumber("DrivebaseRightPosition", rightPosition);

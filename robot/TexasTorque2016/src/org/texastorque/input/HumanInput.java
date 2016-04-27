@@ -1,5 +1,6 @@
 package org.texastorque.input;
 
+import org.texastorque.subsystem.Drivebase.DriveControlType;
 import org.texastorque.torquelib.util.GenericController;
 import org.texastorque.torquelib.util.TorqueToggle;
 
@@ -21,7 +22,7 @@ public class HumanInput extends Input {
 
 		brakesToggle = new TorqueToggle();
 		flashlightToggle = new TorqueToggle();
-		
+
 		armToggle = new TorqueToggle(true);
 	}
 

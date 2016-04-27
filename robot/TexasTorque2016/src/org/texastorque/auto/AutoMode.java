@@ -2,8 +2,8 @@ package org.texastorque.auto;
 
 import org.texastorque.auto.AutoModes.DefensePosition;
 import org.texastorque.feedback.Feedback;
-import org.texastorque.input.DriveControlType;
 import org.texastorque.input.Input;
+import org.texastorque.subsystem.Drivebase.DriveControlType;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -56,16 +56,6 @@ public abstract class AutoMode extends Input {
 	protected final void turn(double degrees) {
 		driveControlType = DriveControlType.TURN;
 		turnSetpoint = degrees;
-	}
-
-	protected final void drive_manual(double left, double right, double pauseTime) {
-		override = true;
-		leftDriveSpeed = left;
-		rightDriveSpeed = right;
-		pause(pauseTime);
-		leftDriveSpeed = 0.0;
-		rightDriveSpeed = 0.0;
-		override = false;
 	}
 
 	protected final void vision() {
