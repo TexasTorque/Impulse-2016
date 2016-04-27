@@ -2,11 +2,9 @@ package org.texastorque.subsystem.etc;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
-import edu.wpi.first.wpilibj.SerialPort;
-import edu.wpi.first.wpilibj.SerialPort.Port;
-import edu.wpi.first.wpilibj.SerialPort.WriteBufferMode;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import jssc.SerialPort;
 
 public class Lights {
 
@@ -27,9 +25,15 @@ public class Lights {
 	private SerialPort arduino;
 
 	public Lights() {
-		arduino = new SerialPort(9600, Port.kUSB);
-		arduino.setWriteBufferMode(WriteBufferMode.kFlushOnAccess);
-		arduino.setTimeout(0.1);// necessary?
+		arduino = new SerialPort("/dev/ttyS0");
+		try {
+			arduino.openPort();
+			arduino.setParams(9600, 8, 1, 0);
+			Thread.sleep(100);// necessary?
+			System.out.println("Connected to serial " + arduino.getPortName());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 		ds = DriverStation.getInstance();
 		off();
@@ -62,7 +66,11 @@ public class Lights {
 	}
 
 	public void update() {
-		arduino.writeString("" + state.value);
+		try {
+			arduino.writeString("" + state.value);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		SmartDashboard.putString("LightState", state.toString());
 	}
 
