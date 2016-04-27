@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import jssc.SerialPort;
+import jssc.SerialPortList;
 
 public class Lights {
 
@@ -25,6 +26,9 @@ public class Lights {
 	private SerialPort arduino;
 
 	public Lights() {
+		for (String s : SerialPortList.getPortNames()) {
+			System.out.println(s);
+		}
 		arduino = new SerialPort("/dev/ttyS0");
 		try {
 			arduino.openPort();
