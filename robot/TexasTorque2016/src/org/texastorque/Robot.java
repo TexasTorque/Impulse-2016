@@ -49,7 +49,7 @@ public class Robot extends TorqueIterative {
 		input = new Input();
 
 		autoManager.reset();
-		
+
 		lights = Lights.getInstance();
 	}
 
