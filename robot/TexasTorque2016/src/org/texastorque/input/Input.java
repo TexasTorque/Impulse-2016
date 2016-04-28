@@ -26,7 +26,7 @@ public class Input {
 
 	protected boolean tiltOverride = false;
 	protected boolean armOverride = false;
-
+	
 	// intake variables
 	protected boolean intaking = false;
 	protected boolean outtaking = false;
@@ -39,6 +39,9 @@ public class Input {
 	protected boolean layupShot = false;
 	protected boolean batterShot = false;
 	protected boolean longShot = false;
+	
+	protected boolean rpmFix = false;
+	protected boolean rpmReturn = false;
 
 	protected boolean hoodReady = false;
 
@@ -121,6 +124,14 @@ public class Input {
 
 	public double getArmOverrideSpeed() {
 		return armOverrideSpeed;
+	}
+	
+	public boolean isRPMFix() {
+		return rpmFix;
+	}
+	
+	public boolean isRPMReturn() {
+		return rpmReturn;
 	}
 
 	public boolean isFlipCheck() {

@@ -88,6 +88,10 @@ public class Parameters {
 			return value == 1;
 		}
 
+		public void override(double _value) {
+			value = _value;
+		}
+
 		@Override
 		public String toString() {
 			return key + ": " + value;

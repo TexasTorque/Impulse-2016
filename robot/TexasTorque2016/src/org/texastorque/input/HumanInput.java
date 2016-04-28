@@ -16,6 +16,9 @@ public class HumanInput extends Input {
 	private TorqueToggle flashlightToggle;
 	private TorqueToggle armToggle;
 
+	private boolean tempRPMFix = false;
+	private boolean tempRPMReturn = false;
+
 	private HumanInput() {
 		driver = new GenericController(0, .1);
 		operator = new GenericController(1, .1);
@@ -38,6 +41,12 @@ public class HumanInput extends Input {
 
 		flashlightToggle.calc(driver.getRightTrigger() || driver.getRightBumper());
 		flashlight = flashlightToggle.get();
+
+		rpmFix = driver.getDPADDown() && !tempRPMFix;
+		tempRPMFix = driver.getDPADDown();
+
+		rpmReturn = driver.getDPADUp() && !tempRPMReturn;
+		tempRPMReturn = driver.getDPADUp();
 
 		visionLock = driver.getXButton();
 

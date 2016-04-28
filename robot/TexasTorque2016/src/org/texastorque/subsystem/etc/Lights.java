@@ -73,7 +73,7 @@ public class Lights {
 		try {
 			arduino.writeString("" + state.value);
 		} catch (Exception e) {
-			e.printStackTrace();
+			// e.printStackTrace();
 		}
 		SmartDashboard.putString("LightState", state.toString());
 	}

@@ -1,6 +1,4 @@
 #include <Adafruit_NeoPixel.h>
-#define SIZE 38
-#define NUM_STRIP 2
 
 boolean firstPartyCycle;
 boolean firstPanicCycle;
@@ -28,13 +26,13 @@ uint32_t blue;
 uint32_t black;
 uint32_t yellow;
 
-//Adafruit_NeoPixel ring;
+Adafruit_NeoPixel ring;
 
 void setup() {
   Serial.begin(9600);
 
-  //ring = Adafruit_NeoPixel(16, 7, NEO_GRBW + NEO_KHZ800);
-  strip = Adafruit_NeoPixel(38, 8, NEO_GRBW + NEO_KHZ800);
+  ring = Adafruit_NeoPixel(16, 6, NEO_GRB + NEO_KHZ800);
+  strip = Adafruit_NeoPixel(36, 8, NEO_GRBW + NEO_KHZ800);
 
   red = strip.Color(255, 0, 0, 0);
   green = strip.Color(0, 255, 0, 0);
@@ -43,7 +41,8 @@ void setup() {
   yellow = strip.Color(255, 255, 0, 0);
 
   strip.begin();
-  strip.show();
+
+  ring.begin();
 
   state = 0;
   firstPartyCycle = true;
@@ -53,6 +52,7 @@ void setup() {
 void loop() {
   if (Serial.available()) {
     ch = Serial.read();
+    Serial.println(int(ch));
     if (isDigit(ch)) {
       state = int(ch) - 48;
     }
@@ -93,8 +93,22 @@ void loop() {
       break;
   }
 
-  //ring.show();
+  //  if (state != 0 && state != 5) {
+  for (int i = 0; i < ring.numPixels(); i++) {
+    ring.setPixelColor(i, green);
+  }
+  //  } else if (state == 0) {
+  //    for (int i = 0; i < ring.numPixels(); i++) {
+  //      ring.setPixelColor(i, black);
+  //    }
+  //  } else if (state == 5 && !firstPartyCycle) {
+  //    for (int i = 0; i < ring.numPixels(); i++) {
+  //      ring.setPixelColor(i, strip.setPixelColor(i, Wheel(((i * 256 / 16) + j) & 255)););
+  //    }
+  //  }
+
   strip.show();
+  ring.show();
 }
 
 uint32_t Wheel(byte pos) {
@@ -113,45 +127,30 @@ void updateOff() {
   for (int i = 0; i < strip.numPixels(); i++) {
     strip.setPixelColor(i, black);
   }
-  //for (int i = 0; i < ring.numPixels(); i++) {
-  //  ring.setPixelColor(i, black);
-  //}
 }
 
 void updateNotReadyRed() {
   for (int i = 0; i < strip.numPixels(); i++) {
     strip.setPixelColor(i, red);
   }
-  //for (int i = 0; i < ring.numPixels(); i++) {
-  //  ring.setPixelColor(i, green);
-  //}
 }
 
 void updateNotReadyBlue() {
   for (int i = 0; i < strip.numPixels(); i++) {
     strip.setPixelColor(i, blue);
   }
-  //for (int i = 0; i < ring.numPixels(); i++) {
-  //  ring.setPixelColor(i, green);
-  //}
 }
 
 void updateLoading() {
   for (int i = 0; i < strip.numPixels(); i++) {
     strip.setPixelColor(i,  yellow);
   }
-  //for (int i = 0; i < ring.numPixels(); i++) {
-  //  ring.setPixelColor(i, green);
-  //}
 }
 
 void updateReady() {
   for (int i = 0; i < strip.numPixels(); i++) {
     strip.setPixelColor(i,  green);
   }
-  //for (int i = 0; i < ring.numPixels(); i++) {
-  //  ring.setPixelColor(i, green);
-  //}
 }
 
 void updateParty() {
@@ -162,12 +161,11 @@ void updateParty() {
     j++;
     for (int i = 0; i < 18; i++) {
       strip.setPixelColor(i, Wheel(((i * 256 / 18) + j) & 255));
-      strip.setPixelColor(i + 19, Wheel(((i * 256 / 18) + j) & 255));
+    }
+    for (int i = 0; i < 18; i++) {
+      strip.setPixelColor(i + 18, Wheel(((i * 256 / 18) + j) & 255));
     }
   }
-  //for (int i = 0; i < ring.numPixels(); i++) {
-  //  ring.setPixelColor(i, Wheel(((i * 256 / ring.numPixels()) + j) & 255));
-  //}
 }
 
 void updatePanic() {
@@ -207,16 +205,16 @@ void updatePanic() {
         if (i < top && i > bot) {
           strip.setPixelColor(i + 9, Wheel(((i * 256 / 8) + j) & 255));
           strip.setPixelColor(8 - i, Wheel(((i * 256 / 8) + j) & 255));
+          strip.setPixelColor(i + 18 + 9, Wheel(((i * 256 / 8) + j) & 255));
+          strip.setPixelColor(8 - i + 18, Wheel(((i * 256 / 8) + j) & 255));
         } else {
           strip.setPixelColor(i + 9, black);
           strip.setPixelColor(8 - i, black);
+          strip.setPixelColor(i + 18 + 9, black);
+          strip.setPixelColor(8 - i + 18, black);
         }
       }
     }
-
-    //for (int i = 0; i < ring.numPixels(); i++) {
-    //  ring.setPixelColor(i, green);
-    //}
   }
 }
 

@@ -44,6 +44,13 @@ public class Shooter extends Subsystem {
 
 		hoodReady = input.isHoodReady();
 
+		if (input.isRPMFix()) {
+			Constants.S_LONG_FLYWHEEL.override(Constants.S_LONG_FLYWHEEL.getDouble() - 500);
+		}
+		if (input.isRPMReturn()) {
+			Constants.S_LONG_FLYWHEEL.override(Constants.S_LONG_FLYWHEEL.getDouble() + 500);
+		}
+
 		if (input.isVisionLock()) {
 			tiltSetpoint = feedback.getRequiredTilt();
 			flywheelSetpoint = Constants.S_VISION_FLYWHEEL.getDouble();
