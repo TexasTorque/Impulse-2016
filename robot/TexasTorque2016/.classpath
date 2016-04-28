@@ -4,6 +4,6 @@
 	<classpathentry kind="var" path="wpilib" sourcepath="wpilib.sources"/>
 	<classpathentry kind="var" path="networktables" sourcepath="networktables.sources"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Java Simple Serial Connection"/>
+	<classpathentry kind="lib" path="./libs/jssc.jar" sourcepath="./libs/jssc-2.8.0-src.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
