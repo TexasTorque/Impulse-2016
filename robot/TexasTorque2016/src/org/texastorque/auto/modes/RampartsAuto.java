@@ -6,13 +6,11 @@ public class RampartsAuto extends AutoMode {
 
 	@Override
 	protected void run() {
-		drive(120);
+		setLinearMaxSpeed(80.0);
+		
+		drive(125);
 		pause(3.0);
+		
 		postDefenseVision();
-	}
-
-	@Override
-	protected double getLinearMaxSpeed() {
-		return 85.0;
 	}
 }

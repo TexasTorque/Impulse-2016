@@ -14,7 +14,8 @@ public enum AutoModes {
 	LOW_BAR_BACK_AUTO(8, LowBarBackAuto.class),
 	PORT_DE_CULLIS_AUTO(9, PortDeCullisAuto.class),
 	CDF_AUTO(10, CDFAuto.class),
-	MOAT_AUTO(11, MoatAuto.class);
+	MOAT_AUTO(11, MoatAuto.class),
+	TEST_AUTO(12, TestAuto.class);
 
 	enum DefensePosition {
 		ZERO, ONE, TWO, THREE, FOUR, FIVE;

@@ -7,11 +7,8 @@ public class TurnAuto extends AutoMode {
 
 	@Override
 	protected void run() {
+		setLinearMaxSpeed(0.0);
+		
 		turn(Constants.A_TURN_AUTO_ANGLE.getDouble());
-	}
-
-	@Override
-	public double getLinearMaxSpeed() {
-		return 0.0;
 	}
 }

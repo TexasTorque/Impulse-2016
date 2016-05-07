@@ -6,7 +6,7 @@ import org.texastorque.auto.AutoManager;
 import org.texastorque.feedback.Feedback;
 import org.texastorque.input.HumanInput;
 import org.texastorque.input.Input;
-import org.texastorque.subsystem.Brakes;
+import org.texastorque.subsystem.Pneumatics;
 import org.texastorque.subsystem.Conveyor;
 import org.texastorque.subsystem.DoubleArm;
 import org.texastorque.subsystem.Drivebase;
@@ -40,7 +40,7 @@ public class Robot extends TorqueIterative {
 		subsystems.add(Intake.getInstance());
 		subsystems.add(Shooter.getInstance());
 		subsystems.add(Conveyor.getInstance());
-		subsystems.add(Brakes.getInstance());
+		subsystems.add(Pneumatics.getInstance());
 		subsystems.add(DoubleArm.getInstance());
 		subsystems.add(Flashlight.getInstance());
 
@@ -73,6 +73,7 @@ public class Robot extends TorqueIterative {
 	@Override
 	public void autonomousPeriodic() {
 		updateDashboard();
+		lights.update();
 	}
 
 	@Override
@@ -101,12 +102,12 @@ public class Robot extends TorqueIterative {
 	public void disabledInit() {
 		numCycles = 0;
 		autoManager.reset();
-		lights.party();
 	}
 
 	@Override
 	public void disabledPeriodic() {
 		autoManager.updateDashboard();
+		lights.party();
 		lights.update();
 	}
 
@@ -115,7 +116,6 @@ public class Robot extends TorqueIterative {
 
 		SmartDashboard.putNumber("NumCycles", numCycles++);
 		SmartDashboard.putNumber("ThreadCount", Thread.activeCount());
-		SmartDashboard.putBoolean("Override", input.isOverride());
 
 		feedback.pushToDashboard();
 	}

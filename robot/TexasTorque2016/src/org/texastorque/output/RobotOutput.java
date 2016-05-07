@@ -1,6 +1,7 @@
 package org.texastorque.output;
 
 import org.texastorque.constants.Ports;
+import org.texastorque.input.HumanInput;
 import org.texastorque.subsystem.etc.Lights;
 import org.texastorque.torquelib.component.TorqueMotor;
 
@@ -81,7 +82,7 @@ public class RobotOutput {
 
 		flashlight = new Relay(Ports.FLASHLIGHT, Relay.Direction.kBoth);
 
-		lights = new Lights();
+		lights = Lights.getInstance();
 	}
 
 	public void setDriveSpeeds(double left, double right) {
@@ -157,9 +158,9 @@ public class RobotOutput {
 	public void setCompressionTesting(boolean doCompressionTesting) {
 		if (OUTPUT_ENABLED) {
 			compressionTesting
-					.set(doCompressionTesting ? DoubleSolenoid.Value.kReverse : DoubleSolenoid.Value.kForward);
+					.set(doCompressionTesting ? DoubleSolenoid.Value.kForward : DoubleSolenoid.Value.kReverse);
 		} else {
-			compressionTesting.set(DoubleSolenoid.Value.kForward);
+			compressionTesting.set(DoubleSolenoid.Value.kReverse);
 		}
 	}
 
@@ -171,11 +172,13 @@ public class RobotOutput {
 		}
 	}
 
-	public void setLightState(double value, double setpoint) {
+	public void setRPMReadyState(double value, double setpoint) {
 		if (OUTPUT_ENABLED) {
 			lights.set(value, setpoint);
+			HumanInput.getInstance().rumbleCalc(value, setpoint);
 		} else {
 			lights.off();
+			HumanInput.getInstance().rumbleCalc(0, 0);
 		}
 	}
 

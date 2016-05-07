@@ -6,13 +6,10 @@ public class RoughTerrainAuto extends AutoMode {
 
 	@Override
 	protected void run() {
-		drive(120);
+		setLinearMaxSpeed(50.0);
+
+		drive(125);
 		pause(3.0);
 		postDefenseVision();
-	}
-
-	@Override
-	protected double getLinearMaxSpeed() {
-		return 50.0;
 	}
 }

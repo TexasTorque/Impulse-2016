@@ -49,4 +49,7 @@ public class Ports {
 
 	// relay
 	public static final int FLASHLIGHT = 3;
+
+	// misc
+	public static final int ARDUINO_ANALOG_PIN = 0;
 }

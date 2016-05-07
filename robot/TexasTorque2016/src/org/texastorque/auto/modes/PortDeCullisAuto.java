@@ -6,13 +6,9 @@ public class PortDeCullisAuto extends AutoMode {
 
 	@Override
 	protected void run() {
+		setLinearMaxSpeed(15.0);
+
 		armUp = false;
-		drive(-100);
+		drive(-110);
 	}
-
-	@Override
-	protected double getLinearMaxSpeed() {
-		return 15.0;
-	}
-
 }

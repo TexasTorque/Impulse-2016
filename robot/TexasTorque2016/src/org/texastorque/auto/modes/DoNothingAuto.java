@@ -6,10 +6,6 @@ public class DoNothingAuto extends AutoMode {
 	
 	@Override
 	protected void run() {
-	}
-	
-	@Override
-	public double getLinearMaxSpeed() {
-		return 0.0;
+		setLinearMaxSpeed(0.0);
 	}
 }

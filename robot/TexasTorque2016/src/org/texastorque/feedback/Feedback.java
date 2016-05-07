@@ -197,7 +197,7 @@ public class Feedback {
 	}
 
 	public boolean visionShotReady() {
-		if (!TorqueMathUtil.near(getRequiredTurn(), 0, 1.0)) {
+		if (!TorqueMathUtil.near(getRequiredTurn(), 0, 2.0)) {
 			return false;
 		}
 		if (!TorqueMathUtil.near(getTiltAngle(), getRequiredTilt(), 1.0)) {

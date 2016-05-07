@@ -16,7 +16,34 @@ public class ShotCheck extends JFrame {
 
 	private static ITable dashboard;
 
+	private static double round(double value) {
+		return Math.round(value * 1000.0) / 1000.0;
+	}
+
+	public static double toArduino(double volts) {
+		return (volts / 5.0) * 1024;
+	}
+
 	public static void main(String[] args) {
+		double interval = 5.0 / 6.0;
+		double value = 0.0;
+		System.out.println("NaN < " + 0.0 + " < " + round((value + interval) - interval / 2.0));
+		for (int i = 0; i < 5; i++) {
+			value += interval;
+			System.out.println(
+					round(value - interval / 2.0) + " < " + round(value) + " < " + round(value + interval / 2.0));
+		}
+		System.out.println(round(value + interval / 2.0) + " < " + round(5.0) + " < NaN");
+		// System.out.println();
+		// interval = 1024.0 / 6.0;
+		// value = 0.0;
+		// System.out.println(0.0);
+		// for (int i = 0; i < 5; i++) {
+		// value += interval;
+		// System.out.println(value);
+		// }
+		// System.out.println(1024);
+		System.exit(0);
 		NetworkTable.setIPAddress("10.14.77.2");
 		NetworkTable.setClientMode();
 		dashboard = NetworkTable.getTable("SmartDashboard");

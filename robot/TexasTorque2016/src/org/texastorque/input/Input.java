@@ -5,6 +5,8 @@ import org.texastorque.subsystem.Drivebase.DriveControlType;
 
 public class Input {
 
+	protected boolean visionLock = false;
+
 	// drivebase
 	protected double leftDriveSpeed = 0.0;
 	protected double rightDriveSpeed = 0.0;
@@ -20,13 +22,6 @@ public class Input {
 	// braking
 	protected boolean braking = false;
 
-	// override variables
-	protected boolean override = false;
-	protected boolean visionLock = false;
-
-	protected boolean tiltOverride = false;
-	protected boolean armOverride = false;
-	
 	// intake variables
 	protected boolean intaking = false;
 	protected boolean outtaking = false;
@@ -39,13 +34,15 @@ public class Input {
 	protected boolean layupShot = false;
 	protected boolean batterShot = false;
 	protected boolean longShot = false;
-	
-	protected boolean rpmFix = false;
-	protected boolean rpmReturn = false;
+
+	protected boolean rpmDownshift = false;
+	protected boolean rpmUpshift = false;
 
 	protected boolean hoodReady = false;
 
 	protected double tiltOverrideSpeed = 0.0;
+
+	protected boolean tiltOverride = false;
 
 	// compression testing
 	protected boolean compressionTesting = false;
@@ -53,10 +50,16 @@ public class Input {
 	// arm
 	protected boolean armUp = true;
 	protected double armSetpoint = 0.0;
-	protected double armOverrideSpeed = 0.0;
+
+	protected boolean armOverride = false;
+	protected double armOverrideLeftSpeed = 0.0;
+	protected double armOverrideRightSpeed = 0.0;
 
 	// flashlight
 	protected boolean flashlight = false;
+	
+	// misc
+	protected boolean other = false;
 
 	public void update() {
 		// must be overridden
@@ -106,10 +109,6 @@ public class Input {
 		return longShot || batterShot || layupShot;
 	}
 
-	public boolean isOverride() {
-		return override;
-	}
-
 	public boolean isArmUp() {
 		return armUp;
 	}
@@ -122,16 +121,12 @@ public class Input {
 		return tiltOverrideSpeed;
 	}
 
-	public double getArmOverrideSpeed() {
-		return armOverrideSpeed;
+	public boolean isRPMDownshift() {
+		return rpmDownshift;
 	}
-	
-	public boolean isRPMFix() {
-		return rpmFix;
-	}
-	
-	public boolean isRPMReturn() {
-		return rpmReturn;
+
+	public boolean isRPMUpshift() {
+		return rpmUpshift;
 	}
 
 	public boolean isFlipCheck() {
@@ -168,6 +163,18 @@ public class Input {
 
 	public boolean isArmOverride() {
 		return armOverride;
+	}
+	
+	public boolean isOther() {
+		return other;
+	}
+
+	public double getArmLeftOverrideSpeed() {
+		return armOverrideLeftSpeed;
+	}
+
+	public double getArmRightOverrideSpeed() {
+		return armOverrideRightSpeed;
 	}
 
 	public boolean isFlashlightOn() {

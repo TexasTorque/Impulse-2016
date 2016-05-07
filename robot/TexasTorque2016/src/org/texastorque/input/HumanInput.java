@@ -15,9 +15,10 @@ public class HumanInput extends Input {
 	private TorqueToggle brakesToggle;
 	private TorqueToggle flashlightToggle;
 	private TorqueToggle armToggle;
+	private TorqueToggle otherToggle;
 
-	private boolean tempRPMFix = false;
-	private boolean tempRPMReturn = false;
+	private boolean tempRPMDownshift = false;
+	private boolean tempRPMUpshift = false;
 
 	private HumanInput() {
 		driver = new GenericController(0, .1);
@@ -25,8 +26,8 @@ public class HumanInput extends Input {
 
 		brakesToggle = new TorqueToggle();
 		flashlightToggle = new TorqueToggle();
-
 		armToggle = new TorqueToggle(true);
+		otherToggle = new TorqueToggle();
 	}
 
 	public void update() {
@@ -42,24 +43,41 @@ public class HumanInput extends Input {
 		flashlightToggle.calc(driver.getRightTrigger() || driver.getRightBumper());
 		flashlight = flashlightToggle.get();
 
-		rpmFix = driver.getDPADDown() && !tempRPMFix;
-		tempRPMFix = driver.getDPADDown();
+		rpmDownshift = driver.getDPADDown() && !tempRPMDownshift;
+		tempRPMDownshift = driver.getDPADDown();
 
-		rpmReturn = driver.getDPADUp() && !tempRPMReturn;
-		tempRPMReturn = driver.getDPADUp();
+		rpmUpshift = driver.getDPADUp() && !tempRPMUpshift;
+		tempRPMUpshift = driver.getDPADUp();
 
 		visionLock = driver.getXButton();
 
 		armToggle.calc(driver.getBButton());
 		armUp = armToggle.get();
 
-		// operator
-		if (operator.getLeftCenterButton()) {
-			override = true;
-		} else if (operator.getRightCenterButton()) {
-			override = false;
+		if (driver.getLeftCenterButton()) {
+			armOverride = true;
+		} else if (driver.getRightCenterButton()) {
+			armOverride = false;
+		}
+		if (driver.getLeftBumper()) {
+			armOverrideLeftSpeed = -0.2;
+		} else if (driver.getLeftTrigger()) {
+			armOverrideLeftSpeed = 0.2;
+		} else {
+			armOverrideLeftSpeed = 0.0;
+		}
+		if (driver.getRightBumper()) {
+			armOverrideRightSpeed = -0.2;
+		} else if (driver.getRightTrigger()) {
+			armOverrideRightSpeed = 0.2;
+		} else {
+			armOverrideRightSpeed = 0.0;
 		}
 
+		otherToggle.calc(driver.getRightStickClick());
+		other = otherToggle.get();
+
+		// operator
 		intaking = operator.getRightBumper();
 		outtaking = operator.getRightTrigger();
 
@@ -70,12 +88,9 @@ public class HumanInput extends Input {
 		batterShot = operator.getBButton();
 		layupShot = operator.getAButton();
 
-		hoodReady = operator.getDPADUp();
+		hoodReady = operator.getDPADUp() || operator.getDPADUpLeft() || operator.getDPADUpRight();
 
 		visionLock = visionLock || operator.getXButton();
-
-		armOverrideSpeed = operator.getRightYAxis() / 4.0;
-		armOverride = operator.getRightStickClick();
 
 		tiltOverrideSpeed = -operator.getLeftYAxis() / 3.0;
 		tiltOverride = operator.getLeftStickClick();
@@ -87,6 +102,10 @@ public class HumanInput extends Input {
 		} else {
 			driveControlType = DriveControlType.MANUAL;
 		}
+	}
+
+	public void rumbleCalc(double value, double setpoint) {
+		operator.setRumble(value > setpoint && setpoint != 0.0);
 	}
 
 	// singleton

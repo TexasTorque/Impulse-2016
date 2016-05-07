@@ -6,14 +6,11 @@ public class LowBarBackAuto extends AutoMode {
 
 	@Override
 	protected void run() {
+		setLinearMaxSpeed(50.0);
+		
 		armUp = false;
-		drive(100);
+		drive(110);
 		pause(5);
-		drive(-90);
-	}
-
-	@Override
-	protected double getLinearMaxSpeed() {
-		return 50.0;
+		drive(-105);
 	}
 }

@@ -1,6 +1,7 @@
 package org.texastorque.auto;
 
 import org.texastorque.auto.AutoModes.DefensePosition;
+import org.texastorque.torquelib.controlLoop.TorqueTMP;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -39,9 +40,9 @@ public class AutoManager {
 	public void runAutoMode() {
 		currentMode.start();
 	}
-
-	public double getAutoMaxSpeed() {
-		return currentMode.getLinearMaxSpeed();
+	
+	public TorqueTMP getAutoLinearProfile() {
+		return currentMode.getLinearProfile();
 	}
 
 	// singleton

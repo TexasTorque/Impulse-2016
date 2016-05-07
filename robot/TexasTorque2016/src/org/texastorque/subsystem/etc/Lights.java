@@ -1,53 +1,40 @@
 package org.texastorque.subsystem.etc;
 
+import org.texastorque.constants.Ports;
+
+import edu.wpi.first.wpilibj.AnalogOutput;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import jssc.SerialPort;
-import jssc.SerialPortList;
 
 public class Lights {
 
 	private static Lights instance;
 
 	public enum State {
-		OFF(0), NOT_READY_RED(1), NOT_READY_BLUE(2), LOADING(3), READY(4), PARTY(5), PANIC(6);
+		OFF(0), NOT_READY_RED(0.833), NOT_READY_BLUE(1.667), LOADING(2.5), READY(3.33), PARTY(4.167), PANIC(5);
 
-		public final int value;
+		public final double value;
 
-		State(int _value) {
+		State(double _value) {
 			value = _value;
 		}
 	}
 
-	private State state;
+	private AnalogOutput arduino;
 	private DriverStation ds;
-	private SerialPort arduino;
+	private State state;
 
-	public Lights() {
-		for (String s : SerialPortList.getPortNames()) {
-			System.out.println(s);
-		}
-		arduino = new SerialPort("/dev/ttyS0");
-		try {
-			arduino.openPort();
-			arduino.setParams(9600, 8, 1, 0);
-			Thread.sleep(100);// necessary?
-			System.out.println("Connected to serial " + arduino.getPortName());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
+	public Lights(double x) {
+		arduino = new AnalogOutput(Ports.ARDUINO_ANALOG_PIN);
 		ds = DriverStation.getInstance();
 		off();
 	}
 
 	public void set(double value, double setpoint) {
-		if (value > setpoint) {
+		if (value > setpoint && setpoint != 0.0) {
 			state = State.READY;
-		} else if (value > setpoint / 2.0) {
-			state = State.LOADING;
 		} else {
 			if (Timer.getMatchTime() > 120) {
 				state = State.PANIC;
@@ -69,17 +56,16 @@ public class Lights {
 		state = State.PARTY;
 	}
 
+	boolean first = true;
+
 	public void update() {
-		try {
-			arduino.writeString("" + state.value);
-		} catch (Exception e) {
-			// e.printStackTrace();
-		}
+		arduino.setVoltage(state.value);
 		SmartDashboard.putString("LightState", state.toString());
+		SmartDashboard.putNumber("LightWrite", state.value);
 	}
 
 	// singleton
 	public static Lights getInstance() {
-		return instance == null ? instance = new Lights() : instance;
+		return instance == null ? instance = new Lights(0.0) : instance;
 	}
 }

@@ -70,10 +70,7 @@ public class Drivebase extends Subsystem {
 		driveControlType = DriveControlType.MANUAL;
 
 		// linear
-		if (driverStation.isAutonomous()) {
-			profile = new TorqueTMP(AutoManager.getInstance().getAutoMaxSpeed(),
-					Constants.D_MAX_ACCELERATION.getDouble());
-		} else {
+		if (!driverStation.isAutonomous()) {
 			profile = new TorqueTMP(Constants.D_MAX_VELOCITY.getDouble(), Constants.D_MAX_ACCELERATION.getDouble());
 		}
 
@@ -133,6 +130,10 @@ public class Drivebase extends Subsystem {
 
 		driveControlType = input.getDriveControlType();
 
+		if (driverStation.isAutonomous()) {
+			profile = AutoManager.getInstance().getAutoLinearProfile();
+		}
+
 		if (driveControlType == DriveControlType.MANUAL) {
 			leftSpeed = input.getLeftDriveSpeed();
 			rightSpeed = input.getRightDriveSpeed();
@@ -176,6 +177,11 @@ public class Drivebase extends Subsystem {
 
 			leftSpeed = angularPV.calculate(angularProfile, angle, angularVelocity);
 			rightSpeed = -leftSpeed;
+		} else if (driveControlType == DriveControlType.VISION) {
+			turnSetpoint = feedback.getRequiredTurn();
+			
+			rightSpeed = visionPID.calculate(turnSetpoint);
+			leftSpeed = -rightSpeed;
 		}
 	}
 

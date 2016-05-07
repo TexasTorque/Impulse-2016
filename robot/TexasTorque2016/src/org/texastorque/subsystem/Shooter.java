@@ -28,7 +28,7 @@ public class Shooter extends Subsystem {
 
 	@Override
 	public void initSystem() {
-		flywheelControl = new TorquePID(0.6, 0.05, 0.01, 0.8, 0.75);
+		flywheelControl = new TorquePID(0.6, 0.05, 0.1, 0.8, 0.75);
 		flywheelControl.setControllingSpeed(true);
 		flywheelControl.setEpsilon(250);
 
@@ -44,10 +44,10 @@ public class Shooter extends Subsystem {
 
 		hoodReady = input.isHoodReady();
 
-		if (input.isRPMFix()) {
+		if (input.isRPMDownshift()) {
 			Constants.S_LONG_FLYWHEEL.override(Constants.S_LONG_FLYWHEEL.getDouble() - 500);
 		}
-		if (input.isRPMReturn()) {
+		if (input.isRPMUpshift()) {
 			Constants.S_LONG_FLYWHEEL.override(Constants.S_LONG_FLYWHEEL.getDouble() + 500);
 		}
 
@@ -70,7 +70,7 @@ public class Shooter extends Subsystem {
 
 		tiltSetpoint = hoodReady || input.isVisionLock() ? tiltSetpoint : Constants.S_DOWN_SETPOINT.getDouble();
 
-		if (input.isOverride() || input.isTiltOverride()) {
+		if (input.isTiltOverride()) {
 			tiltSpeed = input.getTiltOverrideSpeed();
 
 			if (input.isTiltOverride()) {
@@ -95,7 +95,7 @@ public class Shooter extends Subsystem {
 	protected void output() {
 		output.setTiltSpeeds(tiltSpeed);
 		output.setFlywheelSpeed(flywheelSpeed);
-		output.setLightState(flywheelSpeed, flywheelSetpoint);
+		output.setRPMReadyState(flywheelVelocity, flywheelSetpoint);
 	}
 
 	@Override

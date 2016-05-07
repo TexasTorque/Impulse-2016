@@ -7,11 +7,8 @@ public class TiltAuto extends AutoMode {
 
 	@Override
 	protected void run() {
-		tiltSetpoint = Constants.A_TILT_AUTO_ANGLE.getDouble();
-	}
+		setLinearMaxSpeed(0.0);
 
-	@Override
-	public double getLinearMaxSpeed() {
-		return 0.0;
+		tiltSetpoint = Constants.A_TILT_AUTO_ANGLE.getDouble();
 	}
 }
