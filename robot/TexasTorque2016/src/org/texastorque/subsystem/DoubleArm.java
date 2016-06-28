@@ -38,7 +38,6 @@ public class DoubleArm extends Subsystem {
 		leftArmAngle = feedback.getLeftArmAngle();
 		rightArmAngle = feedback.getRightArmAngle();
 		armUp = input.isArmUp();
-
 		if (armUp) {
 			armSetpoint = Constants.ARM_UP_SETPOINT.getDouble();
 		} else {
@@ -49,11 +48,16 @@ public class DoubleArm extends Subsystem {
 			leftArmSpeed = input.getArmLeftOverrideSpeed();
 			rightArmSpeed = input.getArmRightOverrideSpeed();
 		} else {
-			leftArmPID.setSetpoint(armSetpoint);
-			rightArmPID.setSetpoint(armSetpoint);
-
-			leftArmSpeed = leftArmPID.calculate(leftArmAngle);
-			rightArmSpeed = rightArmPID.calculate(rightArmAngle);
+			if(input.doArmMotors()) {
+				leftArmPID.setSetpoint(armSetpoint);
+				rightArmPID.setSetpoint(armSetpoint);
+	
+				leftArmSpeed = leftArmPID.calculate(leftArmAngle);
+				rightArmSpeed = rightArmPID.calculate(rightArmAngle);
+			} else {
+				leftArmSpeed = 0;
+				rightArmSpeed = 0;
+			}
 		}
 	}
 
@@ -72,6 +76,8 @@ public class DoubleArm extends Subsystem {
 
 		SmartDashboard.putNumber("LeftArmSpeed", leftArmSpeed);
 		SmartDashboard.putNumber("RightArmSpeed", rightArmSpeed);
+		
+		SmartDashboard.putBoolean("DoArmMotors", input.doArmMotors());
 	}
 
 	// singleton

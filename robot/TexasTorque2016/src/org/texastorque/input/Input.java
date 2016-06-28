@@ -21,7 +21,8 @@ public class Input {
 
 	// braking
 	protected boolean braking = false;
-
+	protected boolean doArmMotors = true;
+	
 	// intake variables
 	protected boolean intaking = false;
 	protected boolean outtaking = false;
@@ -115,6 +116,10 @@ public class Input {
 
 	public boolean isVisionLock() {
 		return visionLock;
+	}
+	
+	public boolean doArmMotors() {
+		return doArmMotors;
 	}
 
 	public double getTiltOverrideSpeed() {

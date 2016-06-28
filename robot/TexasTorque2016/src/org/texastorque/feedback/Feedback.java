@@ -65,7 +65,7 @@ public class Feedback {
 
 		leftDriveEncoder = new TorqueEncoder(Ports.DRIVE_LEFT_ENCODER_A, Ports.DRIVE_LEFT_ENCODER_B, true,
 				EncodingType.k4X);
-		rightDriveEncoder = new TorqueEncoder(Ports.DRIVE_RIGHT_ENCODER_A, Ports.DRIVE_RIGHT_ENCODER_B, false,
+		rightDriveEncoder = new TorqueEncoder(Ports.DRIVE_RIGHT_ENCODER_A, Ports.DRIVE_RIGHT_ENCODER_B, true,
 				EncodingType.k4X);
 		leftArmEncoder = new TorqueEncoder(Ports.ARM_LEFT_ENCODER_A, Ports.ARM_LEFT_ENCODER_B, true, EncodingType.k4X);
 		rightArmEncoder = new TorqueEncoder(Ports.ARM_RIGHT_ENCODER_A, Ports.ARM_RIGHT_ENCODER_B, true,

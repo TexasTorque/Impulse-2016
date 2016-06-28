@@ -16,7 +16,8 @@ public class HumanInput extends Input {
 	private TorqueToggle flashlightToggle;
 	private TorqueToggle armToggle;
 	private TorqueToggle otherToggle;
-
+	private TorqueToggle armMotorToggle;
+	
 	private boolean tempRPMDownshift = false;
 	private boolean tempRPMUpshift = false;
 
@@ -28,6 +29,8 @@ public class HumanInput extends Input {
 		flashlightToggle = new TorqueToggle();
 		armToggle = new TorqueToggle(true);
 		otherToggle = new TorqueToggle();
+		
+		armMotorToggle = new TorqueToggle(true);
 	}
 
 	public void update() {
@@ -40,6 +43,9 @@ public class HumanInput extends Input {
 		brakesToggle.calc(driver.getAButton());
 		braking = brakesToggle.get();
 
+		armMotorToggle.calc(driver.getYButton());
+		doArmMotors = armMotorToggle.get();
+		
 		flashlightToggle.calc(driver.getRightTrigger() || driver.getRightBumper());
 		flashlight = flashlightToggle.get();
 
