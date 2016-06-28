@@ -8,7 +8,7 @@ public class RockWallAuto extends AutoMode {
 	protected void run() {
 		setLinearMaxSpeed(65.0);
 
-		drive(120);
+		drive(150);
 		pause(3.0);
 		postDefenseVision();
 	}

@@ -133,7 +133,7 @@ public abstract class AutoMode extends Input {
 		if (currentDefense == DefensePosition.ZERO) {
 			driveControlType = DriveControlType.MANUAL;
 		} else {
-			vision();
+//			vision();  JETSON removed for TRI
 		}
 	}
 }

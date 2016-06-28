@@ -8,6 +8,6 @@ public class DriveForwardAuto extends AutoMode {
 	protected void run() {
 		setLinearMaxSpeed(100.0);
 		
-		drive(110);
+		drive(150);
 	}
 }

@@ -9,7 +9,7 @@ public class LowBarAuto extends AutoMode {
 		setLinearMaxSpeed(50.0);
 		
 		armUp = false;
-		drive(110);
+		drive(150);
 		pause(3.0);
 		postDefenseVision();
 	}

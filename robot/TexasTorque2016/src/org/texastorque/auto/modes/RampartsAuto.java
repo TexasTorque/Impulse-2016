@@ -8,7 +8,7 @@ public class RampartsAuto extends AutoMode {
 	protected void run() {
 		setLinearMaxSpeed(80.0);
 		
-		drive(125);
+		drive(150);
 		pause(3.0);
 		
 		postDefenseVision();

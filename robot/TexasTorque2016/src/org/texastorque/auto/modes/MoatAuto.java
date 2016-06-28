@@ -8,7 +8,7 @@ public class MoatAuto extends AutoMode {
 	protected void run() {
 		setLinearMaxSpeed(90.0);
 
-		drive(115);
+		drive(150);
 		pause(3.0);
 		postDefenseVision();
 	}
