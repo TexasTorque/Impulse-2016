@@ -52,7 +52,6 @@ public class Shooter extends Subsystem {
 		}
 
 		if (input.isVisionLock()) {
-			tiltSetpoint = feedback.getRequiredTilt();
 			flywheelSetpoint = Constants.S_VISION_FLYWHEEL.getDouble();
 		} else if (input.isLongShot()) {
 			tiltSetpoint = Constants.S_LONG_SHOT_SETPOINT.getDouble();

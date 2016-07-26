@@ -181,29 +181,8 @@ public class Feedback {
 		return vision.getTurn();
 	}
 
-	public double getRequiredTilt() {
-		return vision.getTilt();
-	}
-
-	public double getVisionDistance() {
-		return vision.getDistance();
-	}
-
-	public double getVisionDistanceRate() {
-		double ret = (getVisionDistance() - prevVisionDistance) / (Timer.getFPGATimestamp() - prevTime);
-		prevTime = Timer.getFPGATimestamp();
-		prevVisionDistance = getVisionDistance();
-		return ret;
-	}
-
 	public boolean visionShotReady() {
-		if (!TorqueMathUtil.near(getRequiredTurn(), 0, 2.0)) {
-			return false;
-		}
-		if (!TorqueMathUtil.near(getTiltAngle(), getRequiredTilt(), 1.0)) {
-			return false;
-		}
-		if (getRequiredTilt() < 0.0) {
+		if (!TorqueMathUtil.near(getRequiredTurn(), 1.65 , 0.1)) {
 			return false;
 		}
 		if (!TorqueMathUtil.near(getFlywheelVelocity(), Constants.S_VISION_FLYWHEEL.getDouble(), 1000)) {
@@ -214,9 +193,6 @@ public class Feedback {
 
 	public void pushToDashboard() {
 		SmartDashboard.putNumber("Turn", vision.getTurn());
-		SmartDashboard.putNumber("Tilt", vision.getTilt());
-		SmartDashboard.putNumber("Distance", vision.getDistance());
-		SmartDashboard.putNumber("JetsonHeartbeat", vision.getJetsonHeartbeat());
 		SmartDashboard.putBoolean("VisionShotReady", visionShotReady());
 
 		SmartDashboard.putNumber("RobotPitch", robotPitch);
