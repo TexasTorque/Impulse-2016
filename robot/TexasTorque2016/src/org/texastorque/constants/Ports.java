@@ -52,6 +52,6 @@ public class Ports {
 
 	// misc
 	public static final int ARDUINO_ANALOG_PIN = 0;
-	public static final int PIXY_PIN_1_AI = 3;
+	public static final int PIXY_PIN_1_AI = 4;
 	public static final int PIXY_PIN_3_DI = 22;
 }
