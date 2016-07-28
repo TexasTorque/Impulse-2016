@@ -18,6 +18,7 @@ public class Constants {
 	public static final Constant V_ROBOT_HEIGHT = new Constant("V_ROBOT_HEIGHT", 0.0);
 	public static final Constant V_G = new Constant("V_G", 0.0);
 	public static final Constant V_PIXY_V = new Constant("V_PIXY_V", 3.3);
+	public static final Constant V_PIXY_PRECISION = new Constant("V_PIXY_PRECISION", 0.1);
 	
 	// drivebase
 	public static final Constant D_MAX_VELOCITY = new Constant("D_MAX_VELOCITY", 0.0);
@@ -70,4 +71,7 @@ public class Constants {
 
 	public static final Constant ARM_UP_SETPOINT = new Constant("ARM_UP_SETPOINT", 0.0);
 	public static final Constant ARM_DOWN_SETPOINT = new Constant("ARM_DOWN_SETPOINT", 0.0);
+	
+	// debug
+	public static final Constant DEBUG_CENTER_SHOOT = new Constant("DEBUG_CENTER_SHOOT", 0);
 }

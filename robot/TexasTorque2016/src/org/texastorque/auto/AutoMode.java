@@ -106,12 +106,12 @@ public abstract class AutoMode extends Input {
 			pause(3.0);
 			break;
 		case THREE:
-			turn(20);
-			pause(1.0);
-			drive(57);
-			pause(3.0);
-			turn(-10);
-			pause(1.0);
+//			turn(20);
+//			pause(1.0);
+//			drive(57);
+//			pause(3.0);
+//			turn(-10);
+//			pause(1.0);
 			break;
 		case FOUR:
 			turn(5.0);
@@ -133,7 +133,7 @@ public abstract class AutoMode extends Input {
 		if (currentDefense == DefensePosition.ZERO) {
 			driveControlType = DriveControlType.MANUAL;
 		} else {
-//			vision();  JETSON removed for TRI
+			vision();
 		}
 	}
 }

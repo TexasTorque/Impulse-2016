@@ -114,6 +114,8 @@ public class Drivebase extends Subsystem {
 		feedback.resetDriveEncoders();
 	}
 
+	private boolean deadbanded = false;
+	
 	@Override
 	public void runSystem() {
 		leftPosition = feedback.getLeftDrivePosition();
@@ -179,10 +181,20 @@ public class Drivebase extends Subsystem {
 			rightSpeed = -leftSpeed;
 		} else if (driveControlType == DriveControlType.VISION) {
 			turnSetpoint = feedback.getRequiredTurn() - (Constants.V_PIXY_V.getDouble() / 2);
-			
+			double threshold = 0.6;
+			double deadband = .001;
 			rightSpeed = visionPID.calculate(turnSetpoint);
-			leftSpeed = -rightSpeed;
+			if(!deadbanded)
+				if (rightSpeed < threshold && rightSpeed > deadband) {
+					rightSpeed = -threshold;
+				} else if (rightSpeed > -threshold && rightSpeed < -deadband) {
+					rightSpeed = threshold;
+				} else if ((rightSpeed < deadband && rightSpeed > 0) || (rightSpeed > -deadband && rightSpeed < 0)) {
+					rightSpeed = 0;
+					deadbanded = true;
+				}
 		}
+		leftSpeed = -rightSpeed;
 	}
 
 	@Override

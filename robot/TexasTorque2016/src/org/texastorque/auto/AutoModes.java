@@ -1,6 +1,19 @@
 package org.texastorque.auto;
 
-import org.texastorque.auto.modes.*;
+import org.texastorque.auto.modes.CDFAuto;
+import org.texastorque.auto.modes.CenterAuto;
+import org.texastorque.auto.modes.DoNothingAuto;
+import org.texastorque.auto.modes.DriveForwardAuto;
+import org.texastorque.auto.modes.LowBarAuto;
+import org.texastorque.auto.modes.LowBarBackAuto;
+import org.texastorque.auto.modes.MoatAuto;
+import org.texastorque.auto.modes.PortDeCullisAuto;
+import org.texastorque.auto.modes.RampartsAuto;
+import org.texastorque.auto.modes.RockWallAuto;
+import org.texastorque.auto.modes.RoughTerrainAuto;
+import org.texastorque.auto.modes.TestAuto;
+import org.texastorque.auto.modes.TiltAuto;
+import org.texastorque.auto.modes.TurnAuto;
 
 public enum AutoModes {
 	DO_NOTHING_AUTO(0, DoNothingAuto.class),
@@ -15,7 +28,8 @@ public enum AutoModes {
 	PORT_DE_CULLIS_AUTO(9, PortDeCullisAuto.class),
 	CDF_AUTO(10, CDFAuto.class),
 	MOAT_AUTO(11, MoatAuto.class),
-	TEST_AUTO(12, TestAuto.class);
+	TEST_AUTO(12, TestAuto.class),
+	CENTER_AUTO(13, CenterAuto.class);
 
 	enum DefensePosition {
 		ZERO, ONE, TWO, THREE, FOUR, FIVE;

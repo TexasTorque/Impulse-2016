@@ -178,14 +178,30 @@ public class Feedback {
 	public double getRequiredTurn() {
 		return vision.getTurn();
 	}
+	
+	public double getRequiredTilt() {
+		return Constants.S_LONG_SHOT_SETPOINT.getDouble();
+	}
 
 	public boolean visionShotReady() {
-		if (!TorqueMathUtil.near(getRequiredTurn(), 1.65 , 0.1)) {
+		if (!TorqueMathUtil.near(vision.getTurn(), Constants.V_PIXY_V.getDouble() / 2 , Constants.V_PIXY_PRECISION.getDouble())) {
 			return false;
 		}
-		if (!TorqueMathUtil.near(getFlywheelVelocity(), Constants.S_VISION_FLYWHEEL.getDouble(), 1000)) {
+		System.out.print("Y, ");
+		if (!TorqueMathUtil.near(getTiltAngle(), getRequiredTilt(), 1.0)) {
 			return false;
 		}
+		System.out.print("Y, ");
+		if (getRequiredTilt() < 0.0) {
+			return false;
+		}
+		System.out.print("Y, ");
+		if(!Constants.DEBUG_CENTER_SHOOT.getBoolean()) {
+			if (!TorqueMathUtil.near(getFlywheelVelocity(), Constants.S_VISION_FLYWHEEL.getDouble(), 1000)) {
+				return false;
+			}
+		}
+		System.out.println("Y");
 		return true;
 	}
 
