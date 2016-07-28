@@ -74,7 +74,6 @@ public class Feedback {
 				EncodingType.k4X);
 		tiltEncoder = new TorqueEncoder(Ports.TILT_ENCODER_A, Ports.TILT_ENCODER_B, false, EncodingType.k4X);
 
-//		gyro = new TorqueGyro(0, 1);
 		gyro = new ADXRS450_Gyro();
 
 		accel = new BuiltInAccelerometer();
@@ -108,7 +107,6 @@ public class Feedback {
 
 		robotPitch = accel.getX() / (accel.getY() * accel.getY() + accel.getZ() + accel.getZ());
 		robotPitch = Math.toDegrees(Math.atan(robotPitch));
-		// tiltAngle += robotPitch;
 	}
 
 	public void resetDriveEncoders() {

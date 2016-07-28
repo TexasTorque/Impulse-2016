@@ -17,7 +17,8 @@ public class Constants {
 	public static final Constant V_TOWER_HEIGHT = new Constant("V_TOWER_HEIGHT", 0.0);
 	public static final Constant V_ROBOT_HEIGHT = new Constant("V_ROBOT_HEIGHT", 0.0);
 	public static final Constant V_G = new Constant("V_G", 0.0);
-
+	public static final Constant V_PIXY_V = new Constant("V_PIXY_V", 3.3);
+	
 	// drivebase
 	public static final Constant D_MAX_VELOCITY = new Constant("D_MAX_VELOCITY", 0.0);
 	public static final Constant D_MAX_ACCELERATION = new Constant("D_MAX_ACCELERATION", 0.0);

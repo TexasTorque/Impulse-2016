@@ -178,7 +178,7 @@ public class Drivebase extends Subsystem {
 			leftSpeed = angularPV.calculate(angularProfile, angle, angularVelocity);
 			rightSpeed = -leftSpeed;
 		} else if (driveControlType == DriveControlType.VISION) {
-			turnSetpoint = feedback.getRequiredTurn();
+			turnSetpoint = feedback.getRequiredTurn() - (Constants.V_PIXY_V.getDouble() / 2);
 			
 			rightSpeed = visionPID.calculate(turnSetpoint);
 			leftSpeed = -rightSpeed;

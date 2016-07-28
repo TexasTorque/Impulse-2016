@@ -34,13 +34,13 @@ public class VisionFeedback {
 	}
 
 	public void run() {
-//		if(pixyExists.get()) {
+		if(pixyExists.get()) {
 			hasTarget = true;
 			turn = pixyX.getVoltage();
-//		} else {
-//			hasTarget = false;
-//			turn = 0;
-//		}
+		} else {
+			hasTarget = false;
+			turn = 0;
+		}
 	}
 
 	public double getTurn() {
