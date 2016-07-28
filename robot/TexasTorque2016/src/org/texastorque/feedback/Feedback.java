@@ -193,6 +193,7 @@ public class Feedback {
 
 	public void pushToDashboard() {
 		SmartDashboard.putNumber("Turn", vision.getTurn());
+		SmartDashboard.putBoolean("HasTarget", vision.hasTarget());
 		SmartDashboard.putBoolean("VisionShotReady", visionShotReady());
 
 		SmartDashboard.putNumber("RobotPitch", robotPitch);
