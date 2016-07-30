@@ -76,4 +76,5 @@ public class Constants {
 	public static final Constant DEBUG_CENTER_SHOOT = new Constant("DEBUG_CENTER_SHOOT", 0);
 	public static final Constant DEBUG_DO_POST_DEFENSE_DRIVING = new Constant("DEBUG_DO_POST_DEFENSE_DRIVING", 0);
 	public static final Constant DEBUG_DO_DEADBAND_RESET = new Constant("DEBUG_DO_DEADBAND_RESET", 0);
+	public static final Constant DEBUG_DO_BOOST = new Constant("DEBUG_DO_BOOST", 0);
 }

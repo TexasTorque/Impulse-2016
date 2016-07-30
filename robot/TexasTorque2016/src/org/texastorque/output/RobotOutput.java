@@ -1,5 +1,6 @@
 package org.texastorque.output;
 
+import org.texastorque.constants.Constants;
 import org.texastorque.constants.Ports;
 import org.texastorque.input.HumanInput;
 import org.texastorque.subsystem.etc.Lights;
@@ -89,17 +90,22 @@ public class RobotOutput {
 		if (OUTPUT_ENABLED) {
 			leftTopDrive.set(left);
 			leftBottomDrive.set(left);
-			leftBoostDrive.set(left);
 			rightTopDrive.set(right);
 			rightBottomDrive.set(right);
-			rightBoostDrive.set(right);
+			if(Constants.DEBUG_DO_BOOST.getBoolean()) {
+				leftBoostDrive.set(left);
+				rightBoostDrive.set(right);
+			} else {
+				leftBoostDrive.set(0.0);
+				rightBoostDrive.set(0.0);
+			}
 		} else {
 			leftTopDrive.set(0.0);
 			leftBottomDrive.set(0.0);
-			leftBoostDrive.set(0.0);
 			rightTopDrive.set(0.0);
 			rightBottomDrive.set(0.0);
 			rightBoostDrive.set(0.0);
+			leftBoostDrive.set(0.0);
 		}
 	}
 
