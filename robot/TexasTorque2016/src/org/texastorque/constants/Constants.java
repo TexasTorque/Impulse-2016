@@ -17,7 +17,7 @@ public class Constants {
 	public static final Constant V_TOWER_HEIGHT = new Constant("V_TOWER_HEIGHT", 0.0);
 	public static final Constant V_ROBOT_HEIGHT = new Constant("V_ROBOT_HEIGHT", 0.0);
 	public static final Constant V_G = new Constant("V_G", 0.0);
-	public static final Constant V_PIXY_V = new Constant("V_PIXY_V", 3.3);
+	public static final Constant V_PIXY_V = new Constant("V_PIXY_V", 1.7);
 	public static final Constant V_PIXY_PRECISION = new Constant("V_PIXY_PRECISION", 0.1);
 	
 	// drivebase
@@ -74,4 +74,6 @@ public class Constants {
 	
 	// debug
 	public static final Constant DEBUG_CENTER_SHOOT = new Constant("DEBUG_CENTER_SHOOT", 0);
+	public static final Constant DEBUG_DO_POST_DEFENSE_DRIVING = new Constant("DEBUG_DO_POST_DEFENSE_DRIVING", 0);
+	public static final Constant DEBUG_DO_DEADBAND_RESET = new Constant("DEBUG_DO_DEADBAND_RESET", 0);
 }

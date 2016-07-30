@@ -1,5 +1,6 @@
 package org.texastorque.feedback;
 
+import org.texastorque.constants.Constants;
 import org.texastorque.constants.Ports;
 
 import edu.wpi.first.wpilibj.AnalogInput;
@@ -45,6 +46,10 @@ public class VisionFeedback {
 
 	public double getTurn() {
 		return turn;
+	}
+	
+	public double getTilt() {
+		return Constants.S_LONG_SHOT_SETPOINT.getDouble();
 	}
 	
 	public boolean hasTarget() {

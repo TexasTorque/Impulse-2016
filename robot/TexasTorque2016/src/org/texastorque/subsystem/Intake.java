@@ -1,5 +1,7 @@
 package org.texastorque.subsystem;
 
+import org.texastorque.constants.Constants;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Intake extends Subsystem {
@@ -14,7 +16,7 @@ public class Intake extends Subsystem {
 
 	@Override
 	public void runSystem() {
-		if (input.isIntaking() || (feedback.visionShotReady()) && input.isVisionLock()) {
+		if (!Constants.DEBUG_CENTER_SHOOT.getBoolean() && (input.isIntaking() || (feedback.visionShotReady()) && input.isVisionLock())) {
 			intakeSpeed = 1.0;
 		} else if (input.isOuttaking()) {
 			intakeSpeed = -1.0;

@@ -1,7 +1,10 @@
 package org.texastorque.feedback;
 
+import java.util.Arrays;
+
 import org.texastorque.constants.Constants;
 import org.texastorque.constants.Ports;
+import org.texastorque.subsystem.Drivebase;
 import org.texastorque.torquelib.component.TorqueEncoder;
 import org.texastorque.torquelib.util.TorqueMathUtil;
 
@@ -180,28 +183,35 @@ public class Feedback {
 	}
 	
 	public double getRequiredTilt() {
-		return Constants.S_LONG_SHOT_SETPOINT.getDouble();
+		return vision.getTilt();
 	}
 
 	public boolean visionShotReady() {
-		if (!TorqueMathUtil.near(vision.getTurn(), Constants.V_PIXY_V.getDouble() / 2 , Constants.V_PIXY_PRECISION.getDouble())) {
+		boolean[] passes = {false, false, false, false}; //DEBUG: keeps track of which checks have passed
+		if (!Drivebase.getInstance().deadbanded) {
+			System.out.println(Arrays.toString(passes)); //DEBUG: keeps track of which checks have passed
 			return false;
 		}
-		System.out.print("Y, ");
-		if (!TorqueMathUtil.near(getTiltAngle(), getRequiredTilt(), 1.0)) {
-			return false;
-		}
-		System.out.print("Y, ");
-		if (getRequiredTilt() < 0.0) {
-			return false;
-		}
-		System.out.print("Y, ");
+		Drivebase.getInstance().deadbanded = true;
 		if(!Constants.DEBUG_CENTER_SHOOT.getBoolean()) {
+			passes[0] = true; //DEBUG: keeps track of which checks have passed
+			if (!TorqueMathUtil.near(getTiltAngle(), getRequiredTilt(), 1.0)) {
+				System.out.println(Arrays.toString(passes)); //DEBUG: keeps track of which checks have passed
+				return false;
+			}
+			passes[1] = true; //DEBUG: keeps track of which checks have passed
+			if (getRequiredTilt() < 0.0) {
+				System.out.println(Arrays.toString(passes));
+				return false;
+			}
+			passes[2] = true; //DEBUG: keeps track of which checks have passed
 			if (!TorqueMathUtil.near(getFlywheelVelocity(), Constants.S_VISION_FLYWHEEL.getDouble(), 1000)) {
+				System.out.println(Arrays.toString(passes)); //DEBUG: keeps track of which checks have passed
 				return false;
 			}
 		}
-		System.out.println("Y");
+		passes[3] = true; //DEBUG: keeps track of which checks have passed
+		System.out.println(Arrays.toString(passes)); //DEBUG: keeps track of which checks have passed
 		return true;
 	}
 

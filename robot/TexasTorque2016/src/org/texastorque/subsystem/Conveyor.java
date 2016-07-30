@@ -1,5 +1,7 @@
 package org.texastorque.subsystem;
 
+import org.texastorque.constants.Constants;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Conveyor extends Subsystem {
@@ -14,7 +16,7 @@ public class Conveyor extends Subsystem {
 
 	@Override
 	public void runSystem() {
-		if (input.isConveyorIntaking() || (feedback.visionShotReady() && input.isVisionLock())) {
+		if (!Constants.DEBUG_CENTER_SHOOT.getBoolean() && (input.isConveyorIntaking() || (feedback.visionShotReady() && input.isVisionLock()))) {
 			conveyorSpeed = 1.0;
 		} else if (input.isConveyorOuttaking()) {
 			conveyorSpeed = -1.0;

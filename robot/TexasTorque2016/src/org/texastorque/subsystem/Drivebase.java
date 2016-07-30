@@ -64,7 +64,13 @@ public class Drivebase extends Subsystem {
 
 	// vision PID control
 	private TorquePID visionPID;
-
+	
+	// vision
+	public boolean deadbanded = false;
+	private double pixyOutputScaling = 8.0;
+	private double threshold = 0.4;
+	private double deadband = .05;
+	
 	@Override
 	public void initSystem() {
 		driveControlType = DriveControlType.MANUAL;
@@ -73,7 +79,7 @@ public class Drivebase extends Subsystem {
 		if (!driverStation.isAutonomous()) {
 			profile = new TorqueTMP(Constants.D_MAX_VELOCITY.getDouble(), Constants.D_MAX_ACCELERATION.getDouble());
 		}
-
+		deadbanded = false;
 		leftPV = new TorquePV();
 		rightPV = new TorquePV();
 
@@ -114,8 +120,6 @@ public class Drivebase extends Subsystem {
 		feedback.resetDriveEncoders();
 	}
 
-	private boolean deadbanded = false;
-	
 	@Override
 	public void runSystem() {
 		leftPosition = feedback.getLeftDrivePosition();
@@ -180,21 +184,21 @@ public class Drivebase extends Subsystem {
 			leftSpeed = angularPV.calculate(angularProfile, angle, angularVelocity);
 			rightSpeed = -leftSpeed;
 		} else if (driveControlType == DriveControlType.VISION) {
-			turnSetpoint = feedback.getRequiredTurn() - (Constants.V_PIXY_V.getDouble() / 2);
-			double threshold = 0.6;
-			double deadband = .001;
-			rightSpeed = visionPID.calculate(turnSetpoint);
-			if(!deadbanded)
+			turnSetpoint = (feedback.getRequiredTurn() - Constants.V_PIXY_V.getDouble()) * pixyOutputScaling;
+			rightSpeed = -visionPID.calculate(turnSetpoint);
+			if(!deadbanded || Constants.DEBUG_DO_DEADBAND_RESET.getBoolean()) {
 				if (rightSpeed < threshold && rightSpeed > deadband) {
 					rightSpeed = -threshold;
 				} else if (rightSpeed > -threshold && rightSpeed < -deadband) {
 					rightSpeed = threshold;
 				} else if ((rightSpeed < deadband && rightSpeed > 0) || (rightSpeed > -deadband && rightSpeed < 0)) {
 					rightSpeed = 0;
-					deadbanded = true;
 				}
+			} else {
+				rightSpeed = 0;
+			}
+			leftSpeed = -rightSpeed;
 		}
-		leftSpeed = -rightSpeed;
 	}
 
 	@Override

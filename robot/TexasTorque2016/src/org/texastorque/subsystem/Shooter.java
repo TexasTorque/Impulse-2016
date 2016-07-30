@@ -28,9 +28,9 @@ public class Shooter extends Subsystem {
 
 	@Override
 	public void initSystem() {
-		flywheelControl = new TorquePID(0.6, 0.05, 0.1, 0.8, 0.75);
-		flywheelControl.setControllingSpeed(true);
-		flywheelControl.setEpsilon(250);
+//		flywheelControl = new TorquePID(0.6, 0.05, 0.1);
+//		flywheelControl.setControllingSpeed(true);
+//		flywheelControl.setEpsilon(250);
 
 		tiltPID = new TorquePID(Constants.S_TILT_P.getDouble(), Constants.S_TILT_I.getDouble(),
 				Constants.S_TILT_D.getDouble());
@@ -85,10 +85,11 @@ public class Shooter extends Subsystem {
 		}
 
 		if (flywheelSetpoint != 0) {
-			flywheelControl.setSetpoint(flywheelSetpoint);
-			flywheelSpeed = flywheelControl.calculate(flywheelVelocity);
+//			flywheelControl.setSetpoint(flywheelSetpoint);
+//			flywheelSpeed = flywheelControl.calculate(flywheelVelocity);
+			flywheelSpeed = flywheelSetpoint;
 		} else {
-			flywheelControl.reset();
+//			flywheelControl.reset();
 			flywheelSpeed = 0.0;
 		}
 	}
