@@ -92,7 +92,7 @@ public class RobotOutput {
 			leftBottomDrive.set(left);
 			rightTopDrive.set(right);
 			rightBottomDrive.set(right);
-			if(Constants.DEBUG_DO_BOOST.getBoolean()) {
+			if(Constants.D_DO_BOOST.getBoolean()) {
 				leftBoostDrive.set(left);
 				rightBoostDrive.set(right);
 			} else {

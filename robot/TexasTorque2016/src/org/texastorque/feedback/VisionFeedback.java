@@ -45,6 +45,7 @@ public class VisionFeedback {
 	}
 
 	public double getTurn() {
+		System.out.println("VOLTAGE: " + turn);
 		return turn;
 	}
 	

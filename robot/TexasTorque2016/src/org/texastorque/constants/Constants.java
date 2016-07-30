@@ -44,6 +44,7 @@ public class Constants {
 	public static final Constant D_VISION_P = new Constant("D_VISION_P", 0.0);
 	public static final Constant D_VISION_I = new Constant("D_VISION_I", 0.0);
 	public static final Constant D_VISION_D = new Constant("D_VISION_D", 0.0);
+	public static final Constant D_DO_BOOST = new Constant("DEBUG_DO_BOOST", 1);
 
 	public static final Constant TUNED_VOLTAGE = new Constant("TUNED_VOLTAGE", 12.5);
 
@@ -76,5 +77,4 @@ public class Constants {
 	public static final Constant DEBUG_CENTER_SHOOT = new Constant("DEBUG_CENTER_SHOOT", 0);
 	public static final Constant DEBUG_DO_POST_DEFENSE_DRIVING = new Constant("DEBUG_DO_POST_DEFENSE_DRIVING", 0);
 	public static final Constant DEBUG_DO_DEADBAND_RESET = new Constant("DEBUG_DO_DEADBAND_RESET", 0);
-	public static final Constant DEBUG_DO_BOOST = new Constant("DEBUG_DO_BOOST", 0);
 }
